@@ -133,3 +133,32 @@ double lilSpmat::vecMul(const unsigned int i, const std::vector<double> &vecPhi)
   }
   return sumProdRow;
 }
+
+// Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
+//double lilSpmat::vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi)
+double lilSpmat::avecMulNoDiagonal(unsigned int iRow, std::vector<double> &vecPhi)
+{
+  double sumProdRow = 0.0;
+  unsigned int id_column = 0;
+  for(unsigned int j=0;j<columns_[iRow].size();j++)
+  {
+    id_column = columns_[iRow][j];
+    if (iRow != id_column) sumProdRow += values_[iRow][j] * vecPhi[id_column];
+  }
+  return sumProdRow;
+}
+
+
+// Returns a double given by the sum of the products of xValue (a double) for a specific row of the matrix
+double lilSpmat::xValueProduct(const unsigned int& iRow, const double &xValue)
+{
+  double sumProdRow = 0.0;
+  unsigned int id_column = 0;
+  for(unsigned int j=0;j<columns_[iRow].size();j++)
+  {
+    id_column = columns_[iRow][j];
+    sumProdRow += values_[iRow][j] * xValue;
+  }
+  return sumProdRow;
+
+}

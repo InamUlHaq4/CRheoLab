@@ -51,6 +51,11 @@ public:
   //std::vector<double> matMul(std::vector<double> v);
   std::vector<double> matMul(std::vector<double> &v, const std::vector<double> &vecPhi);
 
+  // Group 5
+  // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
+  //double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi);
+  //double vecMulNoDiagonal(const unsigned int iRow, std::vector<double> &vecPhi);
+
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
   //double vecMul(unsigned int i, std::vector<double> v);
   double vecMul(const unsigned int i, const std::vector<double> &vecPhi);

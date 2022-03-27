@@ -17,7 +17,7 @@
         for(unsigned int lineI = 0; lineI < nCells_; lineI++)
         {
             //result[lineI] = ((*bVector_)[lineI] -  axMultiplicationNoDiagonal(lineI))/(*aMatrix_)[lineI*nCells_+lineI]; 
-            result[lineI] = ((*bVector_)[lineI] - (*aMatrix_).avecMulNoDiagonal(lineI,(*xVector_)))/(*aMatrix_).getValue(lineI,lineI);
+            result[lineI] = ((*bVector_)[lineI] - (*aMatrix_).vecMulNoDiagonal(lineI,(*xVector_)))/(*aMatrix_).getValue(lineI,lineI);
             (*xVector_)[lineI] = result[lineI];                   
         }      
         return result;

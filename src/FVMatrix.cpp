@@ -65,7 +65,7 @@ inline double FVMatrix::residualValue()
     for (unsigned int i = 0; i < nCells_; i++)
     {
         //residualMagnitude += fabs(bVector_[i] - axMultiplication(i));
-        residualMagnitude += fabs(bVector_[i] - aMatrix_.vecMul(i,bVector_));
+        residualMagnitude += fabs(bVector_[i] - aMatrix_.vecMul(i,xVector_));
     }
     return residualMagnitude;
 }
@@ -87,13 +87,10 @@ inline double FVMatrix::residualNormFactor()
     {
         //nNormalize_ += fabs(axMultiplication(i) -  axAverageMultiplication(i)) + fabs(bVector_[i] - axAverageMultiplication(i));
         double xValueProduct = aMatrix_.xValueProduct(i,xAverage_);
-        nNormalize_ += fabs(aMatrix_.vecMul(i,bVector_) -  xValueProduct) + fabs(bVector_[i] - xValueProduct);
+        nNormalize_ += fabs(aMatrix_.vecMul(i,xVector_) -  xValueProduct) + fabs(bVector_[i] - xValueProduct);
     }
     return nNormalize_;
 }
-
-
-
 
 ///////////////////////////////////////////////25/2/2022
 /*

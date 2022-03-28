@@ -1,8 +1,8 @@
 #ifndef LILSPMAT_H
 #define LILSPMAT_H
 
-#include "spmat.h"
 #include <vector>
+#include "spmat.h"
 
 // Class to implement a list of lists for a sparse matrix
 // The std::vector structure is used to implement the list
@@ -37,30 +37,30 @@ public:
   double sparsity();
 
   // Adds a value to position (i,j) if exists, otherwise inserts a new value
-  void addValue(unsigned int i, unsigned int j, double val);
+  void addValue(unsigned int i, unsigned int j, double val) override;
 
   // Subtracts a value to position (i,j) if exists, otherwise inserts a new value with oposite sign
-  void subValue(unsigned int i, unsigned int j, double val);
+  void subValue(unsigned int i, unsigned int j, double val) override;
 
   // Deletes the value in position (i,j) if exists, otherwise does nothing
-  void delValue(unsigned int i, unsigned int j);
+  void delValue(unsigned int i, unsigned int j) override;
 
   // Returns the value in position (i,j) if exists, otherwise returns 0
-  double getValue(unsigned int i, unsigned int j);
+  double getValue(unsigned int i, unsigned int j) override;
 
   // Returns the sparse matrix in a dense format as a vector of vectors
-  std::vector< std::vector<double> > dense();
+  std::vector< std::vector<double> > dense() override;
 
   // Returns the product matrix-vector as a vector
-  std::vector<double> matMul(const std::vector<double> &vecPhi);
+  std::vector<double> matMul(const std::vector<double> &vecPhi) override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
-  double vecMul(const unsigned int i, const std::vector<double> &vecPhi);
+  double vecMul(const unsigned int i, const std::vector<double> &vecPhi) override;
 
   // Group 5
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
   //double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi);
-  double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi);
+  double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi) override;
 
   // Group 5
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row

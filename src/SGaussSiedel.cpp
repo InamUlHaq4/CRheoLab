@@ -1,7 +1,7 @@
 #include "SGaussSiedel.h"
 
     //Constructor
-    SGaussSiedel::SGaussSiedel(  lilSpmat &aMatrix,  std::vector<double> &bVector,std::vector<double> &xVector, const int nCells)
+    SGaussSiedel::SGaussSiedel(  spmat* aMatrix,  std::vector<double> &bVector,std::vector<double> &xVector, const int nCells)
     :
     FVMatrixSolver(aMatrix,bVector,xVector, nCells)
     {}

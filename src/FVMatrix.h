@@ -43,7 +43,7 @@ class FVMatrix
         std::vector<double> bVector_;
         std::vector<double> xVector_;
         unsigned int nCells_;
-        lilSpmat aMatrix_;
+        spmat* aMatrix_;
         double absNormResidual_;
         double relNormResidual_;
         double normResidual_;

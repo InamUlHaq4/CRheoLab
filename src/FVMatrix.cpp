@@ -8,7 +8,7 @@ FVMatrix::FVMatrix(const Mesh &mesh, vector<double> &xVector) : xVector_(xVector
                                                                 nCells_(mesh.nCells_),
                                                                 residualNormFactor_(-1.0),
                                                                 readParameter_("constant/modelParameter"),
-                                                                aMatrix_(nCells_,nCells_)   
+                                                                aMatrix_(new lilSpmat(nCells_,nCells_))   
 {
     //aMatrix_.resize(nCells_ * nCells_);
     bVector_.resize(nCells_);
@@ -65,7 +65,7 @@ inline double FVMatrix::residualValue()
     for (unsigned int i = 0; i < nCells_; i++)
     {
         //residualMagnitude += fabs(bVector_[i] - axMultiplication(i));
-        residualMagnitude += fabs(bVector_[i] - aMatrix_.vecMul(i,xVector_));
+        residualMagnitude += fabs(bVector_[i] - aMatrix_->vecMul(i,xVector_));
     }
     return residualMagnitude;
 }
@@ -86,8 +86,8 @@ inline double FVMatrix::residualNormFactor()
     for (unsigned int i = 0; i < nCells_; i++)
     {
         //nNormalize_ += fabs(axMultiplication(i) -  axAverageMultiplication(i)) + fabs(bVector_[i] - axAverageMultiplication(i));
-        double xValueProduct = aMatrix_.xValueProduct(i,xAverage_);
-        nNormalize_ += fabs(aMatrix_.vecMul(i,xVector_) -  xValueProduct) + fabs(bVector_[i] - xValueProduct);
+        double xValueProduct = aMatrix_->xValueProduct(i,xAverage_);
+        nNormalize_ += fabs(aMatrix_->vecMul(i,xVector_) -  xValueProduct) + fabs(bVector_[i] - xValueProduct);
     }
     return nNormalize_;
 }
@@ -138,16 +138,16 @@ void FVMatrix::createRandomaMatrixbVector()
         double diagValue = 0.0;
         for (unsigned int j = 0; j < lineI; j++)
         {
-            aMatrix_.addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
-            diagValue += fabs(aMatrix_.getValue(lineI,j));
+            aMatrix_->addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
+            diagValue += fabs(aMatrix_->getValue(lineI,j));
         }
 
         for (unsigned int j = lineI + 1; j < nCells_; j++)
         {
-            aMatrix_.addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
-            diagValue += fabs(aMatrix_.getValue(lineI,j));
+            aMatrix_->addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
+            diagValue += fabs(aMatrix_->getValue(lineI,j));
         }
-        aMatrix_.addValue(lineI,lineI, 1.1 * diagValue);
+        aMatrix_->addValue(lineI,lineI, 1.1 * diagValue);
         bVector_[lineI] = (static_cast<double>(rand() % maxValue));
     }
     std::cout << ">> leaving createaMatrix " << std::endl;

@@ -7,26 +7,58 @@
 FVMatrix::FVMatrix(const Mesh &mesh, vector<double> &xVector) : xVector_(xVector),
                                                                 nCells_(mesh.nCells_),
                                                                 residualNormFactor_(-1.0),
-                                                                readParameter_("constant/modelParameter"),
-                                                                aMatrix_(new lilSpmat(nCells_,nCells_))   
+                                                                readParameter_("constant/modelParameter")
+                                                                   
 {
     //aMatrix_.resize(nCells_ * nCells_);
     bVector_.resize(nCells_);
-    createRandomaMatrixbVector();
   
     solverModel_ = readParameter_.ReadString("solverModel");
     absNormResidual_ = readParameter_.ReadDouble("absNormResidual");
     relNormResidual_ = readParameter_.ReadDouble("relNormResidual");
+    matrixFormat_ = readParameter_.ReadString("matrixFormat");
+    matrixType_ = readParameter_.ReadString("matrixType");
 
-    std::cout << "Reading done" << std::endl;;
-    
+    if (matrixFormat_== "lOLists")
+        aMatrix_ = new lilSpmat(nCells_,nCells_);
+    else if (matrixFormat_== "CSR")
+        if (matrixType_== "full"){
+            aMatrix_ = new csrSpmat(nCells_);    
+        }
+        else if (matrixType_== "sparse") {
+            aMatrix_ = new csrSpmat(mesh);
+        }
+        else {
+            std::cout << "ERROR: Unindentified Matrix type";
+            exit(0);
+        }
+
+    else {
+        std::cout << "ERROR: Unindentified Matrix format";
+        exit(0);
+    }
+
+    if (matrixType_== "full"){
+       createRandomFullaMatrixbVector();  
+    }
+    else if (matrixType_== "sparse") {
+       createRandomSparseaMatrixbVector(mesh);
+    }
+    else {
+        std::cout << "ERROR: Unindentified Matrix type";
+        exit(0);
+    }
+
     setSolver(solverModel_);
 
+    std::cout << "Reading done" << std::endl;
+    std::cout << "ncells:" << nCells_ << std::endl;
 }
 
 FVMatrix::~FVMatrix()
 {
     delete Solver_;
+    delete aMatrix_;
 }
 
 // inline double FVMatrix::axMultiplication(const unsigned int &lineI)
@@ -126,9 +158,9 @@ void FVMatrix::printaMatrix(std::vector<double> &mat, int n, int m)
     }
 }
 
-void FVMatrix::createRandomaMatrixbVector()
+void FVMatrix::createRandomFullaMatrixbVector()
 {
-    std::cout << ">> entered createaMatrix " << std::endl;
+    std::cout << ">> entered create Full aMatrix and bVector" << std::endl;
 
     int maxValue = 10;
     srand(time(0));
@@ -149,9 +181,48 @@ void FVMatrix::createRandomaMatrixbVector()
         }
         aMatrix_->addValue(lineI,lineI, 1.1 * diagValue);
         bVector_[lineI] = (static_cast<double>(rand() % maxValue));
+        //std::cout << "LineI" << lineI << std::endl;
     }
-    std::cout << ">> leaving createaMatrix " << std::endl;
+    std::cout << ">> leaving create FullaMatrix and bVector " << std::endl;
 }
+
+void FVMatrix::createRandomSparseaMatrixbVector(const Mesh &mesh)
+{
+    std::cout << ">> entered create Sparse aMatrix and bVector" << std::endl;
+
+    int maxValue = 10;
+    srand(time(0));
+  
+    for (unsigned int iFace=0;iFace<mesh.nInteriorFaces_;iFace++)
+    {
+        unsigned int iNeighbour = mesh.faceList_[iFace].getNeighbour()->ID_;
+        unsigned int iOwner = mesh.faceList_[iFace].getOwner()->ID_;
+        
+        double mCoef = (static_cast<double>(rand() % maxValue))+1.0;
+
+        aMatrix_->addValue(iNeighbour,iOwner, -mCoef); // Add mCoef to line iNeighbour column iOwner
+        aMatrix_->addValue(iOwner,iNeighbour, -mCoef); // Add mCoef to line iOwner column iNeighbour
+        aMatrix_->addValue(iNeighbour,iNeighbour, mCoef); // Add mCoef to Diagonal iNeighbour ,iNeighbour
+        aMatrix_->addValue(iOwner,iOwner, mCoef); // Add mCoef to Diagonal iOwner ,iOwner
+        // std::cout << aMatrix_->getValue(iNeighbour,iOwner) << std::endl;
+        // std::cout << aMatrix_->getValue(iOwner,iNeighbour) << std::endl;
+        // std::cout << aMatrix_->getValue(iNeighbour,iNeighbour) << std::endl;
+        // std::cout << aMatrix_->getValue(iOwner,iOwner) << std::endl;
+
+
+    }
+
+    //Loop for cells
+    for (unsigned int iCell = 0; iCell < nCells_; iCell++)
+    {
+        // add a factor to diagonal
+        aMatrix_->addValue(iCell,iCell, 1.1 *  aMatrix_->getValue(iCell,iCell));
+        bVector_[iCell] = (static_cast<double>(rand() % maxValue));
+    }
+
+    std::cout << ">> leaving create Sparse aMatrix and bVector " << std::endl;
+}
+
 
 // reset class xVector to zeros
 void FVMatrix::resetxVector()

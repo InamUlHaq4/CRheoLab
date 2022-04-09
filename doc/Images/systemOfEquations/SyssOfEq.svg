@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="126mm"
+   height="126mm"
+   viewBox="0 0 126 126"
+   version="1.1"
+   id="svg103147"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   sodipodi:docname="SyssOfEq.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview103149"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.64052329"
+     inkscape:cx="397.33138"
+     inkscape:cy="561.25984"
+     inkscape:window-width="1482"
+     inkscape:window-height="983"
+     inkscape:window-x="2549"
+     inkscape:window-y="109"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs103144">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipEmfPath1-3">
+      <path
+         d="M 0,0 H 222.58016 V 32.473701 H 0 Z"
+         id="path6572" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipEmfPath1">
+      <path
+         d="M 0,0 H 171.16346 V 27.061417 H 0 Z"
+         id="path852" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipEmfPath1-7">
+      <path
+         d="M 0,0 H 89.979213 V 24.355276 H 0 Z"
+         id="path10678" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipEmfPath1-10">
+      <path
+         d="M 0,0 H 221.90362 V 33.150236 H 0 Z"
+         id="path7771" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipEmfPath1-1">
+      <path
+         d="M 0,0 H 36.532913 V 24.355276 H 0 Z"
+         id="path4471" />
+    </clipPath>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path101055" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-8"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path101055-5" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-8-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path101055-5-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-8-21"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path101055-5-1" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow2Lend-8-9"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path101055-5-4" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker103092"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:0.625;stroke-linejoin:round"
+         id="path103090" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g103062"
+       transform="translate(-54.866753,-35.488803)">
+      <g
+         id="g81559">
+        <image
+           clip-path="url(#clipEmfPath1-3)"
+           y="0"
+           x="0"
+           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUkAAAAwCAIAAAATsh9CAAAFDUlEQVR4nO2d27pbKwiFNd96/1eevUi326WIAzzEmvFfpU4n4AEQk7bxeZ5ACLmO16cNIIQsgb5NyJ3Qtwm5E/o2IXdC3ybkTmL6lF+YxxiLljnKYtymi5Av57XTqejAg7zjYAqRx8qcxQm2nWCDD2feVob6PE+MUXyXeXuEfM7Hpytfi+KzsoL7EffMl9ggehluw9+8bTU6719IUOKcTxd5s2LexBU5x7HDGXvmI9rzgPKmaO/ymnLkSAugz8K/e7y5kiJA14epE/jOPaOfFMDZuL/ejjF+287oop+tujF6J+dYEjaGGP20As7Jy2euEleUw8NOH4v/sU3jBo7a6Hs4YQU/Um+bPEtkQr1tNW7DBBWLcY1LnLDRN3PCCh6yf6wh5icdz0wDQDZZLdOny22VdVuIF9GiTF1jaC9DPW/IDQUOIj/vI96WFy9ax1joUiQj9udyTG8NrmAX5WsL5BsNh956JnWceVsxCDmur6B1r4hTv9UKT/kr9Wdlg5osfGvHhwPKr22u90D3cz4z+obLR6H3V+zXh19fCiL2vwFtq5+CM9yS8/wGTJbdPjlD9+RKRa27/USKunpW+EgLH3p3yOJ2EQWKFoqXAmIjmOER+XlPJDy1xqi4RNILhj/RftDlwJ56srHahlglUnsc4oOOHe7J292h6vFsivsV04EnN5xCWvqjoiXZ0MoGJgvxzj75JjfIHyEZtbXWpsCnyDHZDPa35mHHfpsVwhA8ebuO4mDmHDkjKHImujQ+CgfKZqqj+Dr5Sn+HDfoBW8mBoD34nuke9UFdOHtWSjwBIXi+355SF7nZk6tNzgDmFlMJM7IuiHyxf2iPxZSHlafI0ReXj0iemPlbpYoVR+Hg0PXjjlWFS6f4uiLj5RS6dI0jWurGbo7qvqVIqAsccZl1l8Dlh16eFAuuVnsLZBM7ApAiU5wffU8+2a/oW31EC0fyvGknmLQkfqzuoUxBAKL4FFfM3Tv0Fs8H7lr501Y7Xj74Mq273h6vMEf2QyFBmfMVGTL83j+Ke1vbW6T+K7JRjbnedsfpkE0lbF6T4qBS1PxuRnKINeqL4NcqPvmiLkVmt31kPxR9Buttn95U1lkddZFVNe7C01xvWyO9tY/VkmLkg+69ot52uKsibZb8Vv/V9bbSZ7DebvVXQkbxyF1vgzPvXikf5t+Tm24jHX185B4+K4fXdOvtDbpW0xqL3q5LG7fH19+6V931tqNCtp7LHDM57ffkSExy3/jhVhVOvkiLqb3LYDawykcw1dt6TzEcgCaNWD54C4DI7LYjMnOUkOrYXf/Lqk+2uvr6abfwEzssul1wTLfyFliH4xWsfgGWd36qfxdFfAuXXwgHx2JtV0Zhtb8lX8F0b5JfcYm7EZ+x+rM+LfVbpoHo2Opt5MCjPN1zPZh0OS4hxEXFNwqeK3SZxekjjUXRZZLfEtKSb/0sjiJv7Ob/aPyltwh4+ki68pbiKaJFdPIwaaUcmPP2kLKNebvQi8sv7IkLvkXHpdXaEXvmWjuOdQ5b4x2ZN0TXCLUcfKUWrZcsep2/7dTlY10cJWQnc/69NJCdunzQsck1DP39bSvnO8xIdUfIUXwgb5/M+RYSAtLM2yty7E5dDk67giJkBO7mX/huZQk5EG5fQu6E/0cvIXdC3ybkTujbhNwJfZuQO6FvE3In9G1C7oS+Tcid0LcJuRP6NiF3Qt8m5E7o24TcCX2bkDv5A/6z6xG819AsAAAAAElFTkSuQmCC"
+           height="32.473701"
+           width="222.58015"
+           transform="matrix(0.26458333,0,0,0.26458333,77.870151,97.822108)"
+           preserveAspectRatio="none"
+           id="image6580" />
+        <g
+           id="use12682"
+           style="fill:none;stroke:#d3bc5f;stroke-opacity:1"
+           transform="matrix(2.498164,0,0,1.6643495,57.742711,65.852153)">
+          <title
+             id="title103422">Decision</title>
+          <desc
+             id="desc103424">A decision or switching type operation.</desc>
+          <path
+             d="m 3.96875,19.84375 15.875,-10.5833333 15.875,10.5833333 -15.875,10.583333 z"
+             style="stroke-width:0.529167"
+             id="path103426" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="85.178528"
+           y="96.033012"
+           id="text24303"><tspan
+             sodipodi:role="line"
+             id="tspan24301"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+             x="85.178528"
+             y="96.033012">Convergence Control</tspan></text>
+      </g>
+      <g
+         id="g81553">
+        <image
+           clip-path="url(#clipEmfPath1)"
+           y="0"
+           x="0"
+           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAP0AAAAoCAIAAAC6pGs3AAAEAElEQVR4nO2c267jIAxFSzX//8uZh+gwHgzOtjHgo3g9RGoTDPhWA1HLdV2fJHkZ39MDSJIDpN8nbyT9Pnkjf04PIEkslFLoR+0yteS6Nvl13E5fXbf5iNDJ9zSS5qOiSgseYC6z9lWdC01evJkcm02mlyd0e7+/p5JlW7T5fp2bNsMKhe/YooW6IR06CnfXRrfHkQVHvXdCZJ21ojnEjTwqWx0ZZ6arRwJqb2laMYzhy2+DHY+uAnfHx12B8miY6weVWG6SU8zovJQCjl+Wv8LiVCbYO53Lt/kKrNLq9bquev08mRkMj/3gtamjzD3M6xxpi9j9INwW39ENRATNJUiGC+IKBgxZ87ixb+bX6IiE/fleBbdFm+9xEXwyj64fxBUqttIO5Lixb2w6p63i53uwwKa0+d4gAn8miCtUzFU7QpAgn6nv8bZn872hTG3fU3CpdH9Lvl9KkCA3/FLVbT287W/N9zMieFs53wdxCIrWMOUHR5mLsOlc22oy3wuJkut5VGAjnllRv5c2k8ttewvytqlhO5UjG4bmv8YMQZxbQKsT2+xsKYDqk/s3fq5isILxvTTBUeRbRXkyusHptTRrIe2MNqPSeY1w2hbsxXCXjo07/aOPqXacGtT7983zH83pBm/7CN8qRa4rRtL4BDhybS/uzNToXvleoPuaDBio+JEit0WhMT2zqDU43Nk0aZh110iyBFUv9BAQvMoy6RiQh7nMx7bdB2yZWDsvLXRUrR8jle6/xtbpGVr58rhU4k/yZ0CfUPWixRy03ScdA3umgsBb4TTyv/iPBaUpKrQ/iIYefdHOesZlkb5s5Rz+Ew+Gx2ilhMxx9I12hbDUN6otFPs53QhWTc+W1SIsbYXad2Qk23rAfSWD6OS/AqBXbNgK4CArnE/PFor9+9Hk3XMPH89qp5/JZ5OSV6O1Sze0DPrhkkHWaYxKVpzXjgak3TGIs5/T9KLiuEODgHZByjBDLyrf2Fn6OpzXzmcFpNVq1++yaEY7edSJS4E6HzabNWl8/95GtBxpHg9SuwcJCTnjellk0itGe0Few+O2QN+/d9l8DOIKlaVzCRLkSKaft4u5UOwuoN39pLMtcfchq4A344/5HuLsQTvrimpRe3ayj/vrFcGmowcE+Xjv9Na6XfzGFv+ibY9T7q/kZNa5ZpwgX6pzWYERIv/Ts4X6/fv57oMUAHsIYvLVOgfPB87S379vCh534uQ/ytJZR5jpooq52wv+/X6akXTOa30zRCMtjiIayg+OciLkuRXn2VzO41roiE4EWwz/ZYofVs90H9bdKfOz9tWbF8X0FqevzP2akXuMZaEk2UP+/33yRtLvkzeSfp+8kfT75I2k3ydv5C9ccyynoqgsmQAAAABJRU5ErkJggg=="
+           height="27.061417"
+           width="171.16347"
+           transform="matrix(0.26458333,0,0,0.26458333,84.672151,66.469084)"
+           preserveAspectRatio="none"
+           id="image860" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="90.752335"
+           y="63.518459"
+           id="text19691"><tspan
+             sodipodi:role="line"
+             id="tspan19689"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+             x="90.752335"
+             y="63.518459">Residual Vector</tspan></text>
+        <g
+           id="use33443-2-3"
+           style="fill:none;stroke:#d3bc5f;stroke-opacity:1"
+           transform="matrix(3.0389432,0,0,0.72351673,47.011625,52.11006)">
+          <title
+             id="title103382">Auxiliary Operation</title>
+          <desc
+             id="desc103384">Offline operation.</desc>
+          <rect
+             x="9.260417"
+             y="9.260417"
+             width="21.166666"
+             height="21.166666"
+             style="stroke-width:0.529167"
+             id="rect103386" />
+        </g>
+      </g>
+      <g
+         id="g81571">
+        <image
+           clip-path="url(#clipEmfPath1-7)"
+           y="0"
+           x="0"
+           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIUAAAAkCAIAAAAo+G4gAAACL0lEQVRoge1bwXIDIQiNO/n/X7YHG4dVQHBBSes7ZFIXgTxAxZ2mnPPrIAyu3Q4c3HDiEQsnHrHwXmMmpVS/nx2LwYp4pJRqDGBgDnqkPlttcxkGgxmxMucKE2Z4Jb7U9NRXE6h+VD4IbH2jeL7ZYJh6YlUV8pi14uEVqvPqH3ujmKd+GP90C5xSBN1TLz+TVIDL+NzTjfBIkV7n5W2MrwP5+J9En3ZtfZgb4+tAPr4Lrv6M68PQ/N+oD1d/yPrwM68NcLT6WIw2Hjwd1BIk34SHMgHPVwVDZgqoR0IrivtESDo0QI2/PrRWhySnOO35qrcu+ZzA0Gf0e/1TaFcaj9KdFqACVF73OxOf+9r6yDkvCwmKnhk0KYW/SNp/UOOwA2fmQkjcUtUHtC781NYfAyoFhcw0VhJ0TktWmeu01ke4y1rDzG1W82xChUReiwi3WOiyI581txK8n3QersHYXhwrmanyj97X+nX1Wvm9WzrllVDsdsWuPf+oJOeg3Tm889ePmV5e3Z9TZ20rTPQfE+crrT+SWSbM6PrzCr/FfW7ldQqGXL6uPA+ZEfUfNWeZndaqVqLdX81dIAk1jO93h0obyeqQVcVsP1Y1cGWmD5Xu/QdUDQ8ChiR+V31UUMzIZ/1OmThfeSNCZw7h1w8ZnK+8saY/CAXI+dWM7iUiTo1CuDLT/FKkP1+fofK3I3uRPjDU02jDV+qygq9cx6PtGRSeM8Nr+A4W/g/O/3/Ewg/7KRyQqDmKOAAAAABJRU5ErkJggg=="
+           height="24.355276"
+           width="89.97921"
+           transform="matrix(0.26458333,0,0,0.26458333,95.412151,153.18568)"
+           preserveAspectRatio="none"
+           id="image10686" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="75.06131"
+           y="151.29094"
+           id="text31045"><tspan
+             sodipodi:role="line"
+             id="tspan31043"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+             x="75.06131"
+             y="151.29094">Update unknown vector guess</tspan></text>
+        <g
+           id="use33443-2-3-8-2"
+           style="fill:none;stroke:#d3bc5f;stroke-opacity:1"
+           transform="matrix(3.2400821,0,0,0.72230987,43.020275,139.27271)">
+          <title
+             id="title103390">Auxiliary Operation</title>
+          <desc
+             id="desc103392">Offline operation.</desc>
+          <rect
+             x="9.260417"
+             y="9.260417"
+             width="21.166666"
+             height="21.166666"
+             style="stroke-width:0.529167"
+             id="rect103394" />
+        </g>
+      </g>
+      <g
+         id="g81565">
+        <image
+           clip-path="url(#clipEmfPath1-10)"
+           y="0"
+           x="0"
+           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUgAAAAxCAIAAAA3LKfZAAAFVklEQVR4nO2c23LrIAxFbU///5d9HjzlUC5i64YJ0XrItAkIARKScNPzvu8jCIK9uN5WIAgCe8Kxg2BDwrGDYEN+3lYgCBw5zzP/9XtulMKxg81Jzlw4+d6c9RmWz198wpkIWZ9nmvQaNhuw5D8SzrOxWQJRJop5CDyszaZeseY7VsPVMjVih0JozX3n6bFq69CbnautmJwRNjq15JucFFa21ztwe37iN65G2vMD17f/KKHfG65m6/DsBxhpafug+x7SeG7l2x4bsaBuTYFiP2ENqpHAldn79Kpb2PJBFU5x1tJ7Y/UpbgFPS5PUTtD3odfAMAN3hV5DqxW2PTppD7p/KT69XHXyk2lIMtl8X/F4K2sjWJNH5vzz0WS+SF+nKhd5P/9UucKveFCt+eWnzadQe/LQq4fLBe4Ei5X3SKObnydwJS+7wkiceJRPLcuI7cqa2Th+Tpvrz7KkVyIJeJCZRGxD6D2VxXNkRCcEdlJGbL9VPpY8EQW6vTWLt+rYun5rtpEJV/aVyaRrbI8RlYB7l+cp5Z+UfmGNfThoiNRytjKHiKt6pO+ysY7FOpoUsJ6b/InYxWdIT+R9ROZb5FqdGUh7AqS6K9oMh8YlE8h2oajc6GYywGxRb2PDskK5wogmxF4TNsCyvac940sg+coWXtF8vzeqbCz8FZSfZ5gmO1prjrSpzxeNZALu7PKBXCM2rkxvxZork44k7h2KX2ZUe036Of1qspL3faOO/XhCunxryjrgWSGaCbxa80zY0LdBOffvX4nSC2ulocBiFrl3ENtenQuwMilb6lk0TyKr6II+x+69n6c3w77ciFpIRl5ZsPR5fjDc9d5JROdjc+oabk6o0crb9vCjs9CHhaBaycscew+qM9Jxn6w9Hic9fEMPV/9hSoJnrT2vBiWIU2uZfKvpi7Wq27NyNIFWuPB1PCi1uXp5P0F+friegt5wqy9cJgFx+uL1uQCTnbKN2HNsT6MVt/0cD0JG+RFE+Vo/p/ZzwOvhg9yJlFnRuyXOPA9+JGmOi5Aiydm6Zey156o00/ZABCu8pgep/jUS11a4krmvLGRBxipDQTyfK9OK2quHtjs/I/MYcdlZCI4b3nPsog3LyifciuPyxYAeq7nJQ25unSDuLOnRre5y8TYe62ByL+03C5aFs//yTFBRCJDdiq+Q0dGnjH7F/GpsTYU//1T1i9jK+4IXPSjXQRKxD/9qWfasa50aXhzZiAYTIslwFNeIDeI3lkYy99mKX8bxAD3HTicZkesTdrOOvyW8b3q4kU15M5+2Rgyr2GN1H+rmansshrOgGwwly7KhQ3Szg34fu7f6w7viNZFF+GEvZe2krK7n3/0kNLqtY3uuEVszC1a29bzyvo/dvEfBV/ZFyyuQVVPDXuCTsyOLALLaTEBPfhGI6lHqBs02YsX0tjchYlv17c0C7wXq0HiS4XSf5CFZDJHXIR2JvmLJ+Oi1cGSFvXdBr9sK5tGLUu/OQjD6jO9je0ueCXjK+t3ZEu+/+5yMfv8jdr+XkS0yC1au/t+xU4ropNY6WOW0TTmu8bApH7wvcN1Z+rYcfBbwru3pV9h1FkisbtyK1+30+g0vEl/B5PRFfDvNXV+5De+N8dq+lqmElsa92ZpvM4YrnLc3mUUupyktfdqogIiZcOdjK8EPW62IqsxkBTzk+MnUSKtl6qXhI3rI9PYg4tMVHc+J/Mz7nlkH38kXOfbxgc/bg0BGGHoQbIjqa5tBEKxJOHYQbEg4dhBsSDh2EGxIOHYQbEg4dhBsSDh2EGxIOHYQbEg4dhBsSDh2EGxIOHYQbEg4dhBsyD97qDKOEx+lXwAAAABJRU5ErkJggg=="
+           height="33.150234"
+           width="221.90363"
+           transform="matrix(0.26458333,0,0,0.26458333,77.959651,129.91103)"
+           preserveAspectRatio="none"
+           id="image7779" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="81.83506"
+           y="127.8486"
+           id="text27933"><tspan
+             sodipodi:role="line"
+             id="tspan27931"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+             x="81.83506"
+             y="127.8486">Update unknown vector</tspan></text>
+        <g
+           id="use33443-2-3-8-2-9"
+           style="fill:none;stroke:#d3bc5f;stroke-opacity:1"
+           transform="matrix(3.2400821,0,0,0.72230987,43.020275,116.70425)">
+          <title
+             id="title103398">Auxiliary Operation</title>
+          <desc
+             id="desc103400">Offline operation.</desc>
+          <rect
+             x="9.260417"
+             y="9.260417"
+             width="21.166666"
+             height="21.166666"
+             style="stroke-width:0.529167"
+             id="rect103402" />
+        </g>
+      </g>
+      <g
+         id="g81547">
+        <image
+           clip-path="url(#clipEmfPath1-1)"
+           y="0"
+           x="0"
+           xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAAkCAIAAABNOV4aAAABRUlEQVRYhe1Yyw4DIQhczP7/L9uDG0N4CYpum3ROjQ8YRgW6UGu9vhvlbQJj/Clm4D7jBgD67+jtP0ERADotzNW7nce0ErHgAKgLccRwF1u9zq+7kNmI6/GQsXmaIjc40IzNFj63G823JgSffSjmni+xKY77Z0s6sw6PWp5xqmIiPGp5xqmKiVyTVRzunEY0ZlVFp0Xt7Owz9du/JO2F0qQJSaxrd8PIgp68YeVFGy3vN4gLtJvnl0Cz86gYyou4ZqQXJG6zRPkRQ+n8mkF8K+jldfrbx4/bv1cy4lZ+4edi2MrFal4ka85U9nB1wTGcqewzKl7bbqFo2dUv9sjsnj6F4rjTGe4U65v4n2MOq/0i3o+z1dZePdBGHAOJeXu/GIX1okk/8QrEkxSqi78/zQLxSF+k8VUg9x3YMHydIzGNH/i++AEO+BpFFkO0UgAAAABJRU5ErkJggg=="
+           height="24.355276"
+           width="36.532913"
+           transform="matrix(0.26458333,0,0,0.26458333,102.48265,45.049359)"
+           preserveAspectRatio="none"
+           id="image4479"
+           style="fill:none;stroke:#000000;stroke-opacity:1" />
+        <g
+           id="use33443-2"
+           style="fill:none;stroke:#d3bc5f;stroke-opacity:1"
+           transform="matrix(3.0389432,0,0,0.72351673,47.011625,29.892295)">
+          <title
+             id="title103406">Auxiliary Operation</title>
+          <desc
+             id="desc103408">Offline operation.</desc>
+          <rect
+             x="9.260417"
+             y="9.260417"
+             width="21.166666"
+             height="21.166666"
+             style="stroke-width:0.529167"
+             id="rect103410" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="93.991417"
+           y="41.941891"
+           id="text19691-2"><tspan
+             sodipodi:role="line"
+             id="tspan19689-7"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+             x="93.991417"
+             y="41.941891">Initial Guess</tspan></text>
+      </g>
+      <g
+         id="g100997"
+         transform="translate(1.5874998)">
+        <g
+           id="use56435"
+           style="fill:#d3bc5f;stroke:none"
+           transform="matrix(1,0,0,0.53820016,148.62492,87.949444)">
+          <title
+             id="title103414">Auxiliary Operation</title>
+          <desc
+             id="desc103416">Offline operation.</desc>
+          <rect
+             x="9.260417"
+             y="9.260417"
+             width="21.166666"
+             height="21.166666"
+             style="stroke-width:0.529167"
+             id="rect103418" />
+        </g>
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+           x="159.99373"
+           y="100.93145"
+           id="text82776"><tspan
+             sodipodi:role="line"
+             id="tspan82774"
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;font-family:Verdana;-inkscape-font-specification:'Verdana Bold';fill:#ffffff;stroke-width:0.264583"
+             x="159.99373"
+             y="100.93145">END</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+         x="149.98254"
+         y="96.180847"
+         id="text90730"><tspan
+           sodipodi:role="line"
+           id="tspan90728"
+           style="font-size:4.23333px;stroke-width:0.264583"
+           x="149.98254"
+           y="96.180847">Yes</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:4.23333px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:Verdana;stroke-width:0.264583"
+         x="111.92883"
+         y="120.97081"
+         id="text93278"><tspan
+           sodipodi:role="line"
+           id="tspan93276"
+           style="font-size:4.23333px;stroke-width:0.264583"
+           x="111.92883"
+           y="120.97081">No</tspan></text>
+      <path
+         style="fill:#d3bc5f;stroke:#d3bc5f;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+         d="m 146.97401,98.879087 10.15221,-0.133096 v 0"
+         id="path101032" />
+      <g
+         id="g101650"
+         transform="matrix(0,0.62516062,-1,0,230.88943,17.508647)">
+        <path
+           style="fill:#d3bc5f;stroke:#d3bc5f;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-8)"
+           d="m 158.335,123.57378 10.15221,-0.1331 v 0"
+           id="path101032-8" />
+      </g>
+      <g
+         id="g101650-5"
+         transform="matrix(0,0.62516062,-1,0,231.18572,39.380346)">
+        <path
+           style="fill:#d3bc5f;stroke:#d3bc5f;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-8-2)"
+           d="m 158.335,123.57378 10.15221,-0.1331 v 0"
+           id="path101032-8-2" />
+      </g>
+      <g
+         id="g101650-1"
+         transform="matrix(0,0.62516062,-1,0,230.75633,-25.12518)">
+        <path
+           style="fill:#d3bc5f;stroke:#d3bc5f;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-8-21)"
+           d="m 158.335,123.57378 10.15221,-0.1331 v 0"
+           id="path101032-8-1" />
+      </g>
+      <g
+         id="g101650-4"
+         transform="matrix(0,0.62516062,-1,0,230.81896,-47.491448)">
+        <path
+           style="fill:#d3bc5f;stroke:#d3bc5f;stroke-width:0.465;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend-8-9)"
+           d="m 158.335,123.57378 10.15221,-0.1331 v 0"
+           id="path101032-8-7" />
+      </g>
+      <g
+         id="g102928">
+        <path
+           style="fill:none;stroke:#d3bc5f;stroke-width:4.165;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="M 68.353717,65.719459 H 57.344873 v 87.403551 h 13.010451 v -0.3336"
+           id="path102177" />
+        <path
+           style="fill:none;stroke:#d3bc5f;stroke-width:0.965;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#Arrow2Lend)"
+           d="m 67.916633,65.719459 h 4.67042 v 0"
+           id="path102560" />
+      </g>
+    </g>
+  </g>
+</svg>

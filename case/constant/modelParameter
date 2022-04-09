@@ -16,8 +16,10 @@ FoamFile
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 file filetest
-absNormResidual	1E-3
-relNormResidual	1E-1
+absNormResidual	1E-6
+relNormResidual	1E-3
 wSOR	1.1
-solverModel	SOR
+solverModel	SOR // Jacobi, GaussSiedel, SOR
+matrixFormat  lOLists //lOLists // CSR
+matrixType sparse // sparse or full
 // ************************************************************************* //

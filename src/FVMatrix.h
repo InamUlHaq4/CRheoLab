@@ -7,6 +7,7 @@
 #include "SSOR.h"
 #include "Reader.h"
 #include "lilSpmat.h"
+#include "csrSpmat.h"
 
 class FVMatrix
 {
@@ -32,7 +33,8 @@ class FVMatrix
         inline double residualNormFactor();///////////////////////////////////////////////25/2/2022
         inline double axAverageMultiplication(const unsigned int &i);///////////////////////////////////////////////25/2/2022
 
-        void createRandomaMatrixbVector();
+        void createRandomFullaMatrixbVector();
+        void createRandomSparseaMatrixbVector(const Mesh &mesh);
         void printaMatrix(std::vector<double>& mat, int n, int m);
         void resetxVector();
         void setSolver(std::string solvername);
@@ -44,6 +46,8 @@ class FVMatrix
         std::vector<double> xVector_;
         unsigned int nCells_;
         spmat* aMatrix_;
+        std::string matrixFormat_;
+        std::string matrixType_;
         double absNormResidual_;
         double relNormResidual_;
         double normResidual_;

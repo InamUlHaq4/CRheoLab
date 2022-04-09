@@ -127,6 +127,7 @@ int main()
    // FVMatrix TEquation3(polyMesh, T3, SOR, 1E-15, 1E-15, 1.2);
     //std::cout << ">> solve " << std::endl;
   //  std::cout << ">> Jacobi " << std::endl;
+    //TEquation1.setSolver("Jacobi");
     TEquation1.solve();
     TEquation1.solve();
     TEquation1.resetxVector();

@@ -133,8 +133,10 @@ int main()
     TEquation1.resetxVector();
     TEquation1.setSolver("Jacobi");
     TEquation1.solve();
+    TEquation1.solve();
     TEquation1.resetxVector();
     TEquation1.setSolver("GaussSiedel");
+    TEquation1.solve();
     TEquation1.solve();
 
 

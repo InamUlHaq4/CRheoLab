@@ -3,25 +3,29 @@
 #include<iostream>
 #include<fstream>
 
-
+/// Class for reading the solution parameters from a file
 class Reader
 {
     public:
 
-        // Default constructor
+        /// Default constructor
         Reader(std::string fileName);
 
-        // Destructor
+        /// Destructor
         virtual ~Reader();
 
         // Member Functions
+        /// Function to read string
         std::string ReadString(std::string str);
+        /// Function to read double
         double ReadDouble(std::string str);
+        /// Function to read integer
         int ReadInt(std::string str);
             
     protected:
     
     private:
+    /// Name of the file
     std::string fileName_;
      
 };

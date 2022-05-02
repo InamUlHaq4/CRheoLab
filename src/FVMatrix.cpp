@@ -6,7 +6,7 @@
 
 FVMatrix::FVMatrix(const Mesh &mesh, vector<double> &xVector) : xVector_(xVector),
                                                                 nCells_(mesh.nCells_),
-                                                                residualNormFactor_(-1.0),
+                                                              //  residualNormFactor_(-1.0),
                                                                 readParameter_("constant/modelParameter")
                                                                    
 {
@@ -276,7 +276,7 @@ std::vector<double> FVMatrix::solve()
         result = Solver_->doSolverStep();
         xVector_ = result;
 
-        residual = residualValue()/residualNormFactorValue; 
+        residual = residualValue()/residualNormFactor(); //  I have used residualNormFactor() instead of residualNormFactorValue??? 
         relResidual = residual/residualFirst;
 
         count++;

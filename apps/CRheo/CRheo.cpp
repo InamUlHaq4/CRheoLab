@@ -22,15 +22,15 @@ using namespace std;
 
 int main()
 {
-      
+
     std::cout << "Current path is : " << getExecutablePath() << std::endl;
 
     checkCaseStructure();
-    
+
     RunTime time;
 
     Mesh polyMesh;
-    
+
     // ----------------------------------------------------------------------- |
     // Testing Boundary Field class implementation
 
@@ -77,7 +77,7 @@ int main()
 
         // VolField<tensorField> tau ("tau", polyMesh, time);
 
-        
+
         // std::cout << pBoundary[0].patchName() << std::endl;
         // std::cout << pBoundary[1].patchName() << std::endl;
         // std::cout << pBoundary[2].patchName() << std::endl;
@@ -100,14 +100,14 @@ int main()
         // patchBoundaryConditions<symmTensorField> pBCLeft = { "empty", {} , {} };
         // patchBoundaryConditions<symmTensorField> pBCTop = { "empty", symmfield , {} };
 
-        // std::cout<<"\n\n"<<std::endl;
-        // //std::cout << '\n'<< pBCRight << std::endl;
-        // boundaryField<symmTensorField> bField = {{"Right","Left","Top"},{pBCRIght,pBCLeft,pBCTop}};
-        
-        // internalField<symmTensorField> iField =  {symmfield.size(),symmfield};
-        // // VolField<vectorField> U ("U", polyMesh);
+        std::cout<<"\n\n"<<std::endl;
+        //std::cout << '\n'<< pBCRight << std::endl;
+        boundaryField<symmTensorField> bField = {{"Right","Left","Top"},{pBCRIght,pBCLeft,pBCTop}};
 
-        // std::cout<<iField<<std::endl;
+        //internalField<symmTensorField> iField =  {symmfield.size(),symmfield};
+        // VolField<vectorField> U ("U", polyMesh);
+
+        //std::cout<<iField<<std::endl;
 
         // std::cout<< bField << std::endl;
 
@@ -139,7 +139,5 @@ int main()
 
 
     return 0;
-    
+
 }
-
-

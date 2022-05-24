@@ -1,11 +1,11 @@
 #include "Face.h"
 
 Face::Face(int nPointsInFace, vector<Point*> facePoints)
-:       
+:
     ID_(-1),
     nPointsInFace_(nPointsInFace),
-    facePoints_(facePoints), 
-    owner_(nullptr), 
+    facePoints_(facePoints),
+    owner_(nullptr),
     neighbour_(nullptr),
     area_(-1),
     centerOfMass_({-1,-1,-1}),
@@ -15,7 +15,7 @@ Face::Face(int nPointsInFace, vector<Point*> facePoints)
     skewness_(-1)
 {}
 
-Face::Face( )
+Face::Face()
 {}
 
 // Setters
@@ -77,7 +77,7 @@ const double& Face::getWeightingFactor() const
     return weightingFactor_;
 }
 
-const double& Face::getNonOrthogonality() const 
+const double& Face::getNonOrthogonality() const
 {
     return nonOrthogonalityAngle_;
 }
@@ -92,7 +92,7 @@ void Face::computeArea()
 {
     double a(0);
     double b(0);
-    double c(0); 
+    double c(0);
     double s(0);
 
     // face is a triangle
@@ -236,7 +236,7 @@ void Face::computeAreaVector()
 
     // Computes the face normal by doing the cross product of the products (this is not the faceAreaVector)
     vector3 areaVector_tmp = (tmp_vec1^tmp_vec2);
-    
+
     // Computes the norm of the cross product between two vectors
     double mag_vector_tmp = mag(areaVector_tmp);
 
@@ -245,14 +245,14 @@ void Face::computeAreaVector()
         // distance vector between owner and neighbour cell
         vector3 d_ON = neighbour_->getCenterOfMass() - owner_->getCenterOfMass();
 
-        if( (areaVector_tmp & d_ON) < 0) 
+        if( (areaVector_tmp & d_ON) < 0)
         {
             // rotates area vector by 180º
             areaVector_tmp=-1.0*areaVector_tmp;
         }
     }
     // Calculates the faceAreaVector
-    areaVector_ = (areaVector_tmp/mag_vector_tmp)*area_; 
+    areaVector_ = (areaVector_tmp/mag_vector_tmp)*area_;
 }
 
 void Face::computeWeightingFactor()
@@ -303,26 +303,26 @@ void Face::computeNonOrthogonality()
     if (isInteriorFace)
     {
         const vector3& C_n = neighbour_->getCenterOfMass(); // from neighbor
-        
+
         const vector3 d = C_n - C_o;
 
-        // theta = acos(d.nf/[|d|.|n|]) 
+        // theta = acos(d.nf/[|d|.|n|])
         double thetaRad = std::acos(
                                         (d & nf)/(mag(d)*mag(nf))
                                     );
         theta = radToDegree(thetaRad);
     }
     else
-    {   
+    {
         const vector3& faceCenter= getCenterOfMass();
         const vector3 dn = faceCenter- C_o;
         double thetaRad = std::acos(
                                         (dn & nf)/(mag(dn)*mag(nf))
                                     );
         theta = radToDegree(thetaRad);
-        
+
     }
-	
+
     setNonOrthogonalityFace(theta);
 }
 
@@ -354,7 +354,7 @@ void Face::computeIntersectionPoint()
         // distance Face CM to Neighbour CM parallel to Face Area vector
         double dFN = abs((vecFN & Sf)/mag(Sf));
 
-        // Face Intersection Point 
+        // Face Intersection Point
         intersectionPoint_ = Co + (dOF / (dOF + dFN) ) * vecON;
     }
     else
@@ -362,17 +362,17 @@ void Face::computeIntersectionPoint()
     {
         // Owner CM
         vector3 Co = owner_->getCenterOfMass();
-        
+
         // Vector Owner CM to Face CM
         vector3 vecOF = centerOfMass_ - Co;
-        
+
         // Unit vector normal to the face
         vector3 unitNormalVectorFace = 1.0/mag(areaVector_) * areaVector_;
 
         // distance Owner CM to Face CM parallel to Face Area vector
         double dOF=abs(vecOF & unitNormalVectorFace );
-       
-        // Face Intersection Point 
+
+        // Face Intersection Point
         intersectionPoint_ = Co+dOF*unitNormalVectorFace;
     }
 }
@@ -405,8 +405,8 @@ void Face::computeSkewness()
         // Compute skewness vector
         vector3 skewness = dOF - (Sf & dOF)  /  ( (Sf & d) + SMALL ) * d;
 
-        vector3 normSkewnessVector = skewness/( mag(skewness) + SMALL ); 
-     
+        vector3 normSkewnessVector = skewness/( mag(skewness) + SMALL );
+
         // Normalisation distance calculated as the approximate distance
         // from the face centre to the edge of the face in the direction
         // of the skewness
@@ -434,8 +434,8 @@ void Face::computeSkewness()
         // Compute skewness vector
         vector3 skewness = dOF - (Sf & dOF)  /  ( (Sf & dn) + SMALL ) * dn;
 
-        vector3 normSkewnessVector = skewness/( mag(skewness) + SMALL ); 
-        
+        vector3 normSkewnessVector = skewness/( mag(skewness) + SMALL );
+
         // Normalisation distance calculated as the approximate distance
         // from the face centre to the edge of the face in the direction
         // of the skewness
@@ -451,10 +451,10 @@ void Face::computeSkewness()
         }
 
         // normalized skewnnes
-        normSkewness = mag(skewness)/fd;    
-    }  
+        normSkewness = mag(skewness)/fd;
+    }
 
-    setSkewness(normSkewness); 
+    setSkewness(normSkewness);
 }
 
 
@@ -471,4 +471,3 @@ std::ostream& operator<<(std::ostream& os, const Face& p)
 
     return os;
 }
-

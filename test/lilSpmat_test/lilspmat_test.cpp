@@ -6,10 +6,10 @@
 int main(int argc, char const *argv[]) {
 
       std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix" << std::endl;
+      std::cout << "Test lilSpmat class" << std::endl;
       std::cout << "#############################################################" << std::endl;
 
-      std::vector<std::vector<double>> spMatTest //Sparse Matrix for Test
+      std::vector<std::vector<double>> matrix
       {
         {1.0, 0.0, 2.0, 0.0},
         {0.0, 3.0, 0.0, 0.0},
@@ -17,32 +17,15 @@ int main(int argc, char const *argv[]) {
         {0.0, 0.0, 0.0, 6.0}
       };
 
-      for (int i = 0; i < spMatTest.size(); i++)
+      std::cout << "Testing matrix:" << std::endl;
+      for (unsigned int i = 0; i < matrix.size(); i++)
       {
-            for (int j = 0; j < spMatTest[i].size(); j++)
+            for (unsigned int j = 0; j < matrix[i].size(); j++)
             {
-                  std::cout << spMatTest[i][j] << " ";
+                  std::cout << matrix[i][j] << " ";
             }
             std::cout << std::endl;
       }
-
-      //#############################################################
-
-      /*spmat.columns_=
-      {
-            {0, 2},
-            {1},
-            {1, 3},
-            {3}
-      };
-
-      spmat.values_=
-      {
-            {1.0, 2.0},
-            {3.0},
-            {4.0, 5.0},
-            {6.0}
-      };*/
 
       //#############################################################
 
@@ -70,10 +53,9 @@ int main(int argc, char const *argv[]) {
       spmat.delValue(3,2);
 
       std::cout << "Columns indexes:" << std::endl;
-
-      for (int i = 0; i < spmat.columns_.size(); i++)
+      for (unsigned int i = 0; i < spmat.columns_.size(); i++)
       {
-            for (int j = 0; j < spmat.columns_[i].size(); j++)
+            for (unsigned int j = 0; j < spmat.columns_[i].size(); j++)
             {
                   std::cout << spmat.columns_[i][j] << " ";
             }
@@ -81,10 +63,9 @@ int main(int argc, char const *argv[]) {
       }
 
       std::cout << "Columns values:" << std::endl;
-
-      for (int i = 0; i < spmat.values_.size(); i++)
+      for (unsigned int i = 0; i < spmat.values_.size(); i++)
       {
-            for (int j = 0; j < spmat.values_[i].size(); j++)
+            for (unsigned int j = 0; j < spmat.values_[i].size(); j++)
             {
                   std::cout << spmat.values_[i][j] << " ";
             }
@@ -102,10 +83,9 @@ int main(int argc, char const *argv[]) {
       denseMatrix = spmat.dense();
 
       std::cout << "Dense matrix:" << std::endl;
-
-      for (int i = 0; i < denseMatrix.size(); i++)
+      for (unsigned int i = 0; i < denseMatrix.size(); i++)
       {
-            for (int j = 0; j < denseMatrix[i].size(); j++)
+            for (unsigned int j = 0; j < denseMatrix[i].size(); j++)
             {
                   std::cout << denseMatrix[i][j] << " ";
             }
@@ -119,23 +99,21 @@ int main(int argc, char const *argv[]) {
       std::vector<double> vecPhi{ 1.0, 2.0, 3.0, 4.0};
 
       std::cout << "Phi vector for multiplication:" << std::endl;
-
       for (double valuePhi : vecPhi)
             std::cout << valuePhi << std::endl;
 
-      std::vector<double> v(4); //Vector resulting from the matrix-vector product
+      std::vector<double> v(4);
 
-      //Call the function that returns the product matrix-vector as a vector
+      // Call the function that calculates the product matrix-vector
       v = spmat.matMul(vecPhi);
 
       std::cout << "Vector resulting from the matrix-vector product:" << std::endl;
-
       for (double valueV : v)
             std::cout << valueV << std::endl;
 
       unsigned int rowMatVecProd = 2;
 
-      //Call the function that calculates the product (row-of-matrix)-vector for a specific row of the matrix
+      // Call the function that calculates the product (row-of-matrix)-vector
       double ProdRowMatVec = spmat.vecMul(rowMatVecProd, vecPhi);
 
       std::cout << "Double resulting from the (row-of-matrix)-vector product:" << std::endl;

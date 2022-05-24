@@ -7,33 +7,33 @@
 CXX = g++
 
 # define any compile-time flags
-CXXFLAGS := -std=c++11 -g -Wall -I/usr/local/Cellar/boost/1.78.0_1/include/
+CXXFLAGS := -std=c++11 -g -Wall -I../../src -I/usr/local/Cellar/boost/1.78.0_1/include/
 
 # define library paths in addition to /usr/lib
-# if I wanted to include libraries not in /usr/lib I'd specify
-# their path using -Lpath, something like:
+#   if I wanted to include libraries not in /usr/lib I'd specify
+#   their path using -Lpath, something like:
 LFLAGS = -lboost_filesystem -lboost_system -L/usr/local/Cellar/boost/1.78.0_1/lib/
 
 # define output directory
-OUTPUT := run
+OUTPUT := ../../run
 
 # define source directory
-SRC_DIR := src
+SRC_DIR := ../../src
 
 # define obj directory
-OBJ_DIR := obj
+OBJ_DIR := ../../obj
 
 # define bin directory
-BIN_DIR := bin
+BIN_DIR := ../../bin
 
-MAIN := bin/CRheo
+MAIN := ../../bin/csrSpmat_profile
 
 FIXPATH = $1
 RM = rm -f
 MD := mkdir -p
 
 # define the C source files
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp *.cpp)
 
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
@@ -52,19 +52,18 @@ $(shell $(MD) $(OBJ_DIR))
 $(shell $(MD) $(BIN_DIR))
 
 $(MAIN): $(OBJ_FILES)
-	#$(CXX) $(CXXFLAGS) -o $@ $^ $(LFLAGS)
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LFLAGS)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file)
 # (see the gnu make manual section about automatic variables)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $<
+	$(CXX) $(CXXFLAGS) -c  -o $@ $<
 
 .PHONY: clean
 clean:
 	$(RM) $(MAIN)
-	$(RM) $(call FIXPATH,$(OBJ_FILES))
 	@echo Cleanup complete!
 
 runs: all

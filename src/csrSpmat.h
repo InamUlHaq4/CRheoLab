@@ -28,10 +28,7 @@ public:
   csrSpmat(){}
 
   // Constructor
-  csrSpmat(const Mesh &mesh);
-
-  // Constructor for full matrix
-  csrSpmat(const int &nCells);
+  csrSpmat(Mesh &mesh);
 
   // Destructor
   virtual ~csrSpmat(){};
@@ -59,15 +56,6 @@ public:
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
   double vecMul(const unsigned int i, const std::vector<double> &vecPhi) override;
-
-    // Group 5
-  // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
-  //double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi);
-  double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi) override;
-
-  // Group 5
-  // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
-  double xValueProduct(const unsigned int& iRow, const double &xValue);
 
   // // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
   // //double vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi);

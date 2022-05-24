@@ -12,15 +12,16 @@ lilSpmat::lilSpmat(unsigned int numRows, unsigned int numCols)
   // Allocate memory for the rows since any row might be accessed at any time
   // Do not do the same for each columns_[i] and values_[i] vector since their size
   // should only increase as new entries are added
-  columns_.resize(numRows_);
   values_.resize(numRows_);
+  columns_.resize(numRows_);
 }
 
 // Returns the sparsity of the matrix
 double lilSpmat::sparsity()
 {
   unsigned int nz = 0;
-  for(unsigned int i=0;i< numRows_;i++) {
+  for(unsigned int i=0;i< numRows_;i++)
+  {
      nz += columns_[i].size();
   }
   return (1.0 - ((double)nz / ((double)(numRows_ * numCols_))));
@@ -134,31 +135,29 @@ double lilSpmat::vecMul(const unsigned int i, const std::vector<double> &vecPhi)
   return sumProdRow;
 }
 
-// Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
-//double lilSpmat::vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi)
-double lilSpmat::vecMulNoDiagonal(const unsigned int iRow,const std::vector<double> &vecPhi)
-{
-  double sumProdRow = 0.0;
-  unsigned int id_column = 0;
-  for(unsigned int j=0;j<columns_[iRow].size();j++)
-  {
-    id_column = columns_[iRow][j];
-    if (iRow != id_column) sumProdRow += values_[iRow][j] * vecPhi[id_column];
-  }
-  return sumProdRow;
-}
-
-
-// Returns a double given by the sum of the products of xValue (a double) for a specific row of the matrix
-double lilSpmat::xValueProduct(const unsigned int& iRow, const double &xValue)
-{
-  double sumProdRow = 0.0;
-  unsigned int id_column = 0;
-  for(unsigned int j=0;j<columns_[iRow].size();j++)
-  {
-    id_column = columns_[iRow][j];
-    sumProdRow += values_[iRow][j] * xValue;
-  }
-  return sumProdRow;
-
-}
+// // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
+// //double lilSpmat::vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi)
+// double lilSpmat::vecMulNoDiagonal(const unsigned int iRow,const std::vector<double> &vecPhi)
+// {
+//   double sumProdRow = 0.0;
+//   unsigned int id_column = 0;
+//   for(unsigned int j=0;j<columns_[iRow].size();j++)
+//   {
+//     id_column = columns_[iRow][j];
+//     if (iRow != id_column) sumProdRow += values_[iRow][j] * vecPhi[id_column];
+//   }
+//   return sumProdRow;
+// }
+//
+// // Returns a double given by the sum of the products of xValue (a double) for a specific row of the matrix
+// double lilSpmat::xValueProduct(const unsigned int& iRow, const double &xValue)
+// {
+//   double sumProdRow = 0.0;
+//   unsigned int id_column = 0;
+//   for(unsigned int j=0;j<columns_[iRow].size();j++)
+//   {
+//     id_column = columns_[iRow][j];
+//     sumProdRow += values_[iRow][j] * xValue;
+//   }
+//   return sumProdRow;
+// }

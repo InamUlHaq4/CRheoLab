@@ -4,7 +4,7 @@
 
 // Constructor
 // Constructs an empty sparse matrix and allocates memory for the rows
-csrSpmat::csrSpmat(const Mesh &mesh)
+csrSpmat::csrSpmat(Mesh &mesh)
 {
   // Store number of rows and columns
   numRows_ = mesh.nCells_;
@@ -69,37 +69,6 @@ csrSpmat::csrSpmat(const Mesh &mesh)
     }
     // order columns in each row
     //
-  }
-  row_ptr_[numRows_] = nz;
-}
-
-// Constructor for full matrix
-csrSpmat::csrSpmat(const int &nCells)
-{
-  // Store number of rows and columns
-  numRows_ = nCells;
-  numCols_ = nCells;
-
-  // Declaration of variables
-  unsigned int nz;
-
-  // Allocate memory for the values
-  values_.resize(nCells*nCells);
-  columns_.resize(nCells*nCells);
-  row_ptr_.resize(numRows_+1);
-
-  // Fill-in the full matrix with the positions of the non-null values
-  // (number of cells plus their neighbours)
-  nz = 0;
-  for (unsigned int i=0;i<nCells;i++)
-  {
-    row_ptr_[i] = nz;
-    
-    for (unsigned int j=0;j<nCells;j++) // getter?
-    {
-      columns_[nz]=j;
-      nz += 1;     
-    }
   }
   row_ptr_[numRows_] = nz;
 }
@@ -214,36 +183,6 @@ double csrSpmat::vecMul(const unsigned int i, const std::vector<double> &vecPhi)
   while (j<row_ptr_[i+1])
   {
     sumProdRow += values_[j] * vecPhi[columns_[j]];
-    j += 1;
-  }
-  return sumProdRow;
-}
-
-// Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
-//double lilSpmat::vecMulNoDiagonal(const unsigned int iRow, const std::vector<double> &vecPhi)
-double csrSpmat::vecMulNoDiagonal(const unsigned int iRow,const std::vector<double> &vecPhi)
-{
-  double sumProdRow = 0.0;
-  unsigned int j = row_ptr_[iRow];
-  while (j<row_ptr_[iRow+1])
-  {
-    if (iRow != columns_[j]) 
-      sumProdRow += values_[j] * vecPhi[columns_[j]];
-    j += 1;
-  }
-  return sumProdRow;
-
-}
-
-
-// Returns a double given by the sum of the products of xValue (a double) for a specific row of the matrix
-double csrSpmat::xValueProduct(const unsigned int& iRow, const double &xValue)
-{
-  double sumProdRow = 0.0;
-  unsigned int j = row_ptr_[iRow];
-  while (j<row_ptr_[iRow+1])
-  {
-    sumProdRow += values_[j] * xValue;
     j += 1;
   }
   return sumProdRow;

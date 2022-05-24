@@ -2,7 +2,7 @@
 #define FINDFILES_H
 
 #include <iostream>
-#include <dirent.h> 
+#include <dirent.h>
 #include <cstdio>
 #include <errno.h>
 #include <boost/filesystem.hpp>
@@ -79,7 +79,7 @@ inline std::string getTimeFolder()
                 // Name of the curent folder
                 std::string tmp (x.path().filename().string());
 
-                // Move it to a string stream to extract numeric value 
+                // Move it to a string stream to extract numeric value
                 char* end = nullptr;
                 double val = strtod(tmp.c_str(), &end);
 
@@ -91,7 +91,7 @@ inline std::string getTimeFolder()
                     if (val > val2)
                     {
                         currentFolder = tmp;
-                    } 
+                    }
                 }
             }
         }
@@ -99,13 +99,13 @@ inline std::string getTimeFolder()
         if(!foundANumericFolder)
         {
             std::string errorMessage = "There are no numerical folders in " + path.string()  + ". Please create a 0 folder.";
-            throw std::runtime_error(errorMessage); 
+            throw std::runtime_error(errorMessage);
         }
     }
     else
     {
         std::string errorMessage = "Path " + path.string()  + " does not exist";
-        throw std::runtime_error(errorMessage); 
+        throw std::runtime_error(errorMessage);
     }
 
     return currentFolder;

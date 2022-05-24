@@ -3,6 +3,9 @@
 #include <iostream>
 #include "lilSpmat.h"
 #include "Mesh.h"
+#include <chrono>
+#include <iomanip>      // std::setprecision
+#include <math.h>
 
 int main(int argc, char const *argv[]) {
 
@@ -15,47 +18,39 @@ int main(int argc, char const *argv[]) {
 
       // Number of samples
       unsigned int NS = 1000;
+      double time1 = 0.0;
+      double time2 = 0.0;
+      double time3 = 0.0;
 
-      // Time counters
-      double time1;
-      double time2;
-      double time3;
-
-      std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix construction" << std::endl;
-      std::cout << "#############################################################" << std::endl;
-
-      // Time 1 start
-
-      // Declare and initialize a sparse matrix
-      lilSpmat spmat;
-      for(unsigned int i=0;i<NS;i++)
+      for (unsigned int i = 0; i < NS; i++)
       {
-            spmat = lilSpmat(mesh.nCells_,mesh.nCells_);
-      }
 
-      // Time 1 end
+            // Test sparse matrix construction - Test 1
 
-      // Print time on console
-      std::cout << "Time 1: " << time1 << std::endl;
+            // Duration 1 start
+            auto start1 = std::chrono::high_resolution_clock::now();
 
-      std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix fill-in" << std::endl;
-      std::cout << "#############################################################" << std::endl;
+            // Declare and initialize a sparse matrix
+            lilSpmat *spmat = new lilSpmat(mesh.nCells_,mesh.nCells_);
 
-      // Declaration of variables
-      unsigned int nz;
-      const Cell* neigh_ptr;
-      const Cell* owner_ptr;
+            auto stop1 = std::chrono::high_resolution_clock::now();
+            auto duration1 = std::chrono::duration_cast<std::chrono::microseconds>(stop1 - start1);
+            time1 += (pow (10.0, -6.0) * duration1.count());
+            // Duration 1 end
 
-      // Time 2 start
+            // Test sparse matrix fill-in - Test 2
 
-      // Fill-in the sparse matrix with the positions of the non-null values
-      for(unsigned int i=0;i<NS;i++)
-      {
+            // Declaration of variables
+            const Cell* neigh_ptr;
+            const Cell* owner_ptr;
+
+            // Duration 2 start
+            auto start2 = std::chrono::high_resolution_clock::now();
+
+            // Fill-in the sparse matrix with the positions of the non-null values
             for (unsigned int i=0;i<mesh.nCells_;i++)
             {
-                  spmat.addValue(i,i,1.0);
+                  spmat->addValue(i,i,1.0);
                   for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++)
                   {
                         neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
@@ -64,44 +59,51 @@ int main(int argc, char const *argv[]) {
                         {
                               if(neigh_ptr->ID_ == i)
                               {
-                                    spmat.addValue(i,owner_ptr->ID_,1.0);
+                                    spmat->addValue(i,owner_ptr->ID_,1.0);
                               }
                               else //if(owner_ptr.ID_ == i)
                               {
-                                    spmat.addValue(i,neigh_ptr->ID_,1.0);
+                                    spmat->addValue(i,neigh_ptr->ID_,1.0);
                               }
                         }
                   }
             }
+
+             auto stop2 = std::chrono::high_resolution_clock::now();
+            auto duration2 = std::chrono::duration_cast<std::chrono::microseconds>(stop2 - start2);
+            time2 += (pow (10.0, -6.0) * duration2.count());
+            // Duration 2 end
+
+            // Test sparse matrix multiplication - Test 3
+
+            // Declaration of variables
+            std::vector<double> vecPhi;
+            vecPhi.resize(mesh.nCells_);
+
+            std::vector<double> v;
+            v.resize(mesh.nCells_);
+
+            // Duration 3 start
+            auto start3 = std::chrono::high_resolution_clock::now();
+
+            // Call the function that calculates the product matrix-vector
+            v = spmat->matMul(vecPhi);
+
+            auto stop3 = std::chrono::high_resolution_clock::now();
+            auto duration3 = std::chrono::duration_cast<std::chrono::microseconds>(stop3 - start3);
+            time3 += (pow (10.0, -6.0) * duration3.count());
+            // Duration 3 end
+
+            // Destructor
+            delete spmat;
+
       }
 
-      // Time 2 end
+      std::cout << "Elapsed time for Sparse Matrix construction: " << std::fixed << std::setprecision(3) << time1 << " s" << std::endl;
 
-      // Print time on console
-      std::cout << "Time 2: " << time2 << std::endl;
+      std::cout << "Elapsed time for Sparse Matrix Fill-in: " << std::fixed << std::setprecision(3)  << time2 << " s" << std::endl;
 
-      std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix multiplication" << std::endl;
-      std::cout << "#############################################################" << std::endl;
-
-      // Declaration of variables
-      std::vector<double> vecPhi;
-      vecPhi.resize(mesh.nCells_);
-      std::vector<double> v;
-      v.resize(mesh.nCells_);
-
-      // Time 3 start
-
-      // Call the function that calculates the product matrix-vector
-      for(unsigned int i=0;i<NS;i++)
-      {
-            v = spmat.matMul(vecPhi);
-      }
-
-      // Time 3 end
-
-      // Print time on console
-      std::cout << "Time 3: " << time3 << std::endl;
+      std::cout << "Elapsed time for Sparse Matrix Multiplication: " << std::fixed << std::setprecision(3) << time3 << " s" << std::endl;
 
       return 0;
 }

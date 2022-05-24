@@ -10,9 +10,9 @@
     // Destructor
     SSOR::~SSOR()
     {}
-
+     
     std::vector<double> SSOR::doSolverStep() const 
-    {        
+    {       
         std::vector<double> result(nCells_);    
 
         for(unsigned int lineI = 0; lineI < nCells_; lineI++)

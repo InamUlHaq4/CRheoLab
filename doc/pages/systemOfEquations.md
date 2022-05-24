@@ -435,7 +435,7 @@ These aspects are discussed in the thesis of David M. Young Jr.
 
 ### Residual calculation
 
-The residual vector (R) is calculated as 
+The residual vector (\f$R\f$) is calculated as 
 
 \begin{equation}
 \begin{pmatrix}
@@ -552,7 +552,7 @@ b_n
 \end{equation}
 
 
-The residual scalling (n) is calculated as
+The residual scalling factor (\f$n\f$) is calculated as
 
 \begin{equation}
 n=\sum_{i=1}^{N}
@@ -564,7 +564,7 @@ B-A\overline{X}
 \end{vmatrix})
 \end{equation}
 
-\f$\overline{X}\f$ is the average of the solution vector {X}
+\f$\overline{X}\f$ is the average of the solution vector {\f$X\f$}
 
 
 
@@ -579,9 +579,9 @@ r_i
 \end{vmatrix}
 \end{equation}
 
-The residual norm factor \f$\left \| R \right \|_0 \f$ is equal to the norm of the residual vector at the first iteration
+The initial residual \f$\left \| R \right \|_0 \f$ is equal to the scalled residual at the first iteration
 
-The relative residual norm \f$\left \| R \right \|_l \f$ is calculated as
+The relative residual \f$\left \| R \right \|_l \f$ is calculated as
 
 \begin{equation}
 \left \|\left \| R \right \|\right \|_l=\frac{\left \|\left \| R \right \|\right \|}{\left \|\left \| R \right \|\right \|_0}

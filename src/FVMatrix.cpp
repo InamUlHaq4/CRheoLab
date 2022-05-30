@@ -4,7 +4,7 @@
 #include <random>
 #include <chrono>
 
-FVMatrix::FVMatrix(const Mesh &mesh, vector<double> &xVector) : xVector_(xVector),
+FVMatrix::FVMatrix( Mesh &mesh, vector<double> &xVector) : xVector_(xVector),
                                                                 nCells_(mesh.nCells_),
                                                               //  residualNormFactor_(-1.0),
                                                                 readParameter_("constant/modelParameter")

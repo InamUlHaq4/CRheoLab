@@ -19,7 +19,7 @@ class FVMatrix
         // absNormResidual - maximum value allowed for the normResidual, if the normResidual < absNormResidual the iteration process should end
         // relNormResidual - minimum reduction required for the normResidual, if normResidual/normResidualIni < relNormResidual the iteration process should end
         /// Default constructor
-        FVMatrix(const Mesh& mesh, vector<double>& xVector);
+        FVMatrix(Mesh& mesh, vector<double>& xVector);
 
         /// Destructor
         virtual ~FVMatrix();

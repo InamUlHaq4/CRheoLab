@@ -83,6 +83,38 @@ csrSpmat::csrSpmat(Mesh& mesh)
   row_ptr_[numRows_] = nz;
 }
 
+
+// Constructor for full matrix
+csrSpmat::csrSpmat(const int &nCells)
+{
+  // Store number of rows and columns
+  numRows_ = nCells;
+  numCols_ = nCells;
+
+  // Declaration of variables
+  unsigned int nz;
+
+  // Allocate memory for the values
+  values_.resize(nCells*nCells);
+  columns_.resize(nCells*nCells);
+  row_ptr_.resize(numRows_+1);
+
+  // Fill-in the full matrix with the positions of the non-null values
+  // (number of cells plus their neighbours)
+  nz = 0;
+  for (unsigned int i=0;i<nCells;i++)
+  {
+    row_ptr_[i] = nz;
+    
+    for (unsigned int j=0;j<nCells;j++) // getter?
+    {
+      columns_[nz]=j;
+      nz += 1;     
+    }
+  }
+  row_ptr_[numRows_] = nz;
+}
+
 // Returns the sparsity of the matrix
 double csrSpmat::sparsity()
 {

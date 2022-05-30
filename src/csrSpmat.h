@@ -30,6 +30,9 @@ public:
   // Constructor
   csrSpmat(Mesh& mesh);
 
+  // Constructor for full matrix
+  csrSpmat(const int &nCells);
+
   // Destructor
   virtual ~csrSpmat(){};
 

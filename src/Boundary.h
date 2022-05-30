@@ -21,8 +21,7 @@ class Boundary
         ///@param patch reference to the Patch
         ///@param time reference to the RunTime object
         ///@param action Enum fileAction ( MUST_READ or NO_READ)
-        Boundary(std::string fileName, const Patch& patch, const RunTime& time, fileAction action);
-
+        Boundary(const IOObject& IO, const Patch& patch);
         // Constructing with a default value passed by argument
         ///@brief Boundary constructor by setting a default value for the field 
         ///@param fileName name of the file to read field data from
@@ -30,7 +29,9 @@ class Boundary
         ///@param time reference to the RunTime object
         ///@param action Enum fileAction ( MUST_READ or NO_READ)
         ///@param defaultValue is a scalar, vector or a tensor with which the field must be initialized. \note Vectors and tensors must be initialized in braces like: {value1,value2, ...,etc. }.
-        Boundary(std::string fileName, const Patch& patch, const RunTime& time, fileAction action, const typename vectorType::value_type& defaultValue);
+        Boundary(const IOObject& IO, const Patch& patch, const typename vectorType::value_type& defaultValue);
+
+        Boundary(const Boundary& bf); //provisional
 
         // Destructor
         virtual ~Boundary(){} ;
@@ -42,7 +43,7 @@ class Boundary
         // Read Boundary field
         ///@brief this function reads from a specified patch and returns the information to construct the object.
         ///@param patchName the name of patch for reading information. 
-        void readBoundaryPatch( const std::string& patchName);
+        void readBoundaryPatch(const std::string& patchName);
 
         ///@brief Member function to access the boundary patch defined values
         vectorType& definedValues();
@@ -51,7 +52,7 @@ class Boundary
         const std::string& name();
 
         ///@brief Member function to access the boundary patch defined type ( fixedValue, fixedGradient, symmetry, and etc. )
-        std::string& type();
+        const std::string& type();
     
         ///@brief Member function to access the boundary patch field type ( uniform and non-uniform )
         bool& uniformField();
@@ -69,6 +70,8 @@ class Boundary
         ///@brief Operator [] to retrieve the content set for a given position 
         ///@param posI position of a face given by a positive integer. 
         typename vectorType::value_type operator[](unsigned int posI) const;
+
+        Boundary& operator=(const Boundary &bf); //provisional
                 
     private:
 
@@ -77,7 +80,7 @@ class Boundary
         // The naming given to the patch
         const std::string& name_;
         // The type name of the Boundary condition.
-        std::string type_;
+        std::string type_; 
         // The field if it is uniform or not.
         bool uniformField_;
         // The values for the faces in the patch.

@@ -26,8 +26,7 @@ OBJ_DIR := ../../obj
 # define bin directory
 BIN_DIR := ../../bin
 
-MAIN := ../../bin/solveSystemofEquations
-
+MAIN := ../../bin/buildSolveSystemOfEq
 FIXPATH = $1
 RM = rm -f
 MD := mkdir -p

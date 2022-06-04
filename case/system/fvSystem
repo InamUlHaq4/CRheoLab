@@ -9,17 +9,17 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       polyBoundaryMesh;
-    location    "constant/polyMesh";
-    object      boundary;
+    class       fvSystem;
+    location    "system";
+    object      fvSystem;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 file filetest
-absNormResidual	1E-6 ;
-relNormResidual	1E-3 ;
-wSOR  1.2 ;
-solverModel	SOR ; // Jacobi, GaussSiedel, SOR
-matrixFormat  lOLists ;//lOLists // CSR
-matrixType sparse ;// sparse or full
+absNormResidual	1E-6;
+relNormResidual	1E-3;
+wSOR  1.2;
+solverModel	SOR; // Jacobi, GaussSiedel, SOR
+matrixFormat  lOLists; //lOLists // CSR
+matrixType sparse; // sparse or full
 // ************************************************************************* //

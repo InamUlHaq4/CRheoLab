@@ -15,8 +15,8 @@ FVMatrix::FVMatrix( Mesh &mesh, vector<double> &xVector) : xVector_(&xVector),
                                                                         (
                                                                             IOObject
                                                                                 (
-                                                                                    "modelParameter",
-                                                                                    mesh.time().constant(), //"constant",
+                                                                                    "fvSystem",
+                                                                                    mesh.time().system(), //"constant",
                                                                                     mesh,
                                                                                     fileAction::MUST_READ,
                                                                                     fileAction::NO_WRITE,

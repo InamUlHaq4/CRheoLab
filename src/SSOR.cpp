@@ -1,7 +1,7 @@
 #include "SSOR.h"
 
     //Constructor
-    SSOR::SSOR(spmat* aMatrix,  std::vector<double> &bVector,std::vector<double> &xVector, const int nCells, double wSOR)
+    SSOR::SSOR(spmat* aMatrix,  std::vector<double> &bVector,std::vector<double>* xVector, const int nCells, double wSOR)
     :
     FVMatrixSolver(aMatrix,bVector,xVector, nCells),
     wSOR_(wSOR)

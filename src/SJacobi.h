@@ -10,7 +10,7 @@ class SJacobi: public FVMatrixSolver
     public:
 
         /// Constructor
-        SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const int nCells);
+        SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>* xVector, const int nCells);
 
         /// Destructor
         virtual ~SJacobi();

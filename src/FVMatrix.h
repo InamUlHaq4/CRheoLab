@@ -8,6 +8,11 @@
 #include "Reader.h"
 #include "lilSpmat.h"
 #include "csrSpmat.h"
+//#include "IODictionary.h"
+//#include "IODictionaryw.h"
+#include "Dictionary.h"
+#include "IOObject.h"
+
 /// Main class for solving the system of equations 
 class FVMatrix
 {
@@ -82,7 +87,7 @@ class FVMatrix
         /// \f$ b \f$ vector
         std::vector<double> bVector_;
         /// \f$ X \f$ vector
-        std::vector<double> xVector_;
+        std::vector<double>* xVector_;
         /// Number of the elements in the system i.e. the size of the system 
         unsigned int nCells_;
          /// \f$ A \f$ matrix
@@ -102,11 +107,13 @@ class FVMatrix
         /// Name of the solver for the system of equations with either the name Jacobi or Gauss Siedel or SOR   
         std::string solverModel_;
         /// Reading the solution parameters from a file 
-        Reader readParameter_;
+        //Reader readParameter_;
         /// \f$\overline{X}\f$ is the average of the solution vector {\f$ X \f$ } 
         double xAverage_;    
         /// The residual scalling factor \f$ n \f$ 
-        double nNormalize_;     
+        double nNormalize_; 
+         /// Dictionary for the class
+        Dictionary myDict_; 
 };
 
 #endif

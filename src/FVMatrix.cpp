@@ -4,26 +4,42 @@
 #include <random>
 #include <chrono>
 
-FVMatrix::FVMatrix( Mesh &mesh, vector<double> &xVector) : xVector_(xVector),
-                                                                nCells_(mesh.nCells_),
-                                                              //  residualNormFactor_(-1.0),
-                                                                readParameter_("constant/modelParameter")
-                                                                   
-{
-    //aMatrix_.resize(nCells_ * nCells_);
-    bVector_.resize(nCells_);
-  
-    solverModel_ = readParameter_.ReadString("solverModel");
-    absNormResidual_ = readParameter_.ReadDouble("absNormResidual");
-    relNormResidual_ = readParameter_.ReadDouble("relNormResidual");
-    matrixFormat_ = readParameter_.ReadString("matrixFormat");
-    matrixType_ = readParameter_.ReadString("matrixType");
 
+FVMatrix::FVMatrix( Mesh &mesh, vector<double> &xVector) : xVector_(&xVector),
+                                                                nCells_(mesh.nCells_)
+                                                              // , residualNormFactor_(-1.0)
+                                                                //, readParameter_("constant/modelParameter")
+                                                               // ,bVector_(nCells_)
+                                                                , myDict_(
+                                                                    Dictionary 
+                                                                        (
+                                                                            IOObject
+                                                                                (
+                                                                                    "modelParameter",
+                                                                                    mesh.time().constant(), //"constant",
+                                                                                    mesh,
+                                                                                    fileAction::MUST_READ,
+                                                                                    fileAction::NO_WRITE,
+                                                                                    true
+                                                                                )
+                                                                        )
+                                                                )
+
+                                                                  
+{
+    bVector_.resize(nCells_);
+
+    solverModel_ = myDict_.lookup<std::string> ("solverModel");
+    absNormResidual_ = myDict_.lookup<double> ("absNormResidual");
+    relNormResidual_ = myDict_.lookup<double> ("relNormResidual");
+    matrixFormat_ = myDict_.lookup<std::string> ("matrixFormat");
+    matrixType_ = myDict_.lookup<std::string> ("matrixType");
+    
     if (matrixFormat_== "lOLists")
         aMatrix_ = new lilSpmat(nCells_,nCells_);
     else if (matrixFormat_== "CSR")
         if (matrixType_== "full"){
-            aMatrix_ = new csrSpmat(nCells_);    
+            aMatrix_ = new csrSpmat(nCells_);             
         }
         else if (matrixType_== "sparse") {
             aMatrix_ = new csrSpmat(mesh);
@@ -50,8 +66,7 @@ FVMatrix::FVMatrix( Mesh &mesh, vector<double> &xVector) : xVector_(xVector),
     }
 
     setSolver(solverModel_);
-
-    std::cout << "Reading done" << std::endl;
+    
     std::cout << "ncells:" << nCells_ << std::endl;
 }
 
@@ -59,6 +74,7 @@ FVMatrix::~FVMatrix()
 {
     delete Solver_;
     delete aMatrix_;
+    //delete xVector_;
 }
 
 // inline double FVMatrix::axMultiplication(const unsigned int &lineI)
@@ -97,7 +113,7 @@ inline double FVMatrix::residualValue()
     for (unsigned int i = 0; i < nCells_; i++)
     {
         //residualMagnitude += fabs(bVector_[i] - axMultiplication(i));
-        residualMagnitude += fabs(bVector_[i] - aMatrix_->vecMul(i,xVector_));
+        residualMagnitude += fabs(bVector_[i] - aMatrix_->vecMul(i,(*xVector_)));
     }
     return residualMagnitude;
 }
@@ -109,7 +125,7 @@ inline double FVMatrix::residualNormFactor()
     xAverage_=0.0;
     for (unsigned int i = 0; i < nCells_; i++)
     {
-        xAverage_ += xVector_[i];
+        xAverage_ += (*xVector_)[i];
     }
     xAverage_ = xAverage_ / nCells_;
 
@@ -119,7 +135,7 @@ inline double FVMatrix::residualNormFactor()
     {
         //nNormalize_ += fabs(axMultiplication(i) -  axAverageMultiplication(i)) + fabs(bVector_[i] - axAverageMultiplication(i));
         double xValueProduct = aMatrix_->xValueProduct(i,xAverage_);
-        nNormalize_ += fabs(aMatrix_->vecMul(i,xVector_) -  xValueProduct) + fabs(bVector_[i] - xValueProduct);
+        nNormalize_ += fabs(aMatrix_->vecMul(i,(*xVector_)) -  xValueProduct) + fabs(bVector_[i] - xValueProduct);
     }
     return nNormalize_;
 }
@@ -227,7 +243,7 @@ void FVMatrix::createRandomSparseaMatrixbVector(const Mesh &mesh)
 // reset class xVector to zeros
 void FVMatrix::resetxVector()
 {
-    std::fill(xVector_.begin(), xVector_.end(), 0.);
+    std::fill((*xVector_).begin(), (*xVector_).end(), 0.);
 }
 
 // select a solver
@@ -251,7 +267,12 @@ void FVMatrix::setSolver(std::string solvername)
     else if(solverModel_ == "SOR")
     {        
         std::cout << ">>> Solving by SOR <<<<<" << std::endl;
-        double wSOR = readParameter_.ReadDouble("wSOR");
+
+        double wSOR = myDict_.lookup<double> ("wSOR");
+
+        std::cout << ">>>>> wSOR=" << wSOR << std::endl;
+        //double wSOR = readParameter_.ReadDouble("wSOR");
+        //double wSOR=1.5;
         Solver_ = new SSOR(aMatrix_, bVector_, xVector_, nCells_, wSOR);
     } 
 }
@@ -274,7 +295,7 @@ std::vector<double> FVMatrix::solve()
     {
         
         result = Solver_->doSolverStep();
-        xVector_ = result;
+        *(xVector_) = result;
 
         residual = residualValue()/residualNormFactor(); //  I have used residualNormFactor() instead of residualNormFactorValue??? 
         relResidual = residual/residualFirst;

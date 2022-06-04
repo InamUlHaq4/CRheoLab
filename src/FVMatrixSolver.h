@@ -11,7 +11,7 @@ class FVMatrixSolver
     public:
 
         /// Default constructor
-        FVMatrixSolver(spmat* mataMatrix,  std::vector<double>& bVector, std::vector<double>& xVector,const int nCells);
+        FVMatrixSolver(spmat* mataMatrix,  std::vector<double>& bVector, std::vector<double>* xVector,const int nCells);
 
         /// Destructor
         virtual ~FVMatrixSolver();

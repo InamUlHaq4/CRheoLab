@@ -10,7 +10,7 @@ class SSOR: public FVMatrixSolver
     public:
 
         /// Constructor
-        SSOR( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const int nCells, double wSOR = 0.0);
+        SSOR( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>* xVector, const int nCells, double wSOR = 0.0);
 
         /// Destructor
         virtual ~SSOR();

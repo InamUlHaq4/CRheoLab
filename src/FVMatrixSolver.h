@@ -2,7 +2,7 @@
 #define FVMATRIXSOLVER_H
 
 #include "Mesh.h"
-#include "lilSpmat.h"
+#include "FVMatrix.h"
 
 //**
 /// An abstract class for the solver of the system of equations
@@ -11,7 +11,7 @@ class FVMatrixSolver
     public:
 
         /// Default constructor
-        FVMatrixSolver(spmat* mataMatrix,  std::vector<double>& bVector, std::vector<double>* xVector,const int nCells);
+        FVMatrixSolver(FVMatrix* fvMat, std::vector<double>* xVector,const int nCells);
 
         /// Destructor
         virtual ~FVMatrixSolver();
@@ -25,9 +25,7 @@ class FVMatrixSolver
         
     protected:
         /// \f$ A \f$ matrix
-        spmat* const aMatrix_;
-        /// \f$ b \f$ vector
-        std::vector<double>* bVector_;
+        FVMatrix* fvMatrix_;
         /// \f$ X \f$ vector
         std::vector<double>* xVector_;
         /// Number of the elements in the system i.e. the size of the system

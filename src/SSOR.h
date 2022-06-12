@@ -2,7 +2,7 @@
 #define SOR_H
 
 #include "FVMatrixSolver.h"
-#include "lilSpmat.h"
+#include "FVMatrix.h"
 
 /// Class for solving the system of equations using SOR procedure
 class SSOR: public FVMatrixSolver
@@ -10,7 +10,7 @@ class SSOR: public FVMatrixSolver
     public:
 
         /// Constructor
-        SSOR( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>* xVector, const int nCells, double wSOR = 0.0);
+        SSOR( FVMatrix* fvMatrix,std::vector<double>* xVector, const int nCells, double wSOR = 0.0);
 
         /// Destructor
         virtual ~SSOR();

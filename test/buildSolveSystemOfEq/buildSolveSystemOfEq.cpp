@@ -42,20 +42,9 @@ int main()
 
     Mesh polyMesh(time);
     
- 
-
     //Testing System of equations    std::vector<double> T1(polyMesh.nCells_,0.);
     std::vector<double> T1(polyMesh.nCells_,0.);
-    //std::vector<double> T2(polyMesh.nCells_,0.);
-    //std::vector<double> T3(polyMesh.nCells_,0.);    
-    //std::cout << "T: " << T << std::endl;
     FVSystem TEquation1(polyMesh, T1);
-   // FVSystem TEquation1(polyMesh, T1, jacobi, 1E-15, 1E-15);
-  //  FVSystem TEquation2(polyMesh, T2, gaussSidel, 1E-15, 1E-15);
-   // FVSystem TEquation3(polyMesh, T3, SOR, 1E-15, 1E-15, 1.2);
-    //std::cout << ">> solve " << std::endl;
-  //  std::cout << ">> Jacobi " << std::endl;
-    //TEquation1.setSolver("Jacobi");
     TEquation1.solve();
     TEquation1.solve();
     TEquation1.resetxVector();
@@ -64,7 +53,7 @@ int main()
     TEquation1.resetxVector();
     TEquation1.setSolver("GaussSiedel");
     TEquation1.solve();
-    std::cout << "end solve " << std::endl;
+    std::cout << "end solve " << std::endl; 
 
 
     return 0;

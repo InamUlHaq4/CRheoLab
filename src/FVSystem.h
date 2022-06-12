@@ -83,14 +83,12 @@ class FVSystem
         std::vector<double> solve();
 
     private:
-        /// \f$ b \f$ vector
-        FVMatrix fvMatrix;
+        /// Dictionary for the class
+        Dictionary myDict_; 
         /// \f$ X \f$ vector
         std::vector<double>* xVector_;
         /// Number of the elements in the system i.e. the size of the system 
         unsigned int nCells_;
-         /// \f$ A \f$ matrix
-        spmat* aMatrix_;
         /// Matrix format either lOLists or CSR
         std::string matrixFormat_;
         /// Matrix type either full or sparse
@@ -111,8 +109,8 @@ class FVSystem
         double xAverage_;    
         /// The residual scalling factor \f$ n \f$ 
         double nNormalize_; 
-         /// Dictionary for the class
-        Dictionary myDict_; 
+        FVMatrix fvMatrix;
+
 };
 
 #endif

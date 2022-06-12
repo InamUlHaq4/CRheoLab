@@ -1,8 +1,25 @@
-make --dry-run --keep-going --print-directory
+make --dry-run --always-make --keep-going --print-directory
 make: Entering directory '/home/mnobrega/Documents/CRheoLab/CRheoLab'
- 
+mkdir -p run
+g++ -std=c++11 -g -Wall  -c -o obj/IODictionary.o src/IODictionary.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/RunTime.o src/RunTime.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Patch.o src/Patch.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/csrSpmat.o src/csrSpmat.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Reader.o src/Reader.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Mesh.o src/Mesh.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/lilSpmat.o src/lilSpmat.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Dictionary.o src/Dictionary.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Point.o src/Point.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/FVMatrixSolver.o src/FVMatrixSolver.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/FVMatrix.o src/FVMatrix.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/SGaussSiedel.o src/SGaussSiedel.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Face.o src/Face.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/IOObject.o src/IOObject.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/Cell.o src/Cell.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/spmat.o src/spmat.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/SJacobi.o src/SJacobi.cpp
+g++ -std=c++11 -g -Wall  -c -o obj/SSOR.o src/SSOR.cpp
 g++ -std=c++11 -g -Wall  -o bin/CRheo obj/IODictionary.o obj/RunTime.o obj/Patch.o obj/csrSpmat.o obj/Reader.o obj/Mesh.o obj/lilSpmat.o obj/Dictionary.o obj/Point.o obj/FVMatrixSolver.o obj/FVMatrix.o obj/SGaussSiedel.o obj/Face.o obj/IOObject.o obj/Cell.o obj/spmat.o obj/SJacobi.o obj/SSOR.o -lboost_filesystem -lboost_system 
 echo Executing 'all' complete!
- 
 make: Leaving directory '/home/mnobrega/Documents/CRheoLab/CRheoLab'
  

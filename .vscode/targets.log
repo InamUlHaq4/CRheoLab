@@ -5,14 +5,14 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
- 
 
-# Make data base, printed on Sat Jun  4 10:52:42 2022
+# Make data base, printed on Sat Jun  4 11:17:53 2022
 
 # Variables
 
 # 'override' directive
 GNUMAKEFLAGS := 
+ 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
@@ -223,7 +223,6 @@ FOAM_APP = /home/mnobrega/OpenFOAM/OpenFOAM-v2012/applications
 SNAP_USER_COMMON = /home/mnobrega/snap/code/common
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
- 
 # default
 MAKE_VERSION := 4.1
 # environment
@@ -263,11 +262,12 @@ GNOME_SHELL_SESSION_MODE = ubuntu
 # environment
 WM_COMPILER_TYPE = system
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-97ddce6e-e8a7-4a0a-9cf7-2f73c8f44c98.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-998772a8-18cb-4454-bb94-97b53310f2dc.sock
 # environment
 XDG_SESSION_ID = 1
 # environment
 USER = mnobrega
+ 
 # environment
 SNAP_REVISION = 97
 # environment
@@ -371,7 +371,6 @@ WM_ARCH = linux64
 # default
 SUFFIXES := 
 # environment
- 
 SNAP_REEXEC = 
 # environment
 CHROME_DESKTOP = code-url-handler.desktop
@@ -394,9 +393,10 @@ MAKE_HOST := x86_64-pc-linux-gnu
 # environment
 LANG = C
 # environment
+ 
 TERM = xterm-256color
 # environment
-VSCODE_PID = 15698
+VSCODE_PID = 22504
 # environment
 DBUS_STARTER_ADDRESS = unix:path=/run/user/1000/bus,guid=208dd4695f9b2af6d0dbb81d6251c920
 # variable set hash-table stats:
@@ -426,7 +426,6 @@ obj/%.o: src/%.cpp
 # Not a target:
 src/Dictionary.cpp:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-05-30 12:56:48.762040697
 #  File has been updated.
 #  Successfully updated.
@@ -434,7 +433,7 @@ src/Dictionary.cpp:
 obj/Cell.o: src/Cell.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Cell'
-#  Last modified 2022-06-04 10:52:19.431486438
+#  Last modified 2022-06-04 10:58:49.349852652
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -443,7 +442,7 @@ obj/Cell.o: src/Cell.cpp
 obj/Dictionary.o: src/Dictionary.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Dictionary'
-#  Last modified 2022-06-04 10:52:15.763540351
+#  Last modified 2022-06-04 10:58:45.673905064
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -458,6 +457,7 @@ all: run bin/CRheo
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/6=0%
 #  recipe to execute (from 'Makefile', line 45):
+ 
 	@echo Executing 'all' complete!
 
 # Not a target:
@@ -475,8 +475,7 @@ src/SGaussSiedel.cpp:
 obj/lilSpmat.o: src/lilSpmat.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'lilSpmat'
- 
-#  Last modified 2022-06-04 10:52:15.135549583
+#  Last modified 2022-06-04 10:58:45.053913905
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -492,7 +491,7 @@ src/spmat.cpp:
 obj/FVMatrix.o: src/FVMatrix.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'FVMatrix'
-#  Last modified 2022-06-04 10:52:17.531514361
+#  Last modified 2022-06-04 10:58:47.449879739
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -501,7 +500,7 @@ obj/FVMatrix.o: src/FVMatrix.cpp
 obj/IODictionary.o: src/IODictionary.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'IODictionary'
-#  Last modified 2022-06-04 10:52:11.707599992
+#  Last modified 2022-06-04 10:58:41.621962849
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -510,7 +509,7 @@ obj/IODictionary.o: src/IODictionary.cpp
 obj/SJacobi.o: src/SJacobi.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'SJacobi'
-#  Last modified 2022-06-04 10:52:20.135476092
+#  Last modified 2022-06-04 10:58:50.041842785
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -521,7 +520,6 @@ obj/SJacobi.o: src/SJacobi.cpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
- 
 
 # Not a target:
 src/Point.cpp:
@@ -540,6 +538,7 @@ Makefile:
 # Not a target:
 src/csrSpmat.cpp:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-05-30 12:56:23.518385604
 #  File has been updated.
 #  Successfully updated.
@@ -561,7 +560,7 @@ src/Patch.cpp:
 obj/RunTime.o: src/RunTime.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'RunTime'
-#  Last modified 2022-06-04 10:52:12.275591639
+#  Last modified 2022-06-04 10:58:42.173954977
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -577,8 +576,7 @@ src/FVMatrixSolver.cpp:
 obj/Face.o: src/Face.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Face'
- 
-#  Last modified 2022-06-04 10:52:18.459500722
+#  Last modified 2022-06-04 10:58:48.397866224
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -616,9 +614,9 @@ bin/CRheo: obj/IODictionary.o obj/RunTime.o obj/Patch.o obj/csrSpmat.o obj/Reade
 # automatic
 # % := 
 # automatic
+ 
 # * := 
 # automatic
- 
 # + := obj/IODictionary.o obj/RunTime.o obj/Patch.o obj/csrSpmat.o obj/Reader.o obj/Mesh.o obj/lilSpmat.o obj/Dictionary.o obj/Point.o obj/FVMatrixSolver.o obj/FVMatrix.o obj/SGaussSiedel.o obj/Face.o obj/IOObject.o obj/Cell.o obj/spmat.o obj/SJacobi.o obj/SSOR.o
 # automatic
 # | := 
@@ -636,7 +634,7 @@ bin/CRheo: obj/IODictionary.o obj/RunTime.o obj/Patch.o obj/csrSpmat.o obj/Reade
 obj/Reader.o: src/Reader.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Reader'
-#  Last modified 2022-06-04 10:52:13.863568285
+#  Last modified 2022-06-04 10:58:43.793931873
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -659,7 +657,7 @@ runs: all
 obj/SGaussSiedel.o: src/SGaussSiedel.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'SGaussSiedel'
-#  Last modified 2022-06-04 10:52:18.167505014
+#  Last modified 2022-06-04 10:58:48.085870671
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -668,7 +666,6 @@ obj/SGaussSiedel.o: src/SGaussSiedel.cpp
 # Not a target:
 src/lilSpmat.cpp:
 #  Implicit rule search has been done.
- 
 #  Last modified 2022-05-24 13:09:20.217661658
 #  File has been updated.
 #  Successfully updated.
@@ -691,10 +688,11 @@ clean:
 	$(RM) $(call FIXPATH,$(OBJ_FILES))
 	@echo Cleanup complete!
 
+ 
 obj/Mesh.o: src/Mesh.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Mesh'
-#  Last modified 2022-06-04 10:52:14.759555111
+#  Last modified 2022-06-04 10:58:44.681919209
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -724,8 +722,7 @@ src/SJacobi.cpp:
 obj/spmat.o: src/spmat.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'spmat'
- 
-#  Last modified 2022-06-04 10:52:19.495485498
+#  Last modified 2022-06-04 10:58:49.413851738
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -734,7 +731,7 @@ obj/spmat.o: src/spmat.cpp
 obj/Point.o: src/Point.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Point'
-#  Last modified 2022-06-04 10:52:16.011536704
+#  Last modified 2022-06-04 10:58:45.925901471
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -743,7 +740,7 @@ obj/Point.o: src/Point.cpp
 obj/csrSpmat.o: src/csrSpmat.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'csrSpmat'
-#  Last modified 2022-06-04 10:52:13.115579285
+#  Last modified 2022-06-04 10:58:43.04594254
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -752,7 +749,7 @@ obj/csrSpmat.o: src/csrSpmat.cpp
 obj/SSOR.o: src/SSOR.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'SSOR'
-#  Last modified 2022-06-04 10:52:20.763466865
+#  Last modified 2022-06-04 10:58:50.661833946
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -761,6 +758,7 @@ obj/SSOR.o: src/SSOR.cpp
 # Not a target:
 src/RunTime.cpp:
 #  Implicit rule search has been done.
+ 
 #  Last modified 2022-05-30 12:56:48.762040697
 #  File has been updated.
 #  Successfully updated.
@@ -768,8 +766,7 @@ src/RunTime.cpp:
 obj/Patch.o: src/Patch.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'Patch'
- 
-#  Last modified 2022-06-04 10:52:12.399589815
+#  Last modified 2022-06-04 10:58:42.305953095
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -792,7 +789,7 @@ src/Mesh.cpp:
 obj/FVMatrixSolver.o: src/FVMatrixSolver.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'FVMatrixSolver'
-#  Last modified 2022-06-04 10:52:16.655527239
+#  Last modified 2022-06-04 10:58:46.585892059
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -801,7 +798,7 @@ obj/FVMatrixSolver.o: src/FVMatrixSolver.cpp
 obj/IOObject.o: src/IOObject.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'IOObject'
-#  Last modified 2022-06-04 10:52:19.139490728
+#  Last modified 2022-06-04 10:58:49.065856701
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 62):
@@ -816,12 +813,11 @@ obj/IOObject.o: src/IOObject.cpp
 # No general ('VPATH' variable) search path.
 
 # strcache buffers: 1 (0) / strings = 135 / storage = 1574 B / avg = 11 B
- 
 # current buf: size = 8162 B / used = 1574 B / count = 135 / avg = 11 B
 
 # strcache performance: lookups = 174 / hit rate = 22%
 # hash-table stats:
 # Load=135/8192=2%, Rehash=0, Collisions=6/174=3%
-# Finished Make data base on Sat Jun  4 10:52:42 2022
+# Finished Make data base on Sat Jun  4 11:17:53 2022
 
  

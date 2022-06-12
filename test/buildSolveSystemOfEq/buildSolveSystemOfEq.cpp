@@ -5,7 +5,7 @@
 #include "VolField.h"
 #include "IOObject.h"
 #include "Dictionary.h"
-#include "FVMatrix.h"
+#include "FVSystem.h"
 
 void foo(VolField<std::vector<double>>& field)
 {
@@ -49,10 +49,10 @@ int main()
     //std::vector<double> T2(polyMesh.nCells_,0.);
     //std::vector<double> T3(polyMesh.nCells_,0.);    
     //std::cout << "T: " << T << std::endl;
-    FVMatrix TEquation1(polyMesh, T1);
-   // FVMatrix TEquation1(polyMesh, T1, jacobi, 1E-15, 1E-15);
-  //  FVMatrix TEquation2(polyMesh, T2, gaussSidel, 1E-15, 1E-15);
-   // FVMatrix TEquation3(polyMesh, T3, SOR, 1E-15, 1E-15, 1.2);
+    FVSystem TEquation1(polyMesh, T1);
+   // FVSystem TEquation1(polyMesh, T1, jacobi, 1E-15, 1E-15);
+  //  FVSystem TEquation2(polyMesh, T2, gaussSidel, 1E-15, 1E-15);
+   // FVSystem TEquation3(polyMesh, T3, SOR, 1E-15, 1E-15, 1.2);
     //std::cout << ">> solve " << std::endl;
   //  std::cout << ">> Jacobi " << std::endl;
     //TEquation1.setSolver("Jacobi");

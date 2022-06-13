@@ -6,7 +6,8 @@
 
 
 FVSystem::FVSystem( Mesh &mesh, vector<double> &xVector) : 
-    xVector_(&xVector)
+    mesh_(&mesh)
+    , xVector_(&xVector)
     , nCells_(mesh.nCells_)
     , myDict_(
         Dictionary 
@@ -24,7 +25,7 @@ FVSystem::FVSystem( Mesh &mesh, vector<double> &xVector) :
     )
     , matrixFormat_ (myDict_.lookup<std::string> ("matrixFormat"))
     , matrixType_ (myDict_.lookup<std::string> ("matrixType"))
-    , fvMatrix (FVMatrix(mesh, matrixFormat_, matrixType_))
+    , fvMatrix (new FVMatrix(mesh_, matrixFormat_, matrixType_))
     , solverModel_ (myDict_.lookup<std::string> ("solverModel"))
     , absNormResidual_ (myDict_.lookup<double> ("absNormResidual"))
     , relNormResidual_ (myDict_.lookup<double> ("relNormResidual"))
@@ -48,6 +49,7 @@ FVSystem::FVSystem( Mesh &mesh, vector<double> &xVector) :
 FVSystem::~FVSystem()
 {
     delete Solver_;
+    delete fvMatrix;
 }
 
 
@@ -57,7 +59,7 @@ inline double FVSystem::residualValue()
 
     for (unsigned int i = 0; i < nCells_; i++)
     {
-        residualMagnitude += fabs(fvMatrix.bVector_[i] - fvMatrix.aMatrix_->vecMul(i,(*xVector_)));
+        residualMagnitude += fabs(fvMatrix->bVector_[i] - fvMatrix->aMatrix_->vecMul(i,(*xVector_)));
     }
     return residualMagnitude;
 }
@@ -77,8 +79,8 @@ inline double FVSystem::residualNormFactor()
     nNormalize_=0.0 ;
     for (unsigned int i = 0; i < nCells_; i++)
     {
-        double xValueProduct = fvMatrix.aMatrix_->xValueProduct(i,xAverage_);
-        nNormalize_ += fabs(fvMatrix.aMatrix_->vecMul(i,(*xVector_)) -  xValueProduct) + fabs(fvMatrix.bVector_[i] - xValueProduct);
+        double xValueProduct = fvMatrix->aMatrix_->xValueProduct(i,xAverage_);
+        nNormalize_ += fabs(fvMatrix->aMatrix_->vecMul(i,(*xVector_)) -  xValueProduct) + fabs(fvMatrix->bVector_[i] - xValueProduct);
     }
     return nNormalize_;
 }
@@ -95,17 +97,17 @@ void FVSystem::createRandomFullaMatrixbVector()
         double diagValue = 0.0;
         for (unsigned int j = 0; j < lineI; j++)
         {
-            fvMatrix.aMatrix_->addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
-            diagValue += fabs(fvMatrix.aMatrix_->getValue(lineI,j));
+            fvMatrix->aMatrix_->addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
+            diagValue += fabs(fvMatrix->aMatrix_->getValue(lineI,j));
         }
 
         for (unsigned int j = lineI + 1; j < nCells_; j++)
         {
-            fvMatrix.aMatrix_->addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
-            diagValue += fabs(fvMatrix.aMatrix_->getValue(lineI,j));
+            fvMatrix->aMatrix_->addValue(lineI,j, static_cast<double>(rand() % maxValue) * (-1));
+            diagValue += fabs(fvMatrix->aMatrix_->getValue(lineI,j));
         }
-        fvMatrix.aMatrix_->addValue(lineI,lineI, 1.1 * diagValue);
-        fvMatrix.bVector_[lineI] = (static_cast<double>(rand() % maxValue));
+        fvMatrix->aMatrix_->addValue(lineI,lineI, 1.1 * diagValue);
+        fvMatrix->bVector_[lineI] = (static_cast<double>(rand() % maxValue));
         //std::cout << "LineI" << lineI << std::endl;
     }
     std::cout << ">> leaving create FullaMatrix and bVector " << std::endl;
@@ -125,10 +127,10 @@ void FVSystem::createRandomSparseaMatrixbVector(const Mesh &mesh)
         
         double mCoef = (static_cast<double>(rand() % maxValue))+1.0;
 
-        fvMatrix.aMatrix_->addValue(iNeighbour,iOwner, -mCoef); // Add mCoef to line iNeighbour column iOwner
-        fvMatrix.aMatrix_->addValue(iOwner,iNeighbour, -mCoef); // Add mCoef to line iOwner column iNeighbour
-        fvMatrix.aMatrix_->addValue(iNeighbour,iNeighbour, mCoef); // Add mCoef to Diagonal iNeighbour ,iNeighbour
-        fvMatrix.aMatrix_->addValue(iOwner,iOwner, mCoef); // Add mCoef to Diagonal iOwner ,iOwner
+        fvMatrix->aMatrix_->addValue(iNeighbour,iOwner, -mCoef); // Add mCoef to line iNeighbour column iOwner
+        fvMatrix->aMatrix_->addValue(iOwner,iNeighbour, -mCoef); // Add mCoef to line iOwner column iNeighbour
+        fvMatrix->aMatrix_->addValue(iNeighbour,iNeighbour, mCoef); // Add mCoef to Diagonal iNeighbour ,iNeighbour
+        fvMatrix->aMatrix_->addValue(iOwner,iOwner, mCoef); // Add mCoef to Diagonal iOwner ,iOwner
         // std::cout << fvMatrix.aMatrix_->getValue(iNeighbour,iOwner) << std::endl;
         // std::cout << fvMatrix.aMatrix_->getValue(iOwner,iNeighbour) << std::endl;
         // std::cout << fvMatrix.aMatrix_->getValue(iNeighbour,iNeighbour) << std::endl;
@@ -140,8 +142,8 @@ void FVSystem::createRandomSparseaMatrixbVector(const Mesh &mesh)
     for (unsigned int iCell = 0; iCell < nCells_; iCell++)
     {
         // add a factor to diagonal
-        fvMatrix.aMatrix_->addValue(iCell,iCell, 1.1 *  fvMatrix.aMatrix_->getValue(iCell,iCell));
-        fvMatrix.bVector_[iCell] = (static_cast<double>(rand() % maxValue));
+        fvMatrix->aMatrix_->addValue(iCell,iCell, 1.1 *  fvMatrix->aMatrix_->getValue(iCell,iCell));
+        fvMatrix->bVector_[iCell] = (static_cast<double>(rand() % maxValue));
     }
 
     std::cout << ">> leaving create Sparse aMatrix and bVector " << std::endl;
@@ -157,19 +159,19 @@ void FVSystem::resetxVector()
 void FVSystem::setSolver(std::string solvername)
 {
      
-     solverModel_ = solvername;
+    solverModel_ = solvername;
     
     std::cout << std::string(90, '#') << std::endl;
 
      if(solverModel_ == "Jacobi")
     {
         std::cout << ">>> Solving by Jacobi <<<<<" << std::endl;
-        Solver_ = new SJacobi(&fvMatrix, xVector_, nCells_);
+        Solver_ = new SJacobi(fvMatrix, xVector_, nCells_);
     }
     else if(solverModel_ == "GaussSiedel")
     {
         std::cout << ">>> Solving by Gauss Siedel <<<<<" << std::endl;
-        Solver_ = new SGaussSiedel(&fvMatrix, xVector_, nCells_);
+        Solver_ = new SGaussSiedel(fvMatrix, xVector_, nCells_);
     }
     else if(solverModel_ == "SOR")
     {        
@@ -178,7 +180,7 @@ void FVSystem::setSolver(std::string solvername)
         double wSOR = myDict_.lookup<double> ("wSOR");
 
         std::cout << ">>>>> wSOR=" << wSOR << std::endl;
-        Solver_ = new SSOR(&fvMatrix, xVector_, nCells_, wSOR);
+        Solver_ = new SSOR(fvMatrix, xVector_, nCells_, wSOR);
     } 
 }
 ///////////////////////////////////////////////25/2/2022
@@ -212,4 +214,9 @@ std::vector<double> FVSystem::solve()
     std::cout << "Initial Residual: " << std::scientific << residualFirst << " -> Final Residual: " << std::scientific << residual << std::endl;
     std::cout << "Elapsed time:" << duration.count() << " ms" << std::endl;
     return result;
+}
+
+void FVSystem::defineFVMatrix(FVMatrix& fvMatrixNew)
+{
+    this->fvMatrix =  &fvMatrixNew;
 }

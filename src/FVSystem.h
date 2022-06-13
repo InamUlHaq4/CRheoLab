@@ -82,7 +82,10 @@ class FVSystem
         The relative residual is calculated as the scalled residual normalized with respect to the scalled residual at the first iteration.   */     
         std::vector<double> solve();
 
+        void defineFVMatrix(FVMatrix& fvMatrixNew);
+
     private:
+        Mesh* mesh_;
         /// Dictionary for the class
         Dictionary myDict_; 
         /// \f$ X \f$ vector
@@ -109,7 +112,7 @@ class FVSystem
         double xAverage_;    
         /// The residual scalling factor \f$ n \f$ 
         double nNormalize_; 
-        FVMatrix fvMatrix;
+        FVMatrix* fvMatrix;
 
 };
 

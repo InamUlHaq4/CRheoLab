@@ -8,6 +8,9 @@ FVMatrix::FVMatrix(Mesh* mesh, const std::string matrixFormat, const std::string
    unsigned int nCells=mesh->nCells_;
    bVector_.resize(nCells);
 
+
+
+  // To many if conditions 
    if (matrixFormat== "lOLists")
         aMatrix_ = new lilSpmat(nCells,nCells);
     else if (matrixFormat== "CSR")

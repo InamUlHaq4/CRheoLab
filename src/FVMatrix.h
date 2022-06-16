@@ -11,7 +11,7 @@ class FVMatrix
 {
     public:
 
-    FVMatrix (Mesh* mesh, const std::string matrixFormat, const std::string matrixType);
+    FVMatrix (Mesh& mesh, const std::string matrixFormat, const std::string matrixType);
 
     unsigned int nCells_;
     spmat* aMatrix_;

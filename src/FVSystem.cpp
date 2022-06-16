@@ -6,7 +6,7 @@
 
 
 FVSystem::FVSystem( Mesh &mesh, vector<double> &xVector) : 
-    mesh_(&mesh)
+    mesh_(mesh)
     , xVector_(&xVector)
     , nCells_(mesh.nCells_)
     , myDict_(

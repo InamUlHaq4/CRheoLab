@@ -85,7 +85,7 @@ class FVSystem
         void defineFVMatrix(FVMatrix& fvMatrixNew);
 
     private:
-        Mesh* mesh_;
+        Mesh mesh_;
         /// Dictionary for the class
         Dictionary myDict_; 
         /// \f$ X \f$ vector

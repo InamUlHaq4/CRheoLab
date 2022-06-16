@@ -3,9 +3,9 @@
 #include "FVMatrixOperators.h"
 
 //Constructor
-FVMatrix::FVMatrix(Mesh* mesh, const std::string matrixFormat, const std::string matrixType )
+FVMatrix::FVMatrix(Mesh& mesh, const std::string matrixFormat, const std::string matrixType )
 {
-   unsigned int nCells=mesh->nCells_;
+   unsigned int nCells=mesh.nCells_;
    bVector_.resize(nCells);
 
    if (matrixFormat== "lOLists")
@@ -17,7 +17,7 @@ FVMatrix::FVMatrix(Mesh* mesh, const std::string matrixFormat, const std::string
             aMatrix_ = new csrSpmat(nCells);             
         }
         else if (matrixType== "sparse") {
-            aMatrix_ = new csrSpmat(*mesh);
+            aMatrix_ = new csrSpmat(mesh);
         }
         else {
             std::cout << "ERROR: Unindentified Matrix type";

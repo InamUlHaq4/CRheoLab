@@ -2,7 +2,6 @@
 #define GAUSSSIEDEL_H
 
 #include "FVMatrixSolver.h"
-#include "FVMatrix.h"
 
 
 /// Class for solving the system of equations using Gauss Siedel procedure
@@ -11,7 +10,7 @@ class SGaussSiedel: public FVMatrixSolver
     public:
 
         /// Constructor
-        SGaussSiedel( FVMatrix* fvMatrix,std::vector<double>* xVector, const int nCells);
+        SGaussSiedel( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, const int nCells);
 
         /// Destructor
         virtual ~SGaussSiedel();

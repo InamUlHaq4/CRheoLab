@@ -12,7 +12,7 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
 {
     os << "[ \n";
     for (int i = 0; i < v.size(); ++i) {
-        os << v[i] << std::endl;
+        os << v[i] << std::endl;make 
     }
     os << "]\n";
     return os;

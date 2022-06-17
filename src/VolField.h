@@ -50,11 +50,11 @@ class VolField
     private:
         
         vectorType internalField_;
-        BoundaryField<vectorType> boundaryField_;
-        
+        BoundaryField<vectorType> boundaryField_;       
 
 };
 
-#include "VolFieldI.h"
-#include "VolFieldOperations.h"
+// #include "VolFieldI.h"
+// #include "VolFieldOperations.h"
+
 #endif

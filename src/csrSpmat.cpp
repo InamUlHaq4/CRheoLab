@@ -4,7 +4,7 @@
 
 // Constructor
 // Constructs an empty sparse matrix and allocates memory for the rows
-csrSpmat::csrSpmat(Mesh& mesh)
+csrSpmat::csrSpmat(const Mesh& mesh)
 {
   // Store number of rows and columns
   numRows_ = mesh.nCells_;

@@ -1,12 +1,26 @@
 
+
 #include "Mesh.h"
 #include "RunTime.h"
-#include "IODictionary.h"
-#include "VolField.h"
-#include "IOObject.h"
-#include "Dictionary.h"
-#include "FVSystem.h"
 
+//#include "IODictionary.h"
+//#include "IOObject.h"
+
+#include "Dictionary.h"
+#include "VolField.h"
+#include "VolFieldI.h"
+#include "VolFieldOperations.h"
+
+#include "Boundary.h"
+#include "BoundaryI.h"
+
+
+#include "FVMatrix.h"
+
+
+
+
+/*
 void foo(VolField<std::vector<double>>& field)
 {
     Dictionary& banana2 = field.mesh().lookup<Dictionary>( "transportProperties");
@@ -30,7 +44,7 @@ void foo(VolField<std::vector<double>>& field)
 
     
 }
-
+*/
 int main()
 {
 
@@ -41,10 +55,24 @@ int main()
     RunTime time;
 
     Mesh polyMesh(time);
-    
+   
     //Testing System of equations    std::vector<double> T1(polyMesh.nCells_,0.);
-    std::vector<double> T1(polyMesh.nCells_,0.);
-    FVSystem TEquation1(polyMesh, T1);
+    
+    VolField<scalarField> T1
+    (
+        IOObject
+        (
+            "T",
+            polyMesh.time().constant(),
+            polyMesh,
+            fileAction::NO_READ,
+            fileAction::NO_WRITE,
+            false
+        )
+    );
+   
+    FVMatrix TEquation1(T1);
+    /*
     TEquation1.solve();
     TEquation1.solve();
     TEquation1.resetxVector();
@@ -54,7 +82,7 @@ int main()
     TEquation1.setSolver("GaussSiedel");
     TEquation1.solve();
     std::cout << "end solve " << std::endl; 
-
+    */
 
     return 0;
 }

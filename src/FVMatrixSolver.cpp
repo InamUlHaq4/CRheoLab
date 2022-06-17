@@ -1,12 +1,11 @@
 #include "FVMatrixSolver.h"
 #include <vector>
-#include <random>
-
 
 //Constructor
-FVMatrixSolver::FVMatrixSolver(FVMatrix* fvMatrix,std::vector<double>* xVector,const int nCells ):
-fvMatrix_(fvMatrix),
-xVector_(xVector),
+FVMatrixSolver::FVMatrixSolver(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector,const int nCells ):
+aMatrix_(aMatrix),
+bVector_(&bVector),
+xVector_(&xVector),
 nCells_(nCells)
 {}
  

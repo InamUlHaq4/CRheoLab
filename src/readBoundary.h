@@ -1,3 +1,6 @@
+# ifndef READBOUNDARY_H
+# define READBOUNDARY_H
+
 template <typename vectorType>
 template <typename primitiveType>
 primitiveType Boundary<vectorType>::readData(std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter)
@@ -8,6 +11,7 @@ primitiveType Boundary<vectorType>::readData(std::ifstream& in_file, std::istrin
 template <>
 template <>
 double Boundary<scalarField>::readData(std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter)
+
 {
     return this->readScalarData(in_file,iss,line, lineCounter);
 }
@@ -339,3 +343,5 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
     in_file.close();
 
 }
+
+#endif

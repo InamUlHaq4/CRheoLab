@@ -28,7 +28,7 @@ public:
   csrSpmat(){}
 
   // Constructor
-  csrSpmat(Mesh& mesh);
+  csrSpmat(const Mesh& mesh);
 
   // Constructor for full matrix
   csrSpmat(const int &nCells);

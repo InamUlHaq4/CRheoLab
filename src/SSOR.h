@@ -1,8 +1,7 @@
-#ifndef SOR_H
-#define SOR_H
+#ifndef SSOR_H
+#define SSOR_H
 
 #include "FVMatrixSolver.h"
-#include "FVMatrix.h"
 
 /// Class for solving the system of equations using SOR procedure
 class SSOR: public FVMatrixSolver
@@ -10,7 +9,7 @@ class SSOR: public FVMatrixSolver
     public:
 
         /// Constructor
-        SSOR( FVMatrix* fvMatrix,std::vector<double>* xVector, const int nCells, double wSOR = 0.0);
+        SSOR( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, const int nCells, double wSOR = 0.0);
 
         /// Destructor
         virtual ~SSOR();

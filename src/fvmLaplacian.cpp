@@ -1,16 +1,16 @@
 #include "fvmLaplacian.h"
 #include "mathOperations.h"
-#include "Mesh.h"
-#include "Face.h"
-#include "Cell.h"
+//#include "Mesh.h"
+//#include "Face.h"
+//#include "Cell.h"
 
 
 namespace fvm
 {   
     //Scalar Field situation
-    FVMatrix laplacian(FVMatrix& FVM, const double& K, VolField<scalarField>& vf)
+    FVMatrix laplacian(const double& K, VolField<scalarField>& vf)
     {
-        
+        FVMatrix fvMatrix(vf);
         //We will acess the  const Mesh& mesh attending the VolField <scalarField>& vf
 
         //***************Internal Faces contributions**************************************************//
@@ -27,13 +27,11 @@ namespace fvm
              double Sf_modulus =  sqrt( Sf & Sf);  //|Sf|
              double a = (Sf_modulus/d_modulus); // |S_f|/|d|
 
-            FVM.aMatrix_->addValue(ownInd,neiInd,K*a); // updating  non-diagonal components the aMatrix of FVM
-            FVM.aMatrix_->addValue(neiInd,ownInd,K*a);
+            fvMatrix.aMatrix_->addValue(ownInd,neiInd,K*a); // updating  non-diagonal components the aMatrix of FVM
+            fvMatrix.aMatrix_->addValue(neiInd,ownInd,K*a);
   
-            FVM.aMatrix_->addValue(ownInd,ownInd,(-1)*FVM.aMatrix_->getValue(ownInd,neiInd)); // updating  the diagonal components of aMatrix
-            FVM.aMatrix_->addValue(neiInd,neiInd,(-1)*FVM.aMatrix_->getValue(neiInd,ownInd));
-
-             
+            fvMatrix.aMatrix_->addValue(ownInd,ownInd,(-1)*fvMatrix.aMatrix_->getValue(ownInd,neiInd)); // updating  the diagonal components of aMatrix
+            fvMatrix.aMatrix_->addValue(neiInd,neiInd,(-1)*fvMatrix.aMatrix_->getValue(neiInd,ownInd));
         }
 
 
@@ -48,7 +46,7 @@ namespace fvm
 
 
      
-      return FVM;
+      return fvMatrix;
     }
     
 }

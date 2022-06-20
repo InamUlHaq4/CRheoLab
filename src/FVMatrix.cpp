@@ -2,12 +2,13 @@
 
 #include "FVMatrix.h"
 
-
+// Temporary Soltion to compile the code - Must be updated in the future
 template <typename vectorType>
 vectorType& VolField<vectorType>::internalFieldRef() 
 {
   return internalField_;
 }
+// Temporary Soltion to compile the code - Must be updated in the future
 
 //Constructor
 

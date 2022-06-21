@@ -45,6 +45,13 @@ class VolField
         vectorType& internalFieldRef(); 
         const vectorType& internalField() const;
 
+        // Give access to the field/file path in the OS directory tree
+        const std::string& fieldFilePath();
+
+        // Give access to the field/file name
+        const std::string& fieldFileName();
+
+
         VolField& operator=(const VolField &vf); //provisional
 
     private:

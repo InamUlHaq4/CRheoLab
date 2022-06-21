@@ -64,9 +64,16 @@ Boundary<vectorType>::Boundary(const Boundary<vectorType>& bf)
 
 // Member function to access the boundary patch defined values
 template <typename vectorType>
-vectorType& Boundary<vectorType>::definedValues()
+typename vectorType::value_type& Boundary<vectorType>::definedValues(int& faceI)
 {
-  return definedValues_;
+  // std::cout << "The definedValues_ size is " << definedValues_.size() << std::endl;
+  // std::cout << "The definedValues_ are " << definedValues_ << std::endl;
+  // std::cout << "Face is " << faceI << std::endl;
+  // std::cout << "Return value is " << ( (uniformField_) ? (definedValues_[0]) : (definedValues_[faceI]) ) << std::endl;
+  
+  // This is like that due the patches with just a single value defined, such as uniform.
+  // return ( (definedValues_.size()==1) ? (definedValues_[0]) : (definedValues_[faceI]));
+  return ( (uniformField_) ? (definedValues_[0]) : (definedValues_[faceI]));
 }
 
 // Member function to access the boundary patch defined name
@@ -76,9 +83,16 @@ const std::string& Boundary<vectorType>::name()
   return name_;
 }
 
+// Member function to access the boundary patch defined values
+template <typename vectorType>
+const int Boundary<vectorType>::numberOfFaces() const
+{
+  return definedValues_.size();
+}
+
 // Member function to access the boundary patch defined type ( fixedValue, fixedGradient, symmetry, and etc. )
 template <typename vectorType>
-const std::string& Boundary<vectorType>::type()
+const std::string& Boundary<vectorType>::type() const
 {
   return type_;
 }

@@ -329,6 +329,12 @@ void Mesh::updateCellAndFaceData(std::string pathOwners, std::string pathNeighbo
       cellList_[cellI].computeVolume();
       cellList_[cellI].computeCenter();
   }
+  // Update Cells centroids distances, and  cell to face centroids for Boundary faces
+  for (unsigned int faceI = 0; faceI < nFaces_; faceI++)
+  {
+      faceList_[faceI].computeCentroidsDistance();
+  }
+
 
   // Update face weighting factors
   for (unsigned int faceI = 0; faceI < nFaces_; faceI++)
@@ -459,7 +465,7 @@ void Mesh::readBoundary(std::string path)
         }  
       }
 
-      patchList_.push_back(Patch(name, type, nFaces, startFace)); //add a Patch object to the list
+      patchList_.push_back(Patch(name, type, nFaces, startFace, i)); //add a Patch object to the list
 
       checkBoundaryName = false;
       checkType = false;

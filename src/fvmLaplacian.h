@@ -9,7 +9,7 @@ namespace fvm
 {
    //Assuming a constant (e.g K_diffusivity)
    template<typename vectorType> // .cpp file concretizes the vectorType
-   FVMatrix laplacian(const double& K, VolField<scalarField>& vf);
+   FVMatrix laplacian(const double& K, VolField<vectorType>& vf);
    
 }
 

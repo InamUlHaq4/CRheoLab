@@ -33,8 +33,20 @@ class BoundaryField
         virtual ~BoundaryField(){} ;
 
         ///@brief Returns the size of the boundary patch
-        const int& size() const;
+        const int& nPatches() const;
         
+        ///@brief Returns the size of the boundary patch
+        const int patchINumberOfFaces(int i) const;
+        
+        ///@brief Returns the size of the boundary patch
+        const std::string& patchITypeOfBCondition(int i) const;
+
+        ///@brief Returns the size of the boundary patch
+        const std::string& patchIName(int i);
+
+        ///@brief Returns for a patch I, the face J defined value
+        typename vectorType::value_type patchIFaceJValue(int patchI, int faceJ);
+
         ///@brief Member function to access the boundary data
         vector<Boundary<vectorType>>& boundaryData();
 
@@ -43,6 +55,7 @@ class BoundaryField
 
         ///@brief Returns the name in the boundaryField patch list for the give patch index 
         const std::string& patchName(const int& ID) const;
+
 
         BoundaryField& operator=(const BoundaryField &bf); //provisional
 

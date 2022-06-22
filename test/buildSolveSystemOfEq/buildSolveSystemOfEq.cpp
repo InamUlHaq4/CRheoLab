@@ -100,8 +100,7 @@ int main()
     );
     fvBoundaryConditionsField<scalarField> TBoundaryCondition(T);
 
-    //** --- Tests WdCG ---------------------- **//
-
+    // //** --- Tests WdCG ---------------------- **//
     // FVMatrix TMatrix(T);
     // std::vector<double> diagonalTerms(9,0.0);
     // double diffusionK=1e-3;
@@ -126,9 +125,6 @@ int main()
 
     //         ((ownInd == 0) || (ownInd == 3) || (ownInd == 6) ) ? (diffusionK = 1e-3) : (diffusionK = 100);
 
-    //         std::string patchBCType( T.boundaryField().patchITypeOfBCondition(patchI) );
-    //         if ( patchBCType != "fixedValue" ) ( diffusionK=1.0);
-
     //         std::cout << "\t\t\t\tIt's Owner Cell is the cell: " << ownInd << std::endl;
     //         // Loading the values to added for the laplacian term
     //         double valueToAddDiagonal( TBoundaryCondition.coefficientsData().at(patchI).gradientInternalCoeffs.at(faceI));
@@ -140,8 +136,7 @@ int main()
     //         TMatrix.bVector_.at(ownInd)+=diffusionK*valueToAddSource*areaMag;
     //     }
     // }
-    
-    //** ---End-of-Tests----- WdCG ----------- **//
+    // //** ---End-of-Tests----- WdCG ----------- **//
 
     return 0;
 }

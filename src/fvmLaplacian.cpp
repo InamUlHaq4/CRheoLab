@@ -42,15 +42,13 @@ namespace fvm
         // Initializing boundary conditions coefficient contributions
         fvBoundaryConditionsField<scalarField> boundaryConditions(vf);
         long unsigned int patchesSize = vf.mesh().nPatches_;
+        double diffusionK(K);
         for ( long unsigned int patchI = 0; patchI < patchesSize; patchI++)
         { 
           // std::cout << "This is the patch: " << patchI << std::endl;
           // Loading the faces controls for this patch
           int sizeOfPatch( boundaryConditions.coefficientsData().at(patchI).gradientInternalCoeffs.size() );
           int startPatchFaceID = vf.mesh().patchList_[patchI].startFace();
-
-          std::string patchBCType( vf.boundaryField().patchITypeOfBCondition(patchI) );
-          double diffusionK(( patchBCType != "fixedValue" )?(K):(1.0));
 
           // Looping in all the faces for this patch
           for (int faceI = 0; faceI < sizeOfPatch; faceI++)

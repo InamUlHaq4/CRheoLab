@@ -87,7 +87,8 @@ vectorType VolField<vectorType>::readInternalField()
                 dataToVector = readData<typename vectorType::value_type>(in_file,iss,line, lineCounter);
        
                 // Push data to vector
-                store.push_back(dataToVector);
+                store.resize (mesh().nCells_,dataToVector);
+                //store.push_back(dataToVector);
 
                 // Exits the loop (not necessary to continue looking into the file)
                 break;

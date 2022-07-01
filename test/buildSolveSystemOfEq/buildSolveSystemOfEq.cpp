@@ -55,6 +55,8 @@ int main()
     
     RunTime time;
 
+    
+
     Mesh polyMesh(time);
    
     //Testing System of equations    std::vector<double> T1(polyMesh.nCells_,0.);
@@ -63,16 +65,24 @@ int main()
     (
         IOObject
         (
-            "T",
-            polyMesh.time().constant(),
+            "T1",
+            time.timeName(),
             polyMesh,
-            fileAction::NO_READ,
+            fileAction::MUST_READ,
             fileAction::NO_WRITE,
-            false
+            true
         )
     );
 
-    FVMatrix TEquation1(T1);
+    FVMatrix TEquation1 = fvm::laplacian(1.0,T1);
+ 
+    TEquation1.solve();
+
+    
+
+    TEquation1.solverPerf_.perfShow();
+
+
     /*
     TEquation1.solve();
     TEquation1.solve();
@@ -86,19 +96,19 @@ int main()
     */
 
     // Testing constructor from the constructor initialization in the VolField class
-    VolField<scalarField> T
-    (
-        IOObject
-        (
-            "T",
-            time.timeName(),
-            polyMesh,
-            fileAction::MUST_READ,
-            fileAction::NO_WRITE,
-            false
-        )
-    );
-    fvBoundaryConditionsField<scalarField> TBoundaryCondition(T);
+    // VolField<scalarField> T
+    // (
+    //     IOObject
+    //     (
+    //         "T",
+    //         time.timeName(),
+    //         polyMesh,
+    //         fileAction::MUST_READ,
+    //         fileAction::NO_WRITE,
+    //         false
+    //     )
+    // );
+    // fvBoundaryConditionsField<scalarField> TBoundaryCondition(T);
 
     // //** --- Tests WdCG ---------------------- **//
     // FVMatrix TMatrix(T);

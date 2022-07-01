@@ -76,7 +76,7 @@ void FVMatrix::solve()
             field_.mesh(),
             fileAction::MUST_READ,
             fileAction::NO_WRITE,
-            true
+            false
         )
     );
     double absNormResidual (fvSystemDict.lookup<double> ("absNormResidual"));

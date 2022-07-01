@@ -19,7 +19,7 @@ file filetest
 absNormResidual	1E-6;
 relNormResidual	1E-3;
 wSOR  1.2;
-solverModel	Jacobi; // Jacobi, GaussSiedel, SOR
-matrixFormat  CSR; //lOLists // CSR
+solverModel	SOR; // Jacobi, GaussSiedel, SOR
+matrixFormat  lOLists; //lOLists // CSR
 matrixType sparse; // sparse or full
 // ************************************************************************* //

@@ -39,6 +39,7 @@ laplacianSchemes
     default            none;
     laplacian(DD,D)    Gauss linear corrected;
     laplacian(DDD,DD)  Gauss linear correced;
+    laplacian(DT,<fieldname>)   orthonal;
 }
 
 snGradSchemes

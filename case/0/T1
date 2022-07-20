@@ -21,7 +21,7 @@ internalField uniform 0.0;
 
 boundaryField
 {
-   top
+   top 
     {
         type            fixedValue;
         value           uniform 1;

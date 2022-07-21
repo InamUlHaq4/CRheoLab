@@ -13,7 +13,7 @@ namespace fvm
     FVMatrix laplacian(const double& K, VolField<scalarField>& vf)
     {
         FVMatrix fvMatrix(vf);
-        //We will acess the  const Mesh& mesh attending the VolField <scalarField>& vf
+        //We will access the  const Mesh& mesh attending the VolField <scalarField>& vf
 
         //***************Internal Faces contributions**************************************************//
                  //vf.mesh() gives the mesh of vf
@@ -66,8 +66,8 @@ namespace fvm
             double valueToAddSource( boundaryConditions.coefficientsData().at(patchI).gradientBoundaryCoeffs.at(faceI));
             
             // Adding the loaded values to the proper places
-            fvMatrix.aMatrix_->addValue(ownInd,ownInd,(-diffusionK*valueToAddDiagonal*areaMag));
-            fvMatrix.bVector_.at(ownInd) += (diffusionK*valueToAddSource*areaMag) ;
+            fvMatrix.aMatrix_->addValue(ownInd,ownInd,(+diffusionK*valueToAddDiagonal*areaMag));
+            fvMatrix.bVector_.at(ownInd) += (-diffusionK*valueToAddSource*areaMag) ;
           }
         }
   

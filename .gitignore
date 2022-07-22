@@ -4,6 +4,6 @@ doc/bib*
 doc/citelist*
 bin/*
 .DS_Store
-*.vscode/*
-*.log
-aCaseTest/*
+.vscode/*
+.log
+aCaseTest*

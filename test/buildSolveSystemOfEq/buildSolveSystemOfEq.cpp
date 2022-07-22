@@ -19,6 +19,8 @@
 
 #include "fvm.h"
 
+#include "fvc.h"
+
 
 
 /*
@@ -78,6 +80,10 @@ int main()
  
     TEquation1.solve();
 
+
+    std::vector<double> TEquation2 = fvc::laplacian(1.0,T1);
+
+    TEquation1.solve();
     
 
     TEquation1.solverPerf_.perfShow();

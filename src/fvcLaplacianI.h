@@ -13,38 +13,31 @@ namespace fvc
     std::vector<double> laplacian(const double& K, VolField<scalarField>& vf)
     {
       std::vector<double> vecB(vf.mesh().nCells_,0.0);
-      //   FVMatrix fvMatrix(vf);
-      //   //We will access the  const Mesh& mesh attending the VolField <scalarField>& vf
+        //FVMatrix fvMatrix(vf);
+        //We will access the  const Mesh& mesh attending the VolField <scalarField>& vf
 
-      //   //***************Internal Faces contributions**************************************************//
-      //            //vf.mesh() gives the mesh of vf
-      //   for(unsigned int i = 0; i < vf.mesh().nInteriorFaces_ ;i++)
-      //   {
-      //        int ownInd = vf.mesh().faceList_[i].getOwner()->ID_;//->ID_ will be soon replaced with a getter // <----------------------(Owner index) 
-      //        int neiInd = vf.mesh().faceList_[i].getNeighbour()->ID_;  // <------- (Neighbour index)
+        //***************Internal Faces contributions**************************************************//
 
-      //        vector3 Sf = vf.mesh().faceList_[i].getAreaVector(); //<--------------Face area vector
-      //        vector3 d =  vf.mesh().cellList_[ownInd].getCenterOfMass() - vf.mesh().cellList_[neiInd].getCenterOfMass(); // distance vector between onwer center and neighnour center (Q_P - Q_N)
+        for(long unsigned int i = 0; i < vf.mesh().nInteriorFaces_ ;i++)
+        {
+             int ownInd = vf.mesh().faceList_[i].getOwner()->ID_;
+             int neiInd = vf.mesh().faceList_[i].getNeighbour()->ID_;
 
-      //        double d_modulus = sqrt( d & d); // |d| 
-      //        double Sf_modulus =  sqrt( Sf & Sf);  //|Sf|
-      //        double a = (Sf_modulus/d_modulus); // |S_f|/|d|
+             vector3 Sf = vf.mesh().faceList_[i].getAreaVector(); 
+             vector3 d =  vf.mesh().cellList_[ownInd].getCenterOfMass() - vf.mesh().cellList_[neiInd].getCenterOfMass();
 
-      //       //fvMatrix.aMatrix_->addValue(ownInd,neiInd,K*a); // updating  non-diagonal components the aMatrix of FVM
-      //       // fvMatrix.aMatrix_->addValue(neiInd,ownInd,K*a);
-  
-      //       // fvMatrix.aMatrix_->addValue(ownInd,ownInd,(-1)*fvMatrix.aMatrix_->getValue(ownInd,neiInd)); // updating  the diagonal components of aMatrix
-      //       // fvMatrix.aMatrix_->addValue(neiInd,neiInd,(-1)*fvMatrix.aMatrix_->getValue(neiInd,ownInd));
+             double d_modulus = sqrt( d & d); // |d| 
+             double Sf_modulus =  sqrt( Sf & Sf);  //|Sf|
+             double a = (Sf_modulus/d_modulus); // |S_f|/|d|
 
-      //       fvMatrix.bVector_ ;
-
-      //   };
-
-      // *** Boundary faces contributions  : Wagner will take care---------------------------------------------------- ***//
+            vecB.at(ownInd) += ((K)*(-a)*vf.internalFieldRef().at(ownInd));
+            vecB.at(neiInd) += (-(K)*(-a)*vf.internalFieldRef().at(neiInd));
+            
+        };
       
       // *** Boundary faces contributions ---------------------------------------------------- ***//
 
-        // Initializing boundary conditions coefficient contributions
+        // // Initializing boundary conditions coefficient contributions
         fvBoundaryConditionsField<scalarField> boundaryConditions(vf);
         long unsigned int patchesSize = vf.mesh().nPatches_;
         double diffusionK(K);
@@ -75,7 +68,7 @@ namespace fvc
             // fvMatrix.bVector_.at(ownInd) += (-diffusionK*valueToAddSource*areaMag) ;
             vecB.at(ownInd) += ( +diffusionK*valueToAddDiagonal*areaMag*vf.internalFieldRef().at(ownInd) );
             vecB.at(ownInd) += ( +diffusionK*valueToAddSource  *areaMag                                    );
-          }
+         }
         }
         // ***-End-of-Boundary-faces-contributions---------------------------------------------- ***// 
 
@@ -83,9 +76,3 @@ namespace fvc
     }
     
 }
-
-
-
-
-
-

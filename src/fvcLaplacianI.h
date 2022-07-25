@@ -19,12 +19,18 @@ namespace fvc
         //***************Internal Faces contributions**************************************************//
 
         for(long unsigned int i = 0; i < vf.mesh().nInteriorFaces_ ;i++)
+        // looping through all internal faces
         {
              int ownInd = vf.mesh().faceList_[i].getOwner()->ID_;
+             // Accessing the ID_s of Owners
              int neiInd = vf.mesh().faceList_[i].getNeighbour()->ID_;
+             // Accessing the ID_s of Neighbours
 
              vector3 Sf = vf.mesh().faceList_[i].getAreaVector(); 
+             // Accessing the AreaVectors
+
              vector3 d =  vf.mesh().cellList_[ownInd].getCenterOfMass() - vf.mesh().cellList_[neiInd].getCenterOfMass();
+            // Calculating a vectorial distance between the cell centroid of Owner and Neighbours.
 
              double d_modulus = sqrt( d & d); // |d| 
              double Sf_modulus =  sqrt( Sf & Sf);  //|Sf|
@@ -32,6 +38,7 @@ namespace fvc
 
             vecB.at(ownInd) += ((K)*(-a)*vf.internalFieldRef().at(ownInd));
             vecB.at(neiInd) += (-(K)*(-a)*vf.internalFieldRef().at(neiInd));
+            //calculatting and storing the values in the bVector
             
         };
       

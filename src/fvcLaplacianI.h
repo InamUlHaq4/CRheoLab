@@ -73,8 +73,8 @@ namespace fvc
             // Adding the loaded values to the proper places
             // fvMatrix.aMatrix_->addValue(ownInd,ownInd,(+diffusionK*valueToAddDiagonal*areaMag));
             // fvMatrix.bVector_.at(ownInd) += (-diffusionK*valueToAddSource*areaMag) ;
-            vecB.at(ownInd) += ( +diffusionK*valueToAddDiagonal*areaMag*vf.internalFieldRef().at(ownInd) );
-            vecB.at(ownInd) += ( +diffusionK*valueToAddSource  *areaMag                                    );
+            vecB.at(ownInd) -= ( +diffusionK*valueToAddDiagonal*areaMag*vf.internalFieldRef().at(ownInd) );
+            vecB.at(ownInd) += ( +diffusionK*valueToAddSource  *areaMag                                  );
          }
         }
         // ***-End-of-Boundary-faces-contributions---------------------------------------------- ***// 

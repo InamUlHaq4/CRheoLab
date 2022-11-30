@@ -22,6 +22,7 @@
 #include "fvc.h"
 
 
+typedef std::vector<int> wagner;
 
 /*
 void foo(VolField<std::vector<double>>& field)
@@ -67,7 +68,7 @@ int main()
     (
         IOObject
         (
-            "T1",
+            "T",
             time.timeName(),
             polyMesh,
             fileAction::MUST_READ,

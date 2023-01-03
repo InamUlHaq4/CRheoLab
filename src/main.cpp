@@ -34,7 +34,6 @@ int main()
 {
     RunTime time;
     Mesh mesh(time);
-    int i=1;
 
     Dictionary myDict
     (

@@ -5,7 +5,8 @@ IOObject::IOObject
 ( 
     const std::string& name,
     const std::string& fileLocation,
-    const Mesh& mesh,
+    //const Mesh& mesh,
+    Mesh& mesh,
     fileAction read,
     fileAction write,
     const bool& storeObj
@@ -58,7 +59,8 @@ const std::string& IOObject::path() const
     return path_;
 }
 
-const Mesh& IOObject::mesh() const
+//const Mesh& IOObject::mesh() const
+Mesh& IOObject::mesh() const
 {
     return mesh_;
 }

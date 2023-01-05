@@ -38,15 +38,13 @@ public:
 
   std::vector<Patch> patchList_;
 
-  unsigned int nPoints_;
+  unsigned int nPoints_;  
 
   unsigned int nFaces_;
 
   unsigned int nInteriorFaces_;
 
   unsigned int nBoundaryFaces_;
-  
-  unsigned int nCells_;
 
   unsigned int nPatches_;
 
@@ -58,6 +56,10 @@ public:
   T& lookup(const std::string& seeking) const;
 
   std::vector<IOObject*> dataBase_;
+
+  const unsigned int getnCells();
+  
+  void setnCells(unsigned int nCells);
 
 private:
 
@@ -78,8 +80,8 @@ private:
   void readBoundary(std::string path);
 
   const RunTime& time_;
-
-  
+   
+  unsigned int nCells_;
 
   
 } ;

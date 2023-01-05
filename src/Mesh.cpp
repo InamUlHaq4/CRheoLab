@@ -498,7 +498,14 @@ const std::vector <IOObject*>& Mesh::dataBase() const
     return dataBase_;
 }
 
+// Getter for nCells_
+ const unsigned int Mesh::getnCells()
+ {
+    return nCells_;
+ }
 
-
-
+ void Mesh::setnCells(unsigned int nCells)
+ {
+    nCells_ = nCells;
+ }
 

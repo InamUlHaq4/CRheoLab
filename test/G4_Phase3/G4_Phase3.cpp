@@ -47,7 +47,7 @@ int main()
         )
     );
     
-
+    mesh.setnCells(200);   
 
    //Dictionary& banana1 = mesh.lookup<Dictionary>("transportProperties");
   

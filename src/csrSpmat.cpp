@@ -7,8 +7,8 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
-  numRows_ = mesh.nCells_;
-  numCols_ = mesh.nCells_;
+  numRows_ = mesh.getnCells();
+  numCols_ = mesh.getnCells();
 
   // Declaration of variables
   unsigned int nz, aux;
@@ -16,7 +16,7 @@ csrSpmat::csrSpmat(Mesh& mesh)
 
   // Determine the total number of non-zeros values (number of cells plus its neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.nCells_;i++)
+  for (unsigned int i=0;i<mesh.getnCells();i++)
   {
     nz++;
     for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
@@ -43,7 +43,7 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Fill-in the sparse matrix with the positions of the non-null values
   // (number of cells plus their neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.nCells_;i++)
+  for (unsigned int i=0;i<mesh.getnCells();i++)
   {
     row_ptr_[i] = nz;
     columns_[nz] = i;

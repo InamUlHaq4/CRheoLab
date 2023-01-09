@@ -12,7 +12,7 @@ VolField<vectorType>::VolField(const IOObject& IO)
   }
   else if (read() == NO_READ)
   {
-      internalField_.resize(this->mesh().getnCells());
+      internalField_.resize(this->mesh().nCells_);
   }
   else
   {
@@ -25,7 +25,7 @@ VolField<vectorType>::VolField(const IOObject& IO, const typename vectorType::va
   : IODictionary(IO),
     boundaryField_(IO, defaultValue)
 {
-      internalField_.resize(this->mesh().getnCells(), defaultValue);
+      internalField_.resize(this->mesh().nCells_, defaultValue);
 }
 
 template <typename vectorType>

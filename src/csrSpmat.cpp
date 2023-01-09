@@ -7,8 +7,8 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
-  numRows_ = mesh.getnCells();
-  numCols_ = mesh.getnCells();
+  numRows_ = mesh.nCells_;
+  numCols_ = mesh.nCells_;
 
   // Declaration of variables
   unsigned int nz, aux;
@@ -16,12 +16,12 @@ csrSpmat::csrSpmat(Mesh& mesh)
 
   // Determine the total number of non-zeros values (number of cells plus its neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.getnCells();i++)
+  for (unsigned int i=0;i<mesh.nCells_;i++)
   {
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].getCellFaces().size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->getNeighbour();
+      neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
       if(neigh_ptr != NULL)
       {
          nz++;
@@ -43,25 +43,25 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Fill-in the sparse matrix with the positions of the non-null values
   // (number of cells plus their neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.getnCells();i++)
+  for (unsigned int i=0;i<mesh.nCells_;i++)
   {
     row_ptr_[i] = nz;
     columns_[nz] = i;
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].getCellFaces().size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->getNeighbour();
-      owner_ptr = mesh.cellList_[i].getCellFaces()[j]->getOwner();
+      neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
+      owner_ptr = mesh.cellList_[i].cellFaces_[j]->getOwner();
       if(neigh_ptr != NULL)
       {
-        if(neigh_ptr->getID() == i)
+        if(neigh_ptr->ID_ == i)
         {
-          columns_[nz] = owner_ptr->getID();
+          columns_[nz] = owner_ptr->ID_;
           nz++;
         }
         else //if(owner_ptr.ID_ == i)
         {
-          columns_[nz] = neigh_ptr->getID();
+          columns_[nz] = neigh_ptr->ID_;
           nz++;
         }
       }

@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  2106                                  |
+|  \\    /   O peration     | Version:  2206                                  |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -18,40 +18,36 @@ FoamFile
 
 5
 (
-    top
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          625;
-        startFace       45000;
-    }
-    bottom
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          625;
-        startFace       45625;
-    }
-    frontAndBack
-    {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          1250;
-        startFace       46250;
-    }
     left
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          625;
-        startFace       47500;
+        type            patch;
+        nFaces          32;
+        startFace       1984;
     }
     right
     {
-        type            wall;
-        inGroups        1(wall);
-        nFaces          625;
-        startFace       48125;
+        type            patch;
+        nFaces          32;
+        startFace       2016;
+    }
+    frontAndBack
+    {
+        type            empty;
+        inGroups        1(empty);
+        nFaces          2048;
+        startFace       2048;
+    }
+    top
+    {
+        type            patch;
+        nFaces          32;
+        startFace       4096;
+    }
+    bottom
+    {
+        type            patch;
+        nFaces          32;
+        startFace       4128;
     }
 )
 

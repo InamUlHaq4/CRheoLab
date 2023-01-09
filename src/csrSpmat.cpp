@@ -43,7 +43,7 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Fill-in the sparse matrix with the positions of the non-null values
   // (number of cells plus their neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.nCells_;i++)
+  for (int i=0; i< (int)mesh.nCells_; i++)
   {
     row_ptr_[i] = nz;
     columns_[nz] = i;

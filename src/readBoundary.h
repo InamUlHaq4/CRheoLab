@@ -1,54 +1,13 @@
 template <typename vectorType>
-template <typename primitiveType>
-primitiveType Boundary<vectorType>::readData(std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter)
-{
-    throw std::runtime_error("Not implemented");
-}
-
-template <>
-template <>
-double Boundary<scalarField>::readData(std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter)
-{
-    return this->readScalarData(in_file,iss,line, lineCounter);
-}
-
-
-template <>
-template <>
-vector3 Boundary<vectorField>::readData(std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter)
-{
-    return this->readVectorTensorData<vector3>(in_file, iss, line, lineCounter);
-}
-
-template <>
-template <>
-symmTensor Boundary<symmTensorField>::readData(std::ifstream &in_file, std::istringstream &iss, std::string &line, int &lineCounter)
-{
-    return this->readVectorTensorData<symmTensor>(in_file, iss, line, lineCounter);
-}
-
-template <>
-template <>
-tensor Boundary<tensorField>::readData(std::ifstream &in_file, std::istringstream &iss, std::string &line, int &lineCounter)
-{
-    return this->readVectorTensorData<tensor>(in_file, iss, line, lineCounter);
-}
-
-
-
-
-
-
-template <typename vectorType>
 void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
 {
  
     // Create structure to store information
     // patchBoundaryDefinitions store;
-    this->uniformField_=true;
+    uniformField_=true;
   
     // File location path
-    std::string fileLocation = this->path();
+    std::string fileLocation = path();
 
     // Passes the file location path into a ifsteam
     std::ifstream in_file(fileLocation.c_str());
@@ -56,8 +15,8 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
     // Checks if file is to be open correctly
     if(!in_file.is_open())
     {
-        std::cerr << "The input file was not open correctly!" << std::endl;
-        //return 1;
+        in_file.close();
+        throw std::runtime_error("The input file was not open correctly!");
     }
 
     // Line to store input from file
@@ -131,7 +90,14 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                         }
 
                         // Get other patch input that is not the entry 'value' or 'type' or singleLined characters (e.g, }, ) , ...
-                        if( !checkExactMatch(line, "value") && !checkExactMatch(line, "type") && (countCharactersInString(line) > 1) ) // need to add here the name of the other patches in the mesh..
+                        if
+                        ( 
+                            !checkExactMatch(line, "value") 
+                            && 
+                            !checkExactMatch(line, "type") 
+                            && 
+                            (countCharacters(line) > 1) 
+                        ) // need to add here the name of the other patches in the mesh..
                         {
                             // Check if ; it at the end of the sentance
                             checkSemiColon(in_file, line, lineCounter);
@@ -145,14 +111,20 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                             // If there are more than 2 splits, warn the user (here for the time being... might change in the future)
                             if(tmp.size() > 2)
                             {
-                                errorMessage(in_file, "More than two string ", lineCounter);
+                                //errorMessage(in_file, "More than two strings ", lineCounter);
                             }
 
                             // store information in structure
-                            this->otherInfo_.insert ( std::pair<std::string, std::string>(tmp[0] ,tmp[1] ) );
-                            
-                            // Get new line
-                            //newLineAndUpdateSStream(in_file, iss, line, lineCounter);
+                            std::string joinString;
+                            std::for_each
+                            (   std::next(tmp.begin()), tmp.end(), [&](const std::string & subString)
+                                {
+                                    joinString.empty()? joinString += subString : joinString+= " " + subString; 
+                                }
+                            );
+
+                            // this->otherInfo_.insert ( std::pair<std::string, std::string>(tmp[0], tmp[1] ) );
+                            this->otherInfo_.insert ( std::pair<std::string, std::string>(tmp[0], joinString ) );
                         }
 
                         // Get value
@@ -170,15 +142,12 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                                 iss.str(line);
 
                                 // Create a primitiveType to store the data
-                                typename vectorType::value_type dataToVector;
+                                definedValues_.resize(1);
 
-                                dataToVector = readData<typename vectorType::value_type>(in_file,iss, line, lineCounter);
-
-                                // Push data to vector
-                                this->definedValues_.push_back(dataToVector);
-
-                                // Get new line
-                                //newLineAndUpdateSStream(in_file, iss, line, lineCounter);
+                                if(!(iss >>definedValues_[0]))
+                                {
+                                    errorMessage(in_file, "Error while parsing uniform field at line: ", lineCounter);
+                                }
 
                             } // If the internalField is non-uniform
                             else if (checkExactMatch(line, "nonuniform")) 
@@ -205,19 +174,17 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                                 readCharacter(in_file, iss, '(', lineCounter);   
 
                                 // Resize the vector to accomudade the incoming data
-                                this->definedValues_.resize(nPointsInNonUniformField);
+                                definedValues_.resize(nPointsInNonUniformField);
 
-                                // Loop to get the vector data
-                                // Loop counter integer 
-                                int i=0;
-
-                                while (i < nPointsInNonUniformField)
+                                for(int i = 0; i < nPointsInNonUniformField; i++)
                                 {
+                                    // Updates lines 
                                     newLineAndUpdateSStream(in_file, iss, line, lineCounter);
 
-                                    this->definedValues_[i] = readData<typename vectorType::value_type>(in_file, iss, line, lineCounter);
-
-                                    i++;
+                                    if (!(iss >> definedValues_[i]))
+                                    {
+                                        errorMessage(in_file, "Error while parsing nonuniform field at line: ", lineCounter);
+                                    }
                                 }
 
                                 newLineAndUpdateSStream(in_file, iss, line, lineCounter);
@@ -260,7 +227,16 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                 errorMessage(in_file, message, 0, true);
             }
 
-            if (this->type_.empty() || (this->definedValues_.size()==0 && ( (this->type_ != "empty") && (this->type_ != "symmetry")) ))
+            if 
+            (
+                this->type_.empty() 
+                || 
+                (
+                    this->definedValues_.size()==0 
+                    && 
+                    ( (type_ != "empty") && (type_ != "symmetry") && (type_ != "zeroGradient")) 
+                )
+            )
             {
                 std::string message = "Problem in patch " + patchName ;
                 errorMessage(in_file, message, 0, true);
@@ -314,10 +290,8 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                         {
                             findFirstClosingCurly =false;
                         }
-
                    }
                 }
-
             }
 
             if (!endBoundaryField)
@@ -332,10 +306,8 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
             std::string message = "Keyword 'boundaryField is not defined";
             errorMessage(in_file, message, 0, true);
         }
-
     }
 
     // Close the file
     in_file.close();
-
 }

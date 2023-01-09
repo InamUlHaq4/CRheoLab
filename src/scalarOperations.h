@@ -1,19 +1,6 @@
 #ifndef SCALAROPERATIONS_H
 #define SCALAROPERATIONS_H
 
-// Output scalarField to screen
-inline std::ostream& operator<<(std::ostream& os, const scalarField& v)
-{
-    os << "[" << std::endl;
-    
-    for (unsigned int i = 0; i < v.size(); ++i) {
-        os << "\t" << v[i] << std::endl;
-    }
-
-    os << "]\n";
-    return os;
-}
-
 // Math Operations
 
 // At the field level

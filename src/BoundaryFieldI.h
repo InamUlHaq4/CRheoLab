@@ -1,11 +1,15 @@
 // BoundaryField constructor by reading Input file  
 template <typename vectorType>
-BoundaryField<vectorType>::BoundaryField(const IOObject& IO)
-:     nPatches_(IO.mesh().nPatches_)
+BoundaryField<vectorType>::BoundaryField
+(
+    const IOObject& IO
+)
+:     
+nPatches_(IO.mesh().nPatches_)
 {
     for (int i = 0; i < nPatches_; i++)
     {
-        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList_[i]));
+        boundaryData_.emplace_back(Boundary<vectorType>(IO, IO.mesh().patchList_[i]));
     } 
 }
 
@@ -29,7 +33,7 @@ vector<Boundary<vectorType>>& BoundaryField<vectorType>::boundaryData()
 
 // Returns the size of the boundary patch
 template <typename vectorType>
-const int& BoundaryField<vectorType>::size() const
+int BoundaryField<vectorType>::size() const
 {
     return boundaryData_.size();
 }
@@ -66,3 +70,31 @@ BoundaryField<vectorType>& BoundaryField<vectorType>::operator=(const BoundaryFi
   
   return *this;
 }
+
+template <typename vectorType>
+const Boundary<vectorType>& BoundaryField<vectorType>::operator[](int index) const
+{
+    if (index > (int)boundaryData_.size())
+    {
+        throw std::runtime_error("index out of range for boundaryField");
+    } 
+
+    return boundaryData_[index];
+}
+
+template <typename vectorType> 
+std::ostream& operator<<(std::ostream& os, const BoundaryField<vectorType>& bf)
+{
+   os << "boundaryField" << "\n"
+      << "{";  
+
+    for (unsigned int i=0; i < bf.boundaryData_.size(); i++)
+    {
+      os << " \n" << bf.boundaryData_[i] ;
+    }
+   
+    os << "}" << std::endl;
+
+   return os;
+}
+

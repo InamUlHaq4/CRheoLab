@@ -21,25 +21,38 @@ internalField uniform ( 1 1 1 );
 
 boundaryField
 {
-    inlet
+    left
     {
         type          zeroGradient ;
+
         /*type            fixedValue;
         p2 banana;
         value           uniform (0 0 0);*/
     }
 
-    banana
+    right
     {
         type            fixedValue;
-        p2 banana;
+        //p2 banana;
         value           uniform (0 0 0);
     }
 
-    walls
+    top
     {
         type            fixedValue;
         value           uniform (0 0 0);
+    }
+
+    bottom
+    {
+        type            fixedGradient;
+        gradient        uniform (1 2 3);
+        value           uniform (0 0 0);
+    }
+
+    frontAndBack
+    {
+        type            empty;
     }
 }
 // ************************************************************************* //

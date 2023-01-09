@@ -28,12 +28,11 @@ class BoundaryField
         ///@param defaultValue is a scalar, vector or a tensor with which the field must be initialized. \note Vectors and tensors must be initialized in braces like: {value1,value2, ...,etc. }.
         BoundaryField(const IOObject&, const typename vectorType::value_type& defaultValue);
             
-
         // Destructor
-        virtual ~BoundaryField(){} ;
+        virtual ~BoundaryField() = default ;
 
         ///@brief Returns the size of the boundary patch
-        const int& size() const;
+        int size() const;
         
         ///@brief Member function to access the boundary data
         vector<Boundary<vectorType>>& boundaryData();
@@ -45,12 +44,16 @@ class BoundaryField
         const std::string& patchName(const int& ID) const;
 
         BoundaryField& operator=(const BoundaryField &bf); //provisional
+        const Boundary<vectorType>& operator[](int index) const;
+
+        template<class T>
+        friend std::ostream& operator<<(std::ostream& os, const BoundaryField<T>& bf);
 
     private:
 
         // Private Data Members
         vector<Boundary<vectorType>> boundaryData_;
-        const int nPatches_;
+        const int& nPatches_;
         
 };
 

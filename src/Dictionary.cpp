@@ -1,12 +1,43 @@
 #include "Dictionary.h"
 
+// empty
+Dictionary::Dictionary()
+:
+nOpenParenthesis_(0),
+finishedReadingSubDicts_(false),
+filePath_()
+{}
+
+// From string
+Dictionary::Dictionary(const std::string& path)
+:
+nOpenParenthesis_(0),
+finishedReadingSubDicts_(false),
+filePath_(path)
+{}
+
+// Construct from IOobject
 Dictionary::Dictionary(const IOObject& IO)
 :
-IOObject(IO),
 nOpenParenthesis_(0),
-finishedReadingSubDicts_(false)
+finishedReadingSubDicts_(false),
+filePath_(IO.path())
 {
-   read();
+    read();
+}
+
+// copy constructor
+Dictionary::Dictionary(const Dictionary& dict, bool append)
+:
+nOpenParenthesis_(dict.nOpenParenthesis_),
+finishedReadingSubDicts_(dict.finishedReadingSubDicts_),
+filePath_(dict.filePath_)
+{
+    if(append)
+    {
+        localData_ = dict.localData_;
+        // data_ = dict.data_;
+    }
 }
 
 void Dictionary::bracketsTest(std::ifstream& in_file)            
@@ -16,7 +47,7 @@ void Dictionary::bracketsTest(std::ifstream& in_file)
 
     int closedBracketCounter(0);
 
-    unsigned int lineCounter(0);
+    int lineCounter(0);
 
     std::string line;
 
@@ -32,7 +63,7 @@ void Dictionary::bracketsTest(std::ifstream& in_file)
     if (openedBracketCounter != closedBracketCounter)
     {
         in_file.close();
-        std::string message = "Unbalanced number of brackets in the dictionary: " + this->name();
+        std::string message = "Unbalanced number of brackets in dictionary";
         throw std::runtime_error(message);
     }
 
@@ -40,208 +71,104 @@ void Dictionary::bracketsTest(std::ifstream& in_file)
     in_file.seekg(0);
 }
 
-Dictionary::Dictionary(const Dictionary& dict, bool append)
-:
-IOObject(dict),
-nOpenParenthesis_(dict.nOpenParenthesis_),
-finishedReadingSubDicts_(dict.finishedReadingSubDicts_)
-{
-  if (append)
-  {
-    localData_ = dict.localData_;
-    data_ = dict.data_;
-  }  
-}
 
-std::string Dictionary::stripSingleComment(std::string& line)
+bool Dictionary::read()
 {
-    // strips from the string '//' onwards
-    line=line.substr(0, line.find("//"));
-    return line;
-}
+    // Passes the file location path into a ifsteam
+    std::ifstream in_file(filePath_.c_str());
 
-
-std::string Dictionary::stripBlockComment(std::ifstream& in_file, std::string& line, unsigned int& lineCounter)
-{
-    // Booleans to catch line and block comments
-    bool findEndOfBlockComment = false;
-    
-    if((line.find( "*/" ) != std::string::npos))
+    // Checks if file is to be open correctly
+    if(!in_file.is_open())
     {
-        std::string lineBackup=line;
-
-        // strips line
-        line=line.substr(0, line.find("/*"));
-        lineBackup=lineBackup.substr(lineBackup.find("*/") + 2);
-        line+= " "+lineBackup;
-        return line;
+        std::cerr << "The input file was not open correctly!" << std::endl;
+        return false;
     }
-    // looks for the end of block comment
-    while (!findEndOfBlockComment && !in_file.eof())
-    {
-        getline(in_file, line);
-        lineCounter++;
-        if((line.find( "*/" ) != std::string::npos))
+
+    bracketsTest(in_file);
+
+    std::string line;
+    std::istringstream iss (line);
+
+    int lineCounter(0);
+
+    nOpenParenthesis_ = 0;
+
+    std::string possibleDictKeyword;
+
+    // Read file
+    while ( (nOpenParenthesis_ == 0) && !in_file.eof() )
+    { 
+        newLineAndUpdateSStream(in_file, iss, line, lineCounter);
+
+        if (line.find('{') != std::string::npos)
         {
-            findEndOfBlockComment=true;
-            getline(in_file, line);
-            lineCounter++;
+            nOpenParenthesis_ ++;
         }
+        
+        if (nOpenParenthesis_ != 0)
+        {
+            std::string keyword;
+
+            std::vector<std::string> vList (splitString(line,'{')); // Split by curly
+
+            if(vList.empty() || vList[0].empty() )
+            {
+                keyword = possibleDictKeyword;
+                line.erase(line.find("{"), 1);
+                iss.clear();
+                iss.str(line);
+            }
+            else
+            {
+                keyword = vList[0];    
+
+                line.clear();
+
+                for(unsigned int i = 1; i<vList.size(); i ++)
+                {
+                    if (i == 1)
+                    {
+                        line += vList[i];
+                    }
+                    else
+                    {
+                        line += '{' + vList[i];
+                    }
+                }
+                iss.str(line);    
+            }
+        
+            // Remove whitespaces
+            trimWhiteSpaces(keyword);
+            
+            readSubDict(*this, in_file, iss, line, lineCounter, keyword);
+        }
+    
         else
         {
-            continue;
+            if (!line.empty())
+            {
+                if (line.back() == ';')
+                {
+                    stripAndAppendToMap(line, localData_);
+                }
+                else
+                {
+                    possibleDictKeyword = line;
+                }         
+            }
         }
-    }
-    return line;
-}
-
-std::string Dictionary::stripComments(std::ifstream& in_file, std::string& line, unsigned int& lineCounter)
-{
-    bool checkComments=false;
-
-    if(line.find( "//" ) != std::string::npos)
-    {
-        line = stripSingleComment(line);
-        checkComments=true;
-    }
-    else if (line.find( "/*" ) != std::string::npos)
-    {
-        line = stripBlockComment(in_file, line, lineCounter);
-        checkComments=true;
-    }
-
-    if (checkComments)
-    {
-        line = stripComments(in_file, line, lineCounter);
-    }
-
-    return line;
-}
-
-
-void Dictionary::newLineAndUpdateSStream(std::ifstream& in_file, std::istringstream& iss, std::string& line, unsigned int& lineCounter, bool updateStringStream)
-{
-    getline(in_file, line);
-    lineCounter++;
-
-    // Avoid empty lines
-    while(line.find_first_not_of(' ') == std::string::npos && !in_file.eof())
-    {
-        getline(in_file, line);
-        lineCounter++;
-    }
-
-    line = stripComments(in_file, line, lineCounter);
-
-    trimWhiteSpaces(line);
-
-    if (updateStringStream)
-    {
-        // Update string stream
-        iss.clear();
-        iss.str(line);
-    }
-}
-
-bool Dictionary::checkExactMatch(const std::string& line,const std::string& keyWord) const
-{
-    // Check if string has a partial match
-    const std::size_t index = line.find(keyWord);
-
-    // If it doesn't, return false
-    if (index == std::string::npos)
-    {
-        return false;
-    }
-
-    // Create a lambda function to check if there are characters before or after the match string
-    // [&line] means to pass line as a reference to the lambda function
-   auto not_part_of_word = [&line](unsigned int index)
-   {
-        if (index < 0 || index >= line.size())
-        {
-            return true;
-        } 
-        if (std::isspace(line[index]) || std::ispunct(line[index]))
-        {
-            return true;
-        } 
-
-        return false;
-    };
-
-    bool checkCharactersBefore = not_part_of_word( index - 1 );
-    bool checkCharactersAfter =  not_part_of_word( index + keyWord.size() );
-   
-    return checkCharactersBefore && checkCharactersAfter;
-}
-
-
-bool Dictionary::checkCharacter(std::ifstream& in_file, std::istringstream& iss, const char& C)
-{
-    char c1;
-
-    iss >> c1;
-
-    if (iss.fail() || c1 != C)
-    {
-        return false;
     }
 
     return true;
 }
 
-void Dictionary::errorMessage(std::ifstream& in_file, const std::string& message, const unsigned int& lineCounter, bool turnOfLinePrinting)
+
+void Dictionary::readSubDict(Dictionary& tmp, std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter,const std::string& key)
 {
-    // Error message to the user
-    std::string errorMessage = message ;
+    std::unique_ptr<Dictionary> tmp2Ptr = std::make_unique<Dictionary>(tmp, false);
 
-    if (!turnOfLinePrinting)
-    {
-        errorMessage += "in line " + std::to_string(lineCounter);
-    }
-
-    // Closes the file
-    in_file.close();
-
-    // Throws exception to stop the program.
-    throw std::runtime_error(errorMessage);
-}
-
-void Dictionary::stripString(std::string& line, const std::string& word) const
-{
-    const std::size_t index = line.find(word);
-    if (index != std::string::npos)
-    {
-        line.erase(index, word.length() );
-    }
-}
-
-void Dictionary::rightTrimWhiteSpaces(std::string& line)
-{
-    line.erase(std::find_if(line.rbegin(), line.rend(), [](unsigned char ch)
-    {
-        return !std::isspace(ch);
-    }).base(), line.end());
-}
-
-void Dictionary::leftTrimWhiteSpaces(std::string& line)
-{
-    line.erase(line.begin(), std::find_if(line.begin(), line.end(), [](unsigned char ch) 
-    {
-        return !std::isspace(ch);
-    }));
-}
-
-void Dictionary::trimWhiteSpaces(std::string& line)
-{
-    leftTrimWhiteSpaces(line);
-    rightTrimWhiteSpaces(line);
-}
-
-void Dictionary::readSubDict(Dictionary& tmp, std::ifstream& in_file, std::istringstream& iss, std::string& line, unsigned int& lineCounter,const std::string& key)
-{
-    Dictionary tmp2(tmp, false);
+    Dictionary& tmp2 = *tmp2Ptr;
 
     std::string keyword;
 
@@ -262,6 +189,7 @@ void Dictionary::readSubDict(Dictionary& tmp, std::ifstream& in_file, std::istri
         {
             std::string keyword = line;
             newLineAndUpdateSStream(in_file, iss, line, lineCounter, true);
+
             if (line[0] == '{')
             {
                 line.erase(line.find("{"), 1); // erase from the string
@@ -286,42 +214,14 @@ void Dictionary::readSubDict(Dictionary& tmp, std::ifstream& in_file, std::istri
         }
     }    
 
-    tmp.data_.emplace(key, tmp2);
+    tmp.data_.emplace(key, std::move(tmp2Ptr));
 }
 
 
-const Dictionary& Dictionary::subDict(const std::string& dictName) const
+bool Dictionary::readDict(const std::string& dictName)
 {
-    if(data_.count(dictName))
-    {
-        return data_.at(dictName);
-    }
-    else
-    {
-        throw std::runtime_error("subdict does not exist!");
-    }
-}
-
-
-std::vector<std::string> Dictionary::splitStringByChar(const std::string& line, const char& C)
-{
-    std::string subString (line);
-    std::stringstream ss(line);
-    std::vector<std::string> vectorList;
-
-    while(getline(ss, subString, C))
-    {
-        vectorList.push_back(subString);
-    }
-
-    return vectorList;
-}
-
-bool Dictionary::read()
-{
-
-    // Passes the file location path into a ifsteam
-    std::ifstream in_file(this->path().c_str());
+       // Passes the file location path into a ifsteam
+    std::ifstream in_file(filePath_.c_str());
 
     // Checks if file is to be open correctly
     if(!in_file.is_open())
@@ -330,77 +230,82 @@ bool Dictionary::read()
         return false;
     }
 
-    bracketsTest(in_file);
-
-
-
     std::string line;
-
-    unsigned int lineCounter(0);
-
     std::istringstream iss (line);
+
+    int lineCounter(0);
 
     nOpenParenthesis_ = 0;
 
-    // Read file
-    while ( (nOpenParenthesis_ == 0) && !in_file.eof() )
-    { 
-    
-        newLineAndUpdateSStream(in_file, iss, line, lineCounter);
+    std::string possibleDictKeyword = dictName;
 
-        if (line.find('{') != std::string::npos)
+    bool foundKeyword = false;
+    bool isReadingSubDict = true;
+
+    while( newLineAndUpdateSStream(in_file, iss, line, lineCounter) && !in_file.eof())
+    {
+        if(!foundKeyword)
         {
-            nOpenParenthesis_ ++;
+            foundKeyword = checkExactMatch(line, std::string(dictName));
         }
-        
-        if (nOpenParenthesis_ != 0)
+
+        if (foundKeyword) 
         {
-
-            std::string keyword;
-
-            // Split by curly
-            std::vector<std::string> vList (splitStringByChar(line,'{'));
-
-            if(vList[0].empty())
+            if (line.find('{') != std::string::npos)
             {
-                keyword = localData_.back();
-                localData_.pop_back();
-                line.erase(line.find("{"), 1);
-                iss.clear();
-                iss.str(line);
+                nOpenParenthesis_ ++;
+                isReadingSubDict = false;
             }
-            else
+
+            if (nOpenParenthesis_ != 0)
             {
-                keyword = vList[0];    
+                std::string keyword;
 
-                line.clear();
+                std::vector<std::string> vList (splitString(line,'{')); // Split by curly
 
-                for(unsigned int i = 1; i<vList.size(); i ++)
+                if(vList.empty() || vList[0].empty() )
                 {
-                    if (i == 1)
-                    {
-                        line += vList[i];
-                    }
-                    else
-                    {
-                        line += '{' + vList[i];
-                    }
+                    keyword = possibleDictKeyword;
+                    line.erase(line.find("{"), 1);
+                    iss.clear();
+                    iss.str(line);
                 }
-                iss.str(line);    
+                else
+                {
+                    keyword = vList[0];    
+
+                    line.clear();
+
+                    for(unsigned int i = 1; i<vList.size(); i ++)
+                    {
+                        if (i == 1)
+                        {
+                            line += vList[i];
+                        }
+                        else
+                        {
+                            line += '{' + vList[i];
+                        }
+                    }
+                    iss.str(line);    
+                }
+            
+                // Remove whitespaces
+                trimWhiteSpaces(keyword);
+                
+                readSubDict(*this, in_file, iss, line, lineCounter, keyword);
             }
-            
-            // Remove whitespaces
-            trimWhiteSpaces(keyword);
-            
-            readSubDict(*this, in_file, iss, line, lineCounter, keyword);
         }
-        else
+
+        if(nOpenParenthesis_ == 0 && !isReadingSubDict)
         {
-            if (!line.empty())
-            {
-                localData_.push_back(line);
-            }
+            break;
         }
+    }
+
+    if (!foundKeyword)
+    {
+        throw std::runtime_error("Dictionary: " + dictName + " not found in: " + filePath_);
     }
 
     return true;
@@ -408,9 +313,21 @@ bool Dictionary::read()
 
 
 
+const Dictionary& Dictionary::subDict(const std::string& dictName) const
+{
+    if(data_.count(dictName))
+    {
+        return *data_.at(dictName);
+    }
+    else
+    {
+        throw std::runtime_error("subdict does not exist!");
+    }
+}
 
 
-void Dictionary::parseString (std::string& line, std::istringstream& iss, std::ifstream& in_file, Dictionary& tmp2, unsigned int& lineCounter)
+
+void Dictionary::parseString (std::string& line, std::istringstream& iss, std::ifstream& in_file, Dictionary& tmp2, int& lineCounter)
 {
     std::string subString;
 
@@ -432,7 +349,7 @@ void Dictionary::parseString (std::string& line, std::istringstream& iss, std::i
                 subString.clear();
 
                 bool foundClosingParenthesis (false);
-                for (int i = found; i< line.size(); i++)
+                for (int i = found; i< (int)line.size(); i++)
                 {
                     char c = line[i];
                     if (c != ')')
@@ -471,17 +388,19 @@ void Dictionary::parseString (std::string& line, std::istringstream& iss, std::i
             if (subString.find('{') != std::string::npos)
             {
                 subString =  subString.substr(0, subString.find('{'));
+
                 if (subString.empty()) // '{' is the first char in the string
                 {
                     line.erase(0, line.find('{') + 1);
-                    // check valid keyword
-                    rightTrimWhiteSpaces(lineToAppend);
+                    
+                    rightTrimWhiteSpaces(lineToAppend); // check valid keyword
                     subString = lineToAppend;
                 }
                 else
                 {
                     line.erase(line.find(subString), subString.length() + 1);
                 }
+
                 iss.clear();
                 iss.str(line);
                 nOpenParenthesis_++;
@@ -512,6 +431,7 @@ void Dictionary::parseString (std::string& line, std::istringstream& iss, std::i
             if (!subString.empty())
             {
                 lineToAppend.append(subString + ' ');
+                
                 if(!foundSemicolon)
                 {
                     line.erase(line.find(subString), subString.length());
@@ -527,7 +447,7 @@ void Dictionary::parseString (std::string& line, std::istringstream& iss, std::i
                 if(foundSemicolon)
                 {
                     trimWhiteSpaces(lineToAppend);
-                    tmp2.localData_.push_back( lineToAppend );
+                    stripAndAppendToMap(lineToAppend, tmp2.localData_);
                     countWords=0;
                     foundSemicolon = false;
                     lineToAppend.clear();
@@ -540,7 +460,7 @@ void Dictionary::parseString (std::string& line, std::istringstream& iss, std::i
                     if (subString[0]==';')
                     {
                         line.erase(0, line.find(';') + 1);
-                        tmp2.localData_.push_back( lineToAppend );
+                        stripAndAppendToMap(lineToAppend, tmp2.localData_);
                         countWords=0;
                         foundSemicolon = false;
                         lineToAppend.clear();
@@ -589,5 +509,118 @@ void Dictionary::parseString (std::string& line, std::istringstream& iss, std::i
             errorMessage(in_file, message, lineCounter);
         }
     }
+}
+
+void Dictionary::stripAndAppendToMap(std::string& line, stringMap& m)
+{
+    line = line.substr(0, line.find(';'));
     
+    std::istringstream ss(line);
+
+    std::string key, value;
+    ss >> key;
+
+    bool findParenthesis = (line.find("(") != std::string::npos) && (line.find(")") != std::string::npos);
+
+    if (findParenthesis)
+    {
+        size_t start = line.find('(');
+        size_t end   = line.find(')');
+        line = line.substr(start + 1, end - start - 1);
+        ss.str(line);
+    }
+
+    bool parenthesisAppendFlag = true;
+
+    while (ss >> value) 
+    {
+        if (findParenthesis)
+        {
+            if (parenthesisAppendFlag)
+            {
+                m[key] += '(';
+                m[key] += value;
+                parenthesisAppendFlag = false;
+            }
+            else
+            {
+                m[key] += " " + value;
+            }
+        }
+        else
+        {
+            m[key] += value;
+        }
+    }
+
+    if (findParenthesis)
+    {
+        m[key] += ')';
+    }
+}
+
+
+std::ostream& operator<<(std::ostream& os, const indentDict& d) 
+{
+    int j = d.indentLevel;
+
+    size_t size = 0;
+
+    if (d.dict.localData().size() != 0)
+    {
+        // Get largest key
+        for (const auto& elem : d.dict.localData())
+        {
+            if (size < elem.first.size())
+            {
+                size = elem.first.size();
+            }
+        }
+
+        for (const auto& elem : d.dict.localData())
+        {
+            for (int k = 0; k < j; k++) 
+                os << "\t";
+            os <<elem.first 
+            << "\t" 
+            << std::setw(size)
+            << elem.second 
+            << ";" 
+            << "\n";        
+        }
+    }
+
+
+    for (const auto& elem : d.dict.data()) 
+    {
+        os << "\n";
+        
+        for (int k = 0; k < j; k++) 
+            os << "\t";
+
+        os  << elem.first 
+            << "\n";
+
+        for (int k = 0; k < j; k++) 
+                os << "\t";
+
+        os  << "{\n"
+            << indentDict(*elem.second, j + 1);
+                
+        for (int k = 0; k < j; k++) 
+            os << "\t";
+        
+        os  << "}"
+            << "\n";
+    }
+
+    return os;
+}
+
+
+std::ostream& operator<<(std::ostream& os, const Dictionary& dict)
+{
+    os << indentDict(dict);
+
+    return os;  
 }

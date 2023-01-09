@@ -7,7 +7,6 @@ Patch::Patch(std::string name, std::string type, int nFaces, int startFace)
     nFaces_(nFaces),
     startFace_(startFace)
 {
-
 }
 
 

@@ -6,24 +6,41 @@ IOObject::IOObject
     const std::string& name,
     const std::string& fileLocation,
     const Mesh& mesh,
-    fileAction read,
-    fileAction write,
+    readOperation read,
+    writeOperation write,
     const bool& storeObj
 )
 :
 name_(name),
 fileLocation_(fileLocation),
-path_(fileLocation_ + name_),
 mesh_(mesh),
 read_(read),
 write_(write),
 storeObj_(storeObj)
-{std::cout << "IOObject constructor for " << name_ << std::endl;}
+{
+    path_ = fileLocation_ + name_;
+    // std::cout << "IOObject constructor for " << name_ << std::endl;
+}
+
+IOObject::IOObject 
+( 
+    const std::string& name,
+    const std::string& fileLocation,
+    const Mesh& mesh
+)
+:
+name_(name),
+fileLocation_(fileLocation),
+mesh_(mesh)
+{
+    path_ = fileLocation_ + name_;
+}
+
 
 IOObject::IOObject 
 ( 
     const IOObject& obj,
-    const bool& store
+    bool store
 )
 :
 name_(obj.name_),
@@ -38,9 +55,12 @@ storeObj_(obj.storeObj_)
     {
         checkIn(this);
     }
-    std::cout << "IOObject copy constructor for " << name_ << std::endl;
+    // std::cout << "IOObject copy constructor for " << name_ << std::endl;
 }
 
+void IOObject::write() const
+{
+}
 
 const std::string& IOObject::name() const
 {
@@ -63,7 +83,7 @@ const Mesh& IOObject::mesh() const
     return mesh_;
 }
 
-void IOObject::store(const bool& check)
+void IOObject::store(bool check)
 {
     storeObj_ = check;
 
@@ -73,7 +93,7 @@ void IOObject::store(const bool& check)
     }
 }
 
-const bool& IOObject::isStore()
+bool IOObject::isStore()
 {
     return storeObj_;
 }
@@ -99,11 +119,42 @@ void IOObject::checkOut(const std::string& name)
 
     myMesh.dataBaseRef().erase( 
                                 std::remove_if( 
-                                                myMesh.dataBaseRef().begin(), myMesh.dataBaseRef().end(), 
-                                                [name](IOObject* item)
-                                                {
-                                                    return item->name() == name;
-                                                }), myMesh.dataBaseRef().end());
+                                                    myMesh.dataBaseRef().begin(), myMesh.dataBaseRef().end(), 
+                                                    [name](IOObject* item)
+                                                    {
+                                                        return item->name() == name;
+                                                    }
+                                                ), 
+                                                myMesh.dataBaseRef().end()
+                              );
                               
 }  
 
+
+
+std::map<std::type_index, std::string> IOObject::dataTypes =
+{
+    {typeid(double),        "scalar"},   
+    {typeid(vector3),       "vector"},
+    {typeid(tensor),        "tensor"},
+    {typeid(symmTensor),    "symmTensor"},
+};
+
+std::map<std::type_index, std::string> IOObject::volTypes =
+{
+    {typeid(double),        "volScalarField"},   
+    {typeid(vector3),       "volVectorField"},
+    {typeid(tensor),        "volTensorField"},
+    {typeid(symmTensor),    "volSymmTensorField"},
+};
+
+
+const char* IOObject::CRheoHeader = 
+R"""(/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\        /  C            | Computational Rheology Group                    |
+|  \\      /   R            | Insitute for Polymers and Composites            |
+|   \\    /    H            | Univeristy of Minho                             |
+|    \\  /     E            | Web:         http://www.crheo.org               |
+|     \\/      0            |                                                 |
+\*---------------------------------------------------------------------------*/)""";

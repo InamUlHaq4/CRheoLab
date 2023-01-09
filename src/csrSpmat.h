@@ -6,7 +6,10 @@
 #include <vector>
 
 // Class to implement a list of lists for a sparse matrix
-class csrSpmat : public spmat {
+class csrSpmat 
+: 
+  public spmat 
+{
 
 public: // change to private later
 

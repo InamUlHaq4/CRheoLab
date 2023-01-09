@@ -26,7 +26,7 @@ inline std::string getExecutablePath()
 // Function to check if a folder exists withing the executable path
 inline void checkFileStructure(std::string folderName,  std::string pathname = getExecutablePath())
 {
-  std::string fullPath (pathname+folderName);
+  std::string fullPath (pathname + folderName);
 
   DIR* dir = opendir(fullPath.c_str());
 
@@ -108,7 +108,7 @@ inline std::string getTimeFolder()
         throw std::runtime_error(errorMessage);
     }
 
-    return currentFolder+"/";
+    return currentFolder + "/";
 }
 
 

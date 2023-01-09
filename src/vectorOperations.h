@@ -1,58 +1,6 @@
 #ifndef VECTOROPERATIONS_H
 #define VECTOROPERATIONS_H
 
-// Output vectorField to screen
-inline std::ostream& operator<<(std::ostream& os, const vectorField& v)
-{
-    os << "(" << std::endl;
-    
-    for (unsigned int i = 0; i < v.size(); ++i) {
-        
-        os << "\t";
-
-        os << "(";
-
-        for (unsigned int j=0; j< v[i].size(); j++)
-        {
-            if(j<v[i].size()-1)
-            {
-                os<< v[i][j] << " ";
-            }
-            else
-            {
-                os<< v[i][j];
-            }
-
-        }
-        os << ")" << std::endl;
-    }
-
-    os << ")";
-    return os;
-}
-
-// Output vectorField to screen
-inline std::ostream& operator<<(std::ostream& os, const vector3& v)
-{
-    os << "(" ;
-
-    for (unsigned int i = 0; i < v.size(); ++i){
-        
-        if(i<v.size()-1)
-        {
-            os<< v[i] << " ";
-        }
-        else
-        {        
-            os<< v[i];
-        }
-    }
-
-    os << ")" ;
-    return os;
-}
-
-
 // Math Operations
 
 // At the vector level

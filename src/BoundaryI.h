@@ -2,33 +2,39 @@
 
 // Constructor by Reading Input file to initialize data members 
 template <typename vectorType>
-Boundary<vectorType>::Boundary(const IOObject& IO, const Patch& patch)
-    : IODictionary(IO),
-      name_(patch.name())
+Boundary<vectorType>::Boundary
+(
+  const IOObject& IO, 
+  const Patch& patch
+)
+  : IOObject(IO),
+    boundaryPatch_(patch)
 {
-    if (read() == fileAction::MUST_READ)
+    if (readOp() == IOObject::MUST_READ)
     {
-        readBoundaryPatch(patch.name());
+      readBoundaryPatch(boundaryPatch_.name());
     }
-    else if (read() == fileAction::NO_READ)
+    else if (readOp() == IOObject::NO_READ)
     {
-        this->type_="calculated";
-        this->uniformField_=false;
-        this->definedValues_.resize(patch.nFaces());
-        // Initializing the field to zeros.
-        // Zeroed ref value
+        type_ = "calculated";
+        uniformField_ = false;
+        definedValues_.resize(patch.nFaces());
+
         typename vectorType::value_type dataToVector{0};
-        // Zeroing the vector members with the ref data
         std::fill(this->definedValues_.begin(),this->definedValues_.end(), dataToVector);
     }
     else
     {
-        // Verifying if the fileAction not one of the available options
         throw std::runtime_error("Unrecognized action for boundaryField! Please choose MUST_READ or NO_READ!");
     }
 
     // Verifying if the patch size is in agreement with the mesh Patch size
-    if ((!this->uniformField_) && (this->type_!="empty") && this->definedValues_.size() != (long unsigned int)patch.nFaces())
+    if 
+    (
+           (!this->uniformField_) 
+        && (this->type_!="empty") 
+        && (this->definedValues_.size() != (long unsigned int)patch.nFaces())
+    )
     {
         std::cerr << "The input data for the patch named as \" "
         << patch.name() << " \" for the field " << this->name() 
@@ -41,25 +47,33 @@ Boundary<vectorType>::Boundary(const IOObject& IO, const Patch& patch)
 
 // Constructing with a default value passed by argument
 template <typename vectorType>
-Boundary<vectorType>::Boundary(const IOObject& IO, const Patch& patch, const typename vectorType::value_type& defaultValue)
-    : IODictionary(IO),
-      name_(patch.name())
+Boundary<vectorType>::Boundary
+(
+  const IOObject& IO, 
+  const Patch& patch, 
+  const typename vectorType::value_type& defaultValue
+)
+  : IOObject(IO),
+    boundaryPatch_(patch)
 {
-    this->type_="calculated";
-    this->uniformField_=false;
-    this->definedValues_.resize(patch.nFaces(), defaultValue);
+    type_ = "calculated";
+    uniformField_ = false;
+    definedValues_.resize(patch.nFaces(), defaultValue);
 }
 
 
 template <typename vectorType>
-Boundary<vectorType>::Boundary(const Boundary<vectorType>& bf)
-    : IODictionary(bf),
-      name_ (bf.name_),
-      type_(bf.type_),
-      uniformField_ (bf.uniformField_),
-      definedValues_ (bf.definedValues_),
-      otherInfo_(bf.otherInfo_)
-   {}
+Boundary<vectorType>::Boundary
+(
+  const Boundary<vectorType>& bf
+)
+  : IOObject(bf),
+    boundaryPatch_(bf.boundaryPatch_),
+    type_(bf.type_),
+    uniformField_ (bf.uniformField_),
+    definedValues_ (bf.definedValues_),
+    otherInfo_(bf.otherInfo_)
+{}
 
 
 // Member function to access the boundary patch defined values
@@ -71,14 +85,14 @@ vectorType& Boundary<vectorType>::definedValues()
 
 // Member function to access the boundary patch defined name
 template <typename vectorType>
-const std::string& Boundary<vectorType>::name()
+const std::string& Boundary<vectorType>::name() const
 {
-  return name_;
+  return boundaryPatch_.name();
 }
 
 // Member function to access the boundary patch defined type ( fixedValue, fixedGradient, symmetry, and etc. )
 template <typename vectorType>
-const std::string& Boundary<vectorType>::type()
+const std::string& Boundary<vectorType>::type() const
 {
   return type_;
 }
@@ -105,9 +119,9 @@ typename vectorType::value_type& Boundary<vectorType>::operator[](unsigned int p
 {
   if (posI >= this->definedValues_.size())
   {
-      std::cout << "The given index " << posI << " is out of bound, exiting" << std::endl;
-      exit(0);
+      throw std::runtime_error("The given index is out of bounds");
   }
+
   return definedValues().at(posI);
 }
 
@@ -118,9 +132,9 @@ typename vectorType::value_type Boundary<vectorType>::operator[](unsigned int po
 {
   if (posI >= definedValues().size())
   {
-      std::cout << "The given index " << posI << " is out of bound, exiting" << std::endl;
-      exit(0);
+      throw std::runtime_error("The given index is out of bounds");
   }
+
   return this->definedValues_.at(posI);
 }
 
@@ -131,11 +145,61 @@ Boundary<vectorType>& Boundary<vectorType>::operator=(const Boundary<vectorType>
   if (this == &bf)
         return *this;
 
-  // name_ = bf.name_;
-  // type_ = bf.type_;
-  // uniformField_ = bf.uniformField_;
-  // definedValues_ = bf.definedValues_;
-  // otherInfo_ = bf.otherInfo_;
+  // Needs to be fixed
   
   return *this;
 }
+
+template <typename vectorType>
+std::ostream& operator<<(std::ostream& os, const Boundary<vectorType>& b)
+{
+  os << "\t" 
+     << b.name() << "\n"
+     << "\t" 
+     << '{'     << "\n"
+     << "\t\t"    << "type" << "\t" <<"\t" << b.type_ << ';' << "\n";
+
+  for (auto it = b.otherInfo_.cbegin(); it != b.otherInfo_.cend(); ++it)
+  {
+    os << "\t\t" << (*it).first << "\t\t" << (*it).second << ';' << "\n";
+  }   
+
+  if (b.uniformField_ && b.definedValues_.size() != 0)
+  {
+    os << "\t\t" << "value" << "\t" <<"\t" 
+       << "uniform "
+       << b.definedValues_[0] 
+       << ';' << "\n";
+  }
+  else if (!b.uniformField_ && b.definedValues_.size() != 0)
+  {
+    typename vectorType::value_type primitiveDataType;
+    if (IOObject::dataTypes.find(typeid(primitiveDataType)) != IOObject::dataTypes.end()) 
+    {
+        os << "\t\t"
+           <<"value" << "\t"<<"\t" 
+           << "nonuniform List<" << IOObject::dataTypes[typeid(primitiveDataType)] << ">" << "\n" 
+           << b.definedValues_;
+    } 
+    else 
+    {
+        throw std::runtime_error("Error in dataType for printing...");
+    }
+  }
+
+  os  << "\t"
+      << '}'   
+      << std::endl;
+
+  return os;
+}
+
+template <typename vectorType> 
+void Boundary<vectorType>::write() const
+{
+    throw std::runtime_error("write() not implemented for IOObject");
+}
+
+
+
+

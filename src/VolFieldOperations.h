@@ -9,7 +9,11 @@ typedef std::vector<double> scalarField;
 typedef std::vector<vector3> vectorField;
 typedef std::vector<symmTensor> symmTensorField;
 typedef std::vector<tensor> tensorField;
+
 typedef VolField<scalarField> volScalarField;
+typedef VolField<vectorField> volVectorField;
+typedef VolField<tensorField> volTensorField;
+typedef VolField<symmTensorField> volSymmTensorField;
 
 #include "fieldOperations.h"
 
@@ -27,10 +31,11 @@ inline void checkVolSize(const VolField<T1>& v1, const VolField<T1>& v2)
 
 inline volScalarField operator+(const volScalarField& v1, const volScalarField& v2)
 {
-
-   checkVolSize(v1,v2);
-
    volScalarField result (v1);
+
+   result.rename(v1.name() + "+" + v2.name());
+   
+   result.initHeader();
 
    for(unsigned int i = 0 ; i < v1.internalField().size(); i++)
    {

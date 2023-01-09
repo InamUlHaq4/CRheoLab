@@ -1,64 +1,87 @@
 #ifndef Dictionary_H
 #define Dictionary_H
 
-#include <string>
-#include <vector>
-#include <map>
-#include <fstream>
-#include <iostream>
-#include <sstream> 
-#include <algorithm>
-#include <regex>
 #include "IOObject.h"
+#include "readHelpOperations.h"
+#include <unordered_map>
+#include <memory>
+#include <iomanip>
 
+class Dictionary;
+struct indentDict;
+
+typedef std::unordered_map<std::string, std::string> stringMap;
+typedef std::unordered_map<std::string, std::unique_ptr<Dictionary>> dictMap;
+
+std::ostream& operator<<(std::ostream& os, const stringMap&  m);
+std::ostream& operator<<(std::ostream& os, const indentDict& d);
+
+// struct used for indentation printing of dictionary class
+struct indentDict
+{
+    const Dictionary& dict;
+    int indentLevel;    
+
+    indentDict(const Dictionary& dict, int indentLevel=0) 
+    : 
+    dict(dict), 
+    indentLevel(indentLevel) 
+    {}
+};
 
 class Dictionary
-:
-public IOObject
 {
-
     public:
-        Dictionary(const IOObject& IO);
-        Dictionary(const Dictionary& dict, bool append);
 
-        
-        std::string stripSingleComment(std::string& line);
-        std::string stripBlockComment(std::ifstream& in_file, std::string& line, unsigned int& lineCounter);
-        std::string stripComments(std::ifstream& in_file, std::string& line, unsigned int& lineCounter);
-        void newLineAndUpdateSStream(std::ifstream& in_file, std::istringstream& iss, std::string& line, unsigned int& lineCounter, bool updateStringStream=false);
+        //- Constructors
+            // empty
+            Dictionary();
 
-        void errorMessage(std::ifstream& in_file, const std::string& message, const unsigned int& lineCounter=0, bool turnOffLinePrinting=false);
-        bool checkCharacter(std::ifstream& in_file, std::istringstream& iss, const char& C);
+            // From string
+            Dictionary(const std::string& path);
 
-        bool checkExactMatch(const std::string& line, const std::string& keyWord) const;
+            // From IOObject
+            Dictionary(const IOObject& IO);
+            
+            // Copy constructor
+            Dictionary(const Dictionary& dict, bool append=false);
 
-        void stripString(std::string& line, const std::string& word) const;
+        //- Member functions
 
-        void rightTrimWhiteSpaces(std::string& line);
-        void leftTrimWhiteSpaces(std::string& line);
-        void trimWhiteSpaces(std::string& line);
+            // read
+            virtual bool read();
+            void readSubDict (Dictionary& tmp, std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter, const std::string& key);
+            bool readDict (const std::string& dictName);
 
-        std::vector<std::string> splitStringByChar(const std::string& line, const char& C);
+            // Manipulate string
+            virtual void parseString (std::string& line, std::istringstream& iss, std::ifstream& in_file, Dictionary& tmp2, int& lineCounter);
+            void stripAndAppendToMap(std::string&, stringMap&);
 
-        bool read();
-        bool clear();
         void bracketsTest(std::ifstream& in_file);
-        void readSubDict(Dictionary& tmp, std::ifstream& in_file, std::istringstream& iss, std::string& line, unsigned int& lineCounter, const std::string& key);
-        void parseString (std::string& line, std::istringstream& iss, std::ifstream& in_file, Dictionary& tmp2, unsigned int& lineCounter);
 
-        // Utility function
-        const Dictionary& subDict(const std::string& dictName) const;
-        
+        //- Attribute access
+        const stringMap& localData() const {return localData_;}
+        stringMap& localData(){return localData_;}
+        const dictMap& data() const {return data_;}
+        dictMap& data(){return data_;}
+
+        //- Lookup
         template <typename T>
         T lookup(const std::string& keyWord) const;
+
+        const Dictionary& subDict(const std::string& dictName) const;
+
+        //- Print
+
+        friend std::ostream& operator<<(std::ostream& os, const Dictionary& dict);
 
     private:
         int  nOpenParenthesis_;
         bool finishedReadingSubDicts_;
 
-       std::vector<std::string> localData_;
-       std::map<std::string, Dictionary> data_;
-
+        std::string filePath_;
+        stringMap   localData_;
+        dictMap     data_; 
 };
 
 #include "DictionaryI.h"

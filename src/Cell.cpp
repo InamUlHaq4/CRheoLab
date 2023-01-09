@@ -53,6 +53,16 @@ const double& Cell::getSkewness() const
     return skewness_;
 }
 
+const vector<Face*>& Cell:: getCellFaces() const
+{
+    return cellFaces_;
+}
+
+const int& Cell:: getID() const
+{
+    return ID_;
+} 
+
 // Computations
 void Cell::computeVolume()
 {

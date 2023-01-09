@@ -1,7 +1,7 @@
 // BoundaryField constructor by reading Input file  
 template <typename vectorType>
 BoundaryField<vectorType>::BoundaryField(const IOObject& IO)
-:     nPatches_(IO.mesh().nPatches_)
+:     nPatches_(IO.mesh().getnPatches())
 {
     for (int i = 0; i < nPatches_; i++)
     {
@@ -12,7 +12,7 @@ BoundaryField<vectorType>::BoundaryField(const IOObject& IO)
 // BoundaryField constructor by setting a default value for the field  
 template <typename vectorType>
 BoundaryField<vectorType>::BoundaryField(const IOObject& IO, const typename vectorType::value_type& defaultValue)
-:     nPatches_(IO.mesh().nPatches_)
+:     nPatches_(IO.mesh().getnPatches())
 {
     for (int i = 0; i < nPatches_; i++)
     {

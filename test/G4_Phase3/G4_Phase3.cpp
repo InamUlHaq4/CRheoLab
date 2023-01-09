@@ -1,9 +1,9 @@
 
 #include "Mesh.h"
 #include "RunTime.h"
-#include "IODictionary.h"
+//#include "IODictionary.h"
 #include "VolField.h"
-#include "IOObject.h"
+//#include "IOObject.h"
 #include "Dictionary.h"
 
 void foo(VolField<std::vector<double>>& field)
@@ -34,7 +34,6 @@ int main()
 {
     RunTime time;
     Mesh mesh(time);
-    
 
     Dictionary myDict
     (
@@ -48,9 +47,14 @@ int main()
         )
     );
     
+    mesh.setnCells(200);   
+    //mesh.setnFaces(100);
+    //std::cout << " mesh nFaces = " << mesh.getnFaces() << std::endl; 
 
+    mesh.setnPatches(10);
+    std::cout << " mesh nPatches = " << mesh.getnPatches() << std::endl; 
 
-   Dictionary& banana1 = mesh.lookup<Dictionary>("transportProperties");
+   //Dictionary& banana1 = mesh.lookup<Dictionary>("transportProperties");
   
 
     VolField<std::vector<double>> p
@@ -66,7 +70,7 @@ int main()
     
     );
 
-        foo(p);
+    foo(p);
 
 
    // double DT = tst2.lookup<double>("dt");

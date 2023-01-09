@@ -27,6 +27,10 @@ class Face
         void setNonOrthogonalityFace(const double&);
         void setSkewness(const double&);
 
+        void setArea(const double&); //added
+        void setCenterOfMass(const vector3&); //added
+        void setAreaVector(const vector3&); //added
+
         // Getters
         const Cell* getOwner() const;
         const Cell* getNeighbour() const;
@@ -36,6 +40,8 @@ class Face
         const double& getNonOrthogonality() const;
         const double& getSkewness() const;
         const vector3& getIntersectionPoint() const;
+
+        const double& getArea() const; //added
 
         // Computations
         void computeArea();

@@ -25,6 +25,8 @@ class Cell
         const double& getVolume() const;
         const double& getNonOrthogonality() const;
         const double& getSkewness() const;
+        const vector<Face*>& getCellFaces() const; 
+        const int& getID() const; 
 
         // Computations
         void computeCenter();
@@ -34,7 +36,8 @@ class Cell
         void computeMaxNonOrthogonality();
         void computeSkewness();
 
-    public:
+    private:
+    //public:
 
         // cellID
         int ID_;

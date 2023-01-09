@@ -50,6 +50,21 @@ void Face::setSkewness(const double& skewness)
     skewness_ = skewness;
 }
 
+void Face::setArea(const double& area) //added
+{
+    area_ = area;
+}
+
+void Face::setCenterOfMass(const vector3& centerOfMass) //added
+{
+    centerOfMass_ = centerOfMass;
+}
+
+void Face::setAreaVector(const vector3& areaVector) //added
+{
+    areaVector_ = areaVector;
+}
+
 // Getters
 
 const Cell* Face::getOwner() const
@@ -85,6 +100,11 @@ const double& Face::getNonOrthogonality() const
 const double& Face::getSkewness() const
 {
     return skewness_;
+}
+
+const double& Face::getArea() const //added
+{
+    return area_;
 }
 
 // Computations

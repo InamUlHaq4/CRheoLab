@@ -38,16 +38,6 @@ public:
 
   std::vector<Patch> patchList_;
 
-  unsigned int nPoints_;  
-
-  unsigned int nFaces_;
-
-  unsigned int nInteriorFaces_;
-
-  unsigned int nBoundaryFaces_;
-
-  unsigned int nPatches_;
-
   std::vector <IOObject*>& dataBaseRef();
   const std::vector <IOObject*>& dataBase() const;
   bool addToDataBase(IOObject* obj);
@@ -60,6 +50,26 @@ public:
   const unsigned int getnCells();
   
   void setnCells(unsigned int nCells);
+
+  const unsigned int getnInteriorFaces();
+  
+  void setnInteriorFaces(unsigned int nInteriorFaces);
+
+  const unsigned int getnPoints();
+  
+  void setnPoints(unsigned int nPoints);
+
+  const unsigned int getnFaces();
+  
+  void setnFaces(unsigned int nFaces);
+
+  const unsigned int getnBoundaryFaces();
+  
+  void setnBoundaryFaces(unsigned int nBoundaryFaces);
+
+  const unsigned int getnPatches();
+  
+  void setnPatches(unsigned int nPatches);
 
 private:
 
@@ -82,7 +92,16 @@ private:
   const RunTime& time_;
    
   unsigned int nCells_;
+  
+  unsigned int nPoints_;
+  
+  unsigned int nFaces_;
+ 
+  unsigned int nInteriorFaces_;
 
+  unsigned int nBoundaryFaces_;
+
+  unsigned int nPatches_;
   
 } ;
 

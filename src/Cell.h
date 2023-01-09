@@ -39,8 +39,8 @@ class Cell
     private:
     //public:
 
-        // cellID
-        int ID_;
+        // CellID
+        int ID_; 
 
         // Cell Volume
         double volume_;

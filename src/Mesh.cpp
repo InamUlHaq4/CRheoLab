@@ -498,7 +498,74 @@ const std::vector <IOObject*>& Mesh::dataBase() const
     return dataBase_;
 }
 
+// Getter for nCells_
+ const unsigned int Mesh::getnCells()
+ {
+    return nCells_;
+ }
 
+// Setter for nCells_
+ void Mesh::setnCells(unsigned int nCells)
+ {
+    nCells_ = nCells;
+ }
 
+ // Getter for nPoints_
+const unsigned int Mesh::getnPoints()
+ {
+    return nPoints_;
+ }
+ 
+// Setter for nPoints_
+ void Mesh::setnPoints(unsigned int nPoints)
+ {
+    nPoints_ = nPoints;
+ }
 
+  // Getter for nFaces_
+const unsigned int Mesh::getnFaces()
+ {
+    return nFaces_;
+ }
+ 
+// Setter for nFaces_
+ void Mesh::setnFaces(unsigned int nFaces)
+ {
+    nFaces_ = nFaces;
+ }
 
+// Getter for nInteriorFaces_
+const unsigned int Mesh::getnInteriorFaces()
+ {
+    return nInteriorFaces_;
+ }
+
+// Setter for nInteriorFaces_
+ void Mesh::setnInteriorFaces(unsigned int nInteriorFaces)
+ {
+    nInteriorFaces_ = nInteriorFaces;
+ }
+
+ // Getter for nBoundaryFaces_
+const unsigned int Mesh::getnBoundaryFaces()
+ {
+    return nBoundaryFaces_;
+ }
+
+// Setter for nBoundaryFaces_
+ void Mesh::setnBoundaryFaces(unsigned int nBoundaryFaces)
+ {
+    nBoundaryFaces_ = nBoundaryFaces;
+ }
+
+  // Getter for nPatches_
+const unsigned int Mesh::getnPatches()
+ {
+    return nPatches_;
+ }
+
+// Setter for nPatches_
+ void Mesh::setnPatches(unsigned int nPatches)
+ {
+    nPatches_ = nPatches;
+ }

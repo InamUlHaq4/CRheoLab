@@ -107,7 +107,7 @@ bool& Boundary<vectorType>::uniformField()
 
 // Member function to access the boundary patch supplementary data content.
 template <typename vectorType>
-const std::map<std::string, std::string>& Boundary<vectorType>::otherInfo()
+const Dictionary& Boundary<vectorType>::otherInfo()
 {
   return otherInfo_;
 }
@@ -159,10 +159,7 @@ std::ostream& operator<<(std::ostream& os, const Boundary<vectorType>& b)
      << '{'     << "\n"
      << "\t\t"    << "type" << "\t" <<"\t" << b.type_ << ';' << "\n";
 
-  for (auto it = b.otherInfo_.cbegin(); it != b.otherInfo_.cend(); ++it)
-  {
-    os << "\t\t" << (*it).first << "\t\t" << (*it).second << ';' << "\n";
-  }   
+  os << indentDict(b.otherInfo_, 2);
 
   if (b.uniformField_ && b.definedValues_.size() != 0)
   {

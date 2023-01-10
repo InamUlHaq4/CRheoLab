@@ -180,36 +180,6 @@ void vectorFormatError(std::ifstream& in_file, int lineCounter)
 };
 
 
-double readScalarData
-(
-    std::ifstream& in_file, 
-    std::istringstream& iss, 
-    std::string& line, 
-    int lineCounter
-)
-{
-
-    line = stripComments(in_file, line, lineCounter);
-
-    // update string stream
-    iss.clear();
-    iss.str(line);
-
-    // Store data
-    double scalar;
-
-    iss >> scalar;
-
-    // If something is wrong with string stream warn the user
-    if (iss.fail())
-    {
-        errorMessage(in_file, "Problem reading scalar ", lineCounter);
-    }
-    
-    return scalar;
-}
-
-
 std::string readString
 (
     std::ifstream& in_file, 

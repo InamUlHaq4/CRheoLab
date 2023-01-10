@@ -4,6 +4,7 @@
 #include "Mesh.h"
 #include "RunTime.h"
 #include <iostream>
+#include "Dictionary.h"
 
 ///@brief Boundary Class stores the field data for a patch (faces on domain boundary).
 /// provides attributes to store patch information.
@@ -60,7 +61,7 @@ class Boundary
         bool& uniformField();
 
         ///@brief Member function to access the boundary patch supplementary data content.
-        const std::map<std::string, std::string>& otherInfo();
+        const Dictionary& otherInfo();
 
         // Operator Overloading templated
         // Setter
@@ -96,7 +97,7 @@ class Boundary
         vectorType definedValues_;
 
         // The supplementary data content.
-        std::map<std::string, std::string> otherInfo_;
+        Dictionary otherInfo_;
 };
 
 #include "BoundaryI.h"

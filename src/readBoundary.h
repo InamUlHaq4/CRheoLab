@@ -123,8 +123,7 @@ void Boundary<vectorType>::readBoundaryPatch(const std::string& patchName)
                                 }
                             );
 
-                            // this->otherInfo_.insert ( std::pair<std::string, std::string>(tmp[0], tmp[1] ) );
-                            this->otherInfo_.insert ( std::pair<std::string, std::string>(tmp[0], joinString ) );
+                            otherInfo_.localData().emplace(tmp[0], joinString);
                         }
 
                         // Get value

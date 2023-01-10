@@ -101,10 +101,12 @@ void VolField<vectorType>::updateHeader() const
 {
     typename vectorType::value_type primitiveDataType;
 
+    std::string folderName = mesh().time().Folder();
+
     header_.data()["FoamFile"].get()->localData()["version"] = "2.0";
     header_.data()["FoamFile"].get()->localData()["format"] = "ascii";
     header_.data()["FoamFile"].get()->localData()["class"] = IOObject::volTypes[typeid(primitiveDataType)];
-    header_.data()["FoamFile"].get()->localData()["location"] = mesh().time().Folder();
+    header_.data()["FoamFile"].get()->localData()["location"] = '"' + folderName.substr(0, folderName.length() - 1) + '"';
     header_.data()["FoamFile"].get()->localData()["object"] = name();
 }
 

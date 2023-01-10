@@ -29,13 +29,22 @@ struct indentDict
     {}
 };
 
+struct baseDict
+{
+    int  nOpenParenthesis_{0};
+    bool finishedReadingSubDicts_{false};
+    std::string filePath_;
+    virtual ~baseDict() = default;
+};
+
 class Dictionary
+: public baseDict
 {
     public:
 
         //- Constructors
             // empty
-            Dictionary();
+            Dictionary() = default;
 
             // From string
             Dictionary(const std::string& path);
@@ -44,7 +53,17 @@ class Dictionary
             Dictionary(const IOObject& IO);
             
             // Copy constructor
-            Dictionary(const Dictionary& dict, bool append=false);
+            Dictionary(const Dictionary& otherDict);
+            Dictionary& operator=(const Dictionary& otherDict)
+            {
+                *this = Dictionary(otherDict);
+                return *this;
+            }
+
+            Dictionary(Dictionary&& otherDict) = default;
+            Dictionary& operator=(Dictionary&& otherDict) = default;
+
+            virtual ~Dictionary() = default;
 
         //- Member functions
 
@@ -76,10 +95,6 @@ class Dictionary
         friend std::ostream& operator<<(std::ostream& os, const Dictionary& dict);
 
     private:
-        int  nOpenParenthesis_;
-        bool finishedReadingSubDicts_;
-
-        std::string filePath_;
         stringMap   localData_;
         dictMap     data_; 
 };

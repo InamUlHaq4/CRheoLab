@@ -1,42 +1,28 @@
 #include "Dictionary.h"
 
-// empty
-Dictionary::Dictionary()
-:
-nOpenParenthesis_(0),
-finishedReadingSubDicts_(false),
-filePath_()
-{}
-
 // From string
 Dictionary::Dictionary(const std::string& path)
-:
-nOpenParenthesis_(0),
-finishedReadingSubDicts_(false),
-filePath_(path)
-{}
+{
+    filePath_ = path;
+}
 
 // Construct from IOobject
 Dictionary::Dictionary(const IOObject& IO)
-:
-nOpenParenthesis_(0),
-finishedReadingSubDicts_(false),
-filePath_(IO.path())
 {
+    filePath_ = IO.path();
     read();
 }
 
-// copy constructor
-Dictionary::Dictionary(const Dictionary& dict, bool append)
-:
-nOpenParenthesis_(dict.nOpenParenthesis_),
-finishedReadingSubDicts_(dict.finishedReadingSubDicts_),
-filePath_(dict.filePath_)
+Dictionary::Dictionary(const Dictionary& otherDict)
+: 
+localData_(otherDict.localData_)
 {
-    if(append)
+    for(const auto& elem : otherDict.data_) 
     {
-        localData_ = dict.localData_;
-        // data_ = dict.data_;
+        if(elem.second) 
+            data_.emplace(elem.first, std::make_unique<Dictionary>(*elem.second));
+        else 
+            data_.emplace(elem.first, nullptr);
     }
 }
 
@@ -166,9 +152,11 @@ bool Dictionary::read()
 
 void Dictionary::readSubDict(Dictionary& tmp, std::ifstream& in_file, std::istringstream& iss, std::string& line, int& lineCounter,const std::string& key)
 {
-    std::unique_ptr<Dictionary> tmp2Ptr = std::make_unique<Dictionary>(tmp, false);
+    std::unique_ptr<Dictionary> tmp2Ptr = std::make_unique<Dictionary>();
 
     Dictionary& tmp2 = *tmp2Ptr;
+    tmp2.nOpenParenthesis_ = tmp.nOpenParenthesis_;
+    tmp2.finishedReadingSubDicts_ = tmp.finishedReadingSubDicts_;
 
     std::string keyword;
 
@@ -324,8 +312,6 @@ const Dictionary& Dictionary::subDict(const std::string& dictName) const
         throw std::runtime_error("subdict does not exist!");
     }
 }
-
-
 
 void Dictionary::parseString (std::string& line, std::istringstream& iss, std::ifstream& in_file, Dictionary& tmp2, int& lineCounter)
 {
@@ -582,8 +568,8 @@ std::ostream& operator<<(std::ostream& os, const indentDict& d)
             for (int k = 0; k < j; k++) 
                 os << "\t";
             os <<elem.first 
-            << "\t" 
             << std::setw(size)
+            << "\t" 
             << elem.second 
             << ";" 
             << "\n";        

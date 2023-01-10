@@ -18,7 +18,6 @@ void checkSemiColon (std::ifstream& in_file, std::string& line, const int& lineC
 
 void vectorFormatError(std::ifstream& in_file, int lineCounter);
 
-double readScalarData(std::ifstream& in_file, std::istringstream& iss, std::string& line, int lineCounter);
 std::string readString(std::ifstream& in_file, std::istringstream& iss, std::string& line, int lineCounter, bool semiColumCheck);
 void readCharacter(std::ifstream& in_file, std::istringstream& iss, const char C, const int& lineCounter);
 

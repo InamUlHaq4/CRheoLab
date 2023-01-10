@@ -60,6 +60,8 @@ class VolField
         void initHeader() const;
         void updateHeader() const;
 
+        const DimensionedSet& dimensions() {return dimensions_;}
+
         VolField& operator=(const VolField &vf); // provisional
 
         template<class T>

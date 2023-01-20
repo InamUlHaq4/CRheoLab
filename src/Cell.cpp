@@ -10,10 +10,10 @@ Cell::Cell()
 {}
 
 // Setters
-void Cell::setCellID(const int& ID)
-{
-    ID_ = ID;
-}
+// void Cell::setCellID(const int& ID)
+// {
+//     ID_ = ID;
+// }
 
 void Cell::setCellFaces(const vector<Face*>& cellFaces)
 {
@@ -30,6 +30,11 @@ void Cell::setNonOrthogonality(const double& angle)
 void Cell::setSkewness(const double& skewness)
 {
     skewness_ = skewness;
+}
+
+void Cell::setCenterOfMass(const vector3& centerofMass)
+{
+    centerOfMass_ = centerofMass;
 }
 
 // Getters
@@ -51,6 +56,11 @@ const double& Cell::getNonOrthogonality() const
 const double& Cell::getSkewness() const
 {
     return skewness_;
+}
+
+const int& Cell:: getID() const
+{
+    return ID_;
 }
 
 // Computations

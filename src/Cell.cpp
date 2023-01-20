@@ -10,32 +10,26 @@ Cell::Cell()
 {}
 
 // Setters
-// void Cell::setCellID(const int& ID)
-// {
-//     ID_ = ID;
-// }
 
-void Cell::setCellFaces(const vector<Face*>& cellFaces)
-{
-    // Deep copy of points
-    cellFaces_ = cellFaces;   
-}
-
-void Cell::setNonOrthogonality(const double& angle)
+void Cell::setMaxNonOrthogonality(const double& angle)
 {
     maxNonOrthogonality_ = angle;
     
 }
+void Cell::setCellID(const int& ID)
+{
+    ID_ = ID;
+}
+void Cell::setCellFaces(const vector<Face*>& cellFaces)
+{
+    cellFaces_= cellFaces;
+}
 
 void Cell::setSkewness(const double& skewness)
 {
-    skewness_ = skewness;
+    skewness_= skewness;
 }
 
-void Cell::setCenterOfMass(const vector3& centerofMass)
-{
-    centerOfMass_ = centerofMass;
-}
 
 // Getters
 const vector3& Cell::getCenterOfMass() const
@@ -58,10 +52,16 @@ const double& Cell::getSkewness() const
     return skewness_;
 }
 
-const int& Cell:: getID() const
+const int& Cell:: getCellID() const
 {
     return ID_;
 }
+
+const vector<Face*>& Cell:: getCellFaces() const
+{
+    return cellFaces_;
+}
+
 
 // Computations
 void Cell::computeVolume()
@@ -161,7 +161,7 @@ void Cell::computeMaxNonOrthogonality()
                                             );
     }
 
-    setNonOrthogonality(maxNonOrthogonalityAngle);
+    setMaxNonOrthogonality(maxNonOrthogonalityAngle);
 }
 
 void Cell::computeSkewness()
@@ -177,4 +177,5 @@ void Cell::computeSkewness()
     }
 
     setSkewness(maxSkewness);
+    //setSkewness(maxSkewness);
 }

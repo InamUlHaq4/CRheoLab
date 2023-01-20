@@ -14,10 +14,10 @@ class Cell
         virtual  ~Cell(){};
 
         // Setters
-        //void setCellFaces(const vector<Face*>& );
-        //void setCellID(const int& );
-        void setCenterOfMass(const vector3&);
-        void setNonOrthogonality(const double&);
+        void setCellFaces(const vector<Face*>&);
+        void setCellID(const int&);
+        //void setCenterOfMass(const vector3&);
+        void setMaxNonOrthogonality(const double&);
         void setSkewness(const double&);
 
         // Getters
@@ -25,7 +25,8 @@ class Cell
         const double& getVolume() const;
         const double& getNonOrthogonality() const;
         const double& getSkewness() const;
-        const int& getID() const;
+        const int& getCellID() const;
+        const vector<Face*>& getCellFaces() const;
 
 
         // Computations

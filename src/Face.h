@@ -20,16 +20,18 @@ class Face
 
         // Member Functions
         // Setters
-        void setOwner(const Cell&);
-        void setNeighbour(const Cell&);
-        void setID(const int&);
-        void setWeightingFactor(const double&);
-        void setNonOrthogonalityFace(const double&);
-        void setSkewness(const double&);
-
-        void setArea(const double&); //added
-        void setCenterOfMass(const vector3&); //added
-        void setAreaVector(const vector3&); //added
+        void setOwner(const Cell& owner);
+        void setNeighbour(const Cell& neighbour);
+        void setID(const int& ID);
+        void setWeightingFactor(const double& g_c);
+        void setNonOrthogonalityFace(const double& nonOrthoAngle);
+        void setSkewness(const double& skewness);
+        
+        void setIntersectionPoint(const vector3& intersectionPoint);//Added
+        void setnPointsInFace(const int& nPointsInFace);//Added
+        void setArea(const double& area); //added
+        void setCenterOfMass(const vector3& centerOfMass); //added
+        void setAreaVector(const vector3& areaVector); //added
 
         // Getters
         const Cell* getOwner() const;
@@ -41,6 +43,8 @@ class Face
         const double& getSkewness() const;
         const vector3& getIntersectionPoint() const;
 
+        const int& getID() const;//Added
+        const int& getnPointsInFace() const;//Added
         const double& getArea() const; //added
 
         // Computations

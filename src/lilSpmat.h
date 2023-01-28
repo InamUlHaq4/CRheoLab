@@ -7,7 +7,7 @@
 // Class to implement a list of lists for a sparse matrix
 class lilSpmat : public spmat {
 
-public: // change to private later
+private: // change to private later //public before
 
   // vector of vector for the values
   // values_[i] is the vector for row i

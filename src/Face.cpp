@@ -42,12 +42,22 @@ void Face::setWeightingFactor(const double& g_c)
 
 void Face::setNonOrthogonalityFace(const double& nonOrthoAngle)
 {
-    nonOrthogonalityAngle_=nonOrthoAngle;
+    nonOrthogonalityAngle_ = nonOrthoAngle;
 }
 
 void Face::setSkewness(const double& skewness)
 {
     skewness_ = skewness;
+}
+
+void Face::setIntersectionPoint(const vector3& intersectionPoint)//Added
+{
+    intersectionPoint_ = intersectionPoint;    
+}
+
+void Face::setnPointsInFace(const int& nPointsInFace)//Added
+{
+    nPointsInFace_ = nPointsInFace;
 }
 
 void Face::setArea(const double& area) //added
@@ -102,10 +112,26 @@ const double& Face::getSkewness() const
     return skewness_;
 }
 
+const vector3& Face::getIntersectionPoint() const //Added
+{
+    return intersectionPoint_;
+}
+
+const int& Face::getID() const //Added
+{
+    return ID_;
+}
+
+const int& Face::getnPointsInFace() const //Added
+{
+    return nPointsInFace_;
+}
+
 const double& Face::getArea() const //added
 {
     return area_;
 }
+
 
 // Computations
 void Face::computeArea()

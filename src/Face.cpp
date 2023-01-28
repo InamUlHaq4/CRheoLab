@@ -77,57 +77,57 @@ void Face::setAreaVector(const vector3& areaVector) //added
 
 // Getters
 
-const Cell* Face::getOwner() const
+const Cell* Face::Owner() const
 {
     return owner_;
 }
 
-const Cell* Face::getNeighbour() const
+const Cell* Face::Neighbour() const
 {
     return neighbour_;
 }
 
-const vector3& Face::getCenterOfMass() const
+const vector3& Face::CenterOfMass() const
 {
     return centerOfMass_;
 }
 
-const vector3& Face::getAreaVector() const
+const vector3& Face::AreaVector() const
 {
     return areaVector_;
 }
 
-const double& Face::getWeightingFactor() const
+const double& Face::WeightingFactor() const
 {
     return weightingFactor_;
 }
 
-const double& Face::getNonOrthogonality() const
+const double& Face::NonOrthogonality() const
 {
     return nonOrthogonalityAngle_;
 }
 
-const double& Face::getSkewness() const
+const double& Face::Skewness() const
 {
     return skewness_;
 }
 
-const vector3& Face::getIntersectionPoint() const //Added
+const vector3& Face::IntersectionPoint() const //Added
 {
     return intersectionPoint_;
 }
 
-const int& Face::getID() const //Added
+const int& Face::ID_cell() const //Added
 {
     return ID_;
 }
 
-const int& Face::getnPointsInFace() const //Added
+const int& Face::nPointsInFace_cell() const //Added
 {
     return nPointsInFace_;
 }
 
-const double& Face::getArea() const //added
+const double& Face::Area() const //added
 {
     return area_;
 }
@@ -275,7 +275,7 @@ void Face::computeCenterOfMass()
 
 void Face::computeAreaVector()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (Neighbour());
     //Creates two vectors from the center of mass and one of the points in the face
     vector3 tmp_vec1 = facePoints_[0]->point() - centerOfMass_;
     vector3 tmp_vec2 = facePoints_[1]->point() - centerOfMass_;
@@ -303,13 +303,13 @@ void Face::computeAreaVector()
 
 void Face::computeWeightingFactor()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (Neighbour());
 
     if (isInteriorFace)
     {
         // linear interpoaltion factor defined as:
         // g_c \phi_P + (1-g_c) \phi_N
-        const vector3& faceCenter = getCenterOfMass();
+        const vector3& faceCenter = CenterOfMass();
         const vector3& C_o = owner_->centerOfMass();
         const vector3& C_n = neighbour_->centerOfMass();
 
@@ -317,7 +317,7 @@ void Face::computeWeightingFactor()
         const vector3 d_fF = C_n - faceCenter;
         //const vector3 e_f = getAreaVector()/mag( getAreaVector() );
 
-        const vector3& Sf = getAreaVector();
+        const vector3& Sf = AreaVector();
 
         double SfdOwn = std::abs(Sf & d_Cf);
         double SfdNei = std::abs(Sf & d_fF);
@@ -336,11 +336,11 @@ void Face::computeWeightingFactor()
 
 void Face::computeNonOrthogonality()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (Neighbour());
 
     const vector3& C_o = owner_->centerOfMass(); //Cell owner
 
-    const vector3& Sf = getAreaVector(); // Face Area vector
+    const vector3& Sf = AreaVector(); // Face Area vector
 
     const vector3 nf = Sf/mag(Sf); // Face normal vector
 
@@ -360,7 +360,7 @@ void Face::computeNonOrthogonality()
     }
     else
     {
-        const vector3& faceCenter= getCenterOfMass();
+        const vector3& faceCenter= CenterOfMass();
         const vector3 dn = faceCenter- C_o;
         double thetaRad = std::acos(
                                         (dn & nf)/(mag(dn)*mag(nf))
@@ -375,13 +375,13 @@ void Face::computeNonOrthogonality()
 
 void Face::computeIntersectionPoint()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (Neighbour());
 
     if (isInteriorFace)
     {
-        const vector3& Cf = getCenterOfMass();
+        const vector3& Cf = CenterOfMass();
 
-        const vector3& Sf = getAreaVector();
+        const vector3& Sf = AreaVector();
 
         // Owner Cell Center of Mass (CM)
         const vector3& Co = owner_->centerOfMass();
@@ -426,11 +426,11 @@ void Face::computeIntersectionPoint()
 
 void Face::computeSkewness()
 {
-    bool isInteriorFace ( getNeighbour() );
+    bool isInteriorFace ( Neighbour() );
 
-    const vector3& Cf = getCenterOfMass();
+    const vector3& Cf = CenterOfMass();
 
-    const vector3& Sf = getAreaVector();
+    const vector3& Sf = AreaVector();
 
     const vector3& Co = owner_->centerOfMass();
 

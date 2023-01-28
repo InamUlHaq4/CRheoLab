@@ -21,7 +21,7 @@ csrSpmat::csrSpmat(Mesh& mesh)
     nz++;
     for (unsigned int j=0;j<mesh.cellList_[i].getCellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->getNeighbour();
+      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->Neighbour();
       if(neigh_ptr != NULL)
       {
          nz++;
@@ -64,8 +64,8 @@ csrSpmat::csrSpmat(Mesh& mesh)
     nz++;
     for (unsigned int j=0;j<mesh.cellList_[i].getCellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->getNeighbour();
-      owner_ptr = mesh.cellList_[i].getCellFaces()[j]->getOwner();
+      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->Neighbour();
+      owner_ptr = mesh.cellList_[i].getCellFaces()[j]->Owner();
       if(neigh_ptr != NULL)
       {
         if(neigh_ptr->cellID() == i)

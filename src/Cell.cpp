@@ -72,9 +72,9 @@ void Cell::computeVolume()
     
     for(unsigned int faceI = 0; faceI < cellFaces_.size(); faceI++)
     {    
-			const vector3& Sf = cellFaces_[faceI]->getAreaVector();   
+			const vector3& Sf = cellFaces_[faceI]->AreaVector();   
 
-      const vector3& Cf = cellFaces_[faceI]->getCenterOfMass();
+      const vector3& Cf = cellFaces_[faceI]->CenterOfMass();
 
       //Accumulate volume-weighted face-pyramid center
       double pyrvol = computepyrVol(Sf, Cf, geometricCenter);
@@ -95,9 +95,9 @@ void Cell::computeCenter()
 
     for(unsigned int faceI = 0; faceI < cellFaces_.size(); faceI++)
     {     
-      const vector3& Sf = cellFaces_[faceI]->getAreaVector();
+      const vector3& Sf = cellFaces_[faceI]->AreaVector();
       
-      const vector3& Cf = cellFaces_[faceI]->getCenterOfMass();
+      const vector3& Cf = cellFaces_[faceI]->CenterOfMass();
 
       double pyrVol  = computepyrVol(Sf, Cf, geometricCenter);
      
@@ -140,7 +140,7 @@ vector3 Cell::computeGeometricCenter() const
 
     for(unsigned int faceI = 0; faceI <cellFaces_.size(); faceI++)
     {
-      const vector3& Cf = cellFaces_[faceI]->getCenterOfMass();  
+      const vector3& Cf = cellFaces_[faceI]->CenterOfMass();  
 
       geometricCenter = geometricCenter + Cf;
   
@@ -157,7 +157,7 @@ void Cell::computeMaxNonOrthogonality()
     {
         maxNonOrthogonalityAngle= std::max(
                                                 maxNonOrthogonalityAngle,
-                                                cellFaces_[i]->getNonOrthogonality()
+                                                cellFaces_[i]->NonOrthogonality()
                                             );
     }
 
@@ -172,7 +172,7 @@ void Cell::computeSkewness()
 
         maxSkewness = std::max(
                                                 maxSkewness,
-                                                cellFaces_[i]->getSkewness()
+                                                cellFaces_[i]->Skewness()
                                             );
     }
 

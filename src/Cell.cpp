@@ -32,27 +32,27 @@ void Cell::setSkewness(const double& skewness)
 
 
 // Getters
-const vector3& Cell::getCenterOfMass() const
+const vector3& Cell::centerOfMass() const
 {
     return centerOfMass_;
 }
 
-const double& Cell::getVolume() const
+const double& Cell::volume() const
 {
     return volume_;
 }
 
-const double& Cell::getNonOrthogonality() const
+const double& Cell::nonOrthogonality() const
 {
     return maxNonOrthogonality_;
 }
 
-const double& Cell::getSkewness() const
+const double& Cell::skewness() const
 {
     return skewness_;
 }
 
-const int& Cell:: getCellID() const
+const int& Cell:: cellID() const
 {
     return ID_;
 }

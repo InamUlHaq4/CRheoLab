@@ -21,11 +21,11 @@ class Cell
         void setSkewness(const double&);
 
         // Getters
-        const vector3& getCenterOfMass() const;
-        const double& getVolume() const;
-        const double& getNonOrthogonality() const;
-        const double& getSkewness() const;
-        const int& getCellID() const;
+        const vector3& centerOfMass() const;
+        const double& volume() const;
+        const double& nonOrthogonality() const;
+        const double& skewness() const;
+        const int& cellID() const;
         const vector<Face*>& getCellFaces() const;
 
 

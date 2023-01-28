@@ -68,14 +68,14 @@ csrSpmat::csrSpmat(Mesh& mesh)
       owner_ptr = mesh.cellList_[i].getCellFaces()[j]->getOwner();
       if(neigh_ptr != NULL)
       {
-        if(neigh_ptr->getCellID() == i)
+        if(neigh_ptr->cellID() == i)
         {
-          columns_[nz] = owner_ptr->getCellID();
+          columns_[nz] = owner_ptr->cellID();
           nz++;
         }
         else //if(owner_ptr.ID_ == i)
         {
-          columns_[nz] = neigh_ptr->getCellID();
+          columns_[nz] = neigh_ptr->cellID();
           nz++;
         }
       }

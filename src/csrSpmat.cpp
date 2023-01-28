@@ -7,8 +7,8 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
-  numRows_ = mesh.getnCells();
-  numCols_ = mesh.getnCells();
+  setNumRows(mesh.getnCells());
+  setNumCols(mesh.getnCells());
 
   // Declaration of variables
   unsigned int nz, aux;
@@ -49,7 +49,7 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Allocate memory for the values
   values_.resize(nz);
   columns_.resize(nz);
-  row_ptr_.resize(numRows_+1);
+  row_ptr_.resize(NumRows()+1);
 
   // Clean memory for the values
   // values_ = 0.0;
@@ -94,13 +94,13 @@ csrSpmat::csrSpmat(Mesh& mesh)
       }
     }
   }
-  row_ptr_[numRows_] = nz;
+  row_ptr_[NumRows()] = nz;
 }
 
 // Returns the sparsity of the matrix
 double csrSpmat::sparsity()
 {
-  return (1.0 - ((double)numNZ_ / ((double)(numRows_ * numCols_))));
+  return (1.0 - ((double)numNZ_ / ((double)(NumRows() * NumCols()))));
 }
 
 // Sets a value to position (i,j) if exists, otherwise inserts a new value
@@ -179,9 +179,9 @@ double csrSpmat::getValue(const unsigned int& i, const unsigned int& j)
 // Returns the sparse matrix in a dense format as a vector of vectors
 std::vector< std::vector<double> > csrSpmat::dense()
 {
-  std::vector< std::vector<double> > denseMatrix(numCols_, std::vector<double>(numCols_));
+  std::vector< std::vector<double> > denseMatrix(NumCols(), std::vector<double>(NumCols()));
   unsigned int id_column = 0;
-  for (unsigned int i=0;i<numRows_;i++)
+  for (unsigned int i=0;i<NumRows();i++)
   {
     for (unsigned int j=row_ptr_[i];j<row_ptr_[i+1];j++)
     {
@@ -197,7 +197,7 @@ std::vector<double> csrSpmat::matMul(const std::vector<double>& vecPhi)
 {
   std::vector<double> v(vecPhi.size());
   unsigned int j = 0;
-  for (unsigned int i=0;i<numRows_;i++)
+  for (unsigned int i=0;i<NumRows();i++)
   {
     v[i] = 0.0;
     while (j<row_ptr_[i+1])

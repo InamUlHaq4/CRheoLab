@@ -7,7 +7,7 @@
 
 class spmat {
 
-public:
+private: //public before
 
   // Number of rows of the stored matrix
   unsigned int numRows_;
@@ -20,14 +20,26 @@ public:
   // Returns the sparsity of the matrix
   double virtual sparsity() = 0;
 
+//Setters
+  void setNumRows(unsigned int numRows)//Added
+  {
+    numRows_ = numRows;
+  }
+
+  void setNumCols(unsigned int numCols)//Added
+  {
+    numCols_ = numCols;
+  }
+
+//Getters
   // Returns the number of rows
-  unsigned int getNumRows()
+  unsigned int NumRows()
   {
     return numRows_;
   }
 
   // Returns the number of columns
-  unsigned int getNumCols()
+  unsigned int NumCols()
   {
     return numCols_;
   }

@@ -6,25 +6,25 @@
 lilSpmat::lilSpmat(unsigned int numRows, unsigned int numCols)
 {
   // Store number of rows and columns
-  numRows_ = numRows;
-  numCols_ = numCols;
+  setNumRows(numRows);
+  setNumCols(numCols);
 
   // Allocate memory for the rows since any row might be accessed at any time
   // Do not do the same for each columns_[i] and values_[i] vector since their size
   // should only increase as new entries are added
-  values_.resize(numRows_);
-  columns_.resize(numRows_);
+  values_.resize(NumRows());
+  columns_.resize(NumRows());
 }
 
 // Returns the sparsity of the matrix
 double lilSpmat::sparsity()
 {
   unsigned int nz = 0;
-  for(unsigned int i=0;i< numRows_;i++)
+  for(unsigned int i=0;i< NumRows();i++)
   {
      nz += columns_[i].size();
   }
-  return (1.0 - ((double)nz / ((double)(numRows_ * numCols_))));
+  return (1.0 - ((double)nz / ((double)(NumRows() * NumCols()))));
 }
 
 // Sets a value to position (i,j) if exists, otherwise inserts a new value
@@ -102,14 +102,14 @@ double lilSpmat::getValue(const unsigned int& i, const unsigned int& j)
 // Returns the sparse matrix in a dense format as a vector of vectors
 std::vector< std::vector<double> > lilSpmat::dense()
 {
-  std::vector< std::vector<double> > denseMatrix(numRows_);
-  std::vector<double> temp(numCols_);
+  std::vector< std::vector<double> > denseMatrix(NumRows());
+  std::vector<double> temp(NumCols());
   unsigned int id_column = 0;
-  for(unsigned int i=0;i<numRows_;i++)
+  for(unsigned int i=0;i<NumRows();i++)
   {
     denseMatrix[i] = temp;
   }
-  for(unsigned int i=0;i<numRows_;i++)
+  for(unsigned int i=0;i<NumRows();i++)
   {
     for(unsigned int j=0;j<columns_[i].size();j++)
     {
@@ -125,7 +125,7 @@ std::vector<double> lilSpmat::matMul(const std::vector<double>& vecPhi)
 {
   std::vector<double> v(vecPhi.size());
   unsigned int id_column = 0;
-  for(unsigned int i=0;i<numRows_;i++)
+  for(unsigned int i=0;i<NumRows();i++)
   {
     v[i] = 0.0;
     for(unsigned int j=0;j<columns_[i].size();j++)

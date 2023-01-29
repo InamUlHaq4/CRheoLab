@@ -52,7 +52,7 @@ int main()
     //std::cout << " mesh nFaces = " << mesh.getnFaces() << std::endl; 
 
     mesh.setnPatches(10);
-    std::cout << " mesh nPatches = " << mesh.getnPatches() << std::endl; 
+    std::cout << " mesh nPatches = " << mesh.nPatches() << std::endl; 
 
    //Dictionary& banana1 = mesh.lookup<Dictionary>("transportProperties");
   

@@ -499,7 +499,7 @@ const std::vector <IOObject*>& Mesh::dataBase() const
 }
 
 // Getter for nCells_
- const unsigned int Mesh::getnCells()
+ const unsigned int Mesh::nCells()
  {
     return nCells_;
  }
@@ -511,7 +511,7 @@ const std::vector <IOObject*>& Mesh::dataBase() const
  }
 
  // Getter for nPoints_
-const unsigned int Mesh::getnPoints()
+const unsigned int Mesh::nPoints()
  {
     return nPoints_;
  }
@@ -523,7 +523,7 @@ const unsigned int Mesh::getnPoints()
  }
 
   // Getter for nFaces_
-const unsigned int Mesh::getnFaces()
+const unsigned int Mesh::nFaces()
  {
     return nFaces_;
  }
@@ -535,7 +535,7 @@ const unsigned int Mesh::getnFaces()
  }
 
 // Getter for nInteriorFaces_
-const unsigned int Mesh::getnInteriorFaces()
+const unsigned int Mesh::nInteriorFaces()
  {
     return nInteriorFaces_;
  }
@@ -547,7 +547,7 @@ const unsigned int Mesh::getnInteriorFaces()
  }
 
  // Getter for nBoundaryFaces_
-const unsigned int Mesh::getnBoundaryFaces()
+const unsigned int Mesh::nBoundaryFaces()
  {
     return nBoundaryFaces_;
  }
@@ -559,7 +559,7 @@ const unsigned int Mesh::getnBoundaryFaces()
  }
 
   // Getter for nPatches_
-const unsigned int Mesh::getnPatches()
+const unsigned int Mesh::nPatches()
  {
     return nPatches_;
  }
@@ -569,3 +569,39 @@ const unsigned int Mesh::getnPatches()
  {
     nPatches_ = nPatches;
  }
+
+// Getter for cellList_
+  const std::vector<Cell> Mesh::cellList()
+  {
+    return cellList_;
+  }
+
+  // Getter for patchList
+  const std::vector<Patch> Mesh::patchList()
+  {
+    return patchList_;
+  }
+
+  // Getter for pointList
+  const std::vector<Point> Mesh::pointList()
+  {
+    return pointList_;
+  }
+ 
+  // Getter for faceList
+  const std::vector<Face> Mesh::faceList()
+  {
+    return faceList_;
+  }
+
+  // Getter for dataBase not changable
+  const std::vector<IOObject*> Mesh::dataBase()
+  {
+    return dataBase_;
+  }
+  
+  // Getter for dataBase changable
+  std::vector<IOObject*> Mesh::dataBaseRW()
+  {
+    return dataBase_;
+  }

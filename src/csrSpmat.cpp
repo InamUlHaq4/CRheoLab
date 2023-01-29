@@ -7,8 +7,8 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
-  setNumRows(mesh.getnCells());
-  setNumCols(mesh.getnCells());
+  setNumRows(mesh.nCells());
+  setNumCols(mesh.nCells());
 
   // Declaration of variables
   unsigned int nz, aux;
@@ -16,12 +16,12 @@ csrSpmat::csrSpmat(Mesh& mesh)
 
   // Determine the total number of non-zeros values (number of cells plus its neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.getnCells();i++)
+  for (unsigned int i=0;i<mesh.nCells();i++)
   {
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].getCellFaces().size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList()[i].getCellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->Neighbour();
+      neigh_ptr = mesh.cellList()[i].getCellFaces()[j]->Neighbour();
       if(neigh_ptr != NULL)
       {
          nz++;
@@ -57,15 +57,15 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Fill-in the sparse matrix with the positions of the non-null values
   // (number of cells plus their neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.getnCells();i++)
+  for (unsigned int i=0;i<mesh.nCells();i++)
   {
     row_ptr_[i] = nz;
     columns_[nz] = i;
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].getCellFaces().size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList()[i].getCellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].getCellFaces()[j]->Neighbour();
-      owner_ptr = mesh.cellList_[i].getCellFaces()[j]->Owner();
+      neigh_ptr = mesh.cellList()[i].getCellFaces()[j]->Neighbour();
+      owner_ptr = mesh.cellList()[i].getCellFaces()[j]->Owner();
       if(neigh_ptr != NULL)
       {
         if(neigh_ptr->cellID() == i)

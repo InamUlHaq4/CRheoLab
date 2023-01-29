@@ -47,27 +47,27 @@ public:
 
   std::vector<IOObject*> dataBase_;
 
-  const unsigned int getnCells();
+  const unsigned int nCells();
   
   void setnCells(unsigned int nCells);
 
-  const unsigned int getnInteriorFaces();
+  const unsigned int nInteriorFaces();
   
   void setnInteriorFaces(unsigned int nInteriorFaces);
 
-  const unsigned int getnPoints();
+  const unsigned int nPoints();
   
   void setnPoints(unsigned int nPoints);
 
-  const unsigned int getnFaces();
+  const unsigned int nFaces();
   
   void setnFaces(unsigned int nFaces);
 
-  const unsigned int getnBoundaryFaces();
+  const unsigned int nBoundaryFaces();
   
   void setnBoundaryFaces(unsigned int nBoundaryFaces);
 
-  const unsigned int getnPatches();
+  const unsigned int nPatches();
   
   void setnPatches(unsigned int nPatches);
 
@@ -92,7 +92,7 @@ private:
   const RunTime& time_;
    
   unsigned int nCells_;
-  
+
   unsigned int nPoints_;
   
   unsigned int nFaces_;

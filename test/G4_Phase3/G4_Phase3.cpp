@@ -49,7 +49,7 @@ int main()
     
     //mesh.setnCells(200);   
     mesh.setnCells(200);
-    std::cout << " mesh nCells= " << mesh.getnCells() << std::endl;
+    std::cout << " mesh nCells= " << mesh.nCells() << std::endl;
     //mesh.setnFaces(100);
     //std::cout << " mesh nFaces = " << mesh.getnFaces() << std::endl; 
 

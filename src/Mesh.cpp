@@ -558,14 +558,3 @@ const unsigned int Mesh::nPatches()
     return faceList_;
   }
 
-  // Getter for dataBase not changable
-  const std::vector<IOObject*> Mesh::dataBase()
-  {
-    return dataBase_;
-  }
-  
-  // Getter for dataBase changable
-  std::vector<IOObject*> Mesh::dataBaseRW()
-  {
-    return dataBase_;
-  }

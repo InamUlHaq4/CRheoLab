@@ -48,8 +48,6 @@ public:
   const unsigned int nFaces();
   const unsigned int nBoundaryFaces();
   const unsigned int nPatches();
-  const std::vector<IOObject*> dataBase();
-  std::vector<IOObject*> dataBaseRW();
 
 private:
 

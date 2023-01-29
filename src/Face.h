@@ -26,13 +26,9 @@ class Face
         void setWeightingFactor(const double& g_c);
         void setNonOrthogonalityFace(const double& nonOrthoAngle);
         void setSkewness(const double& skewness);
-        
         void setIntersectionPoint(const vector3& intersectionPoint);//Added
         void setnPointsInFace(const int& nPointsInFace);//Added
-        void setArea(const double& area); //added
-        void setCenterOfMass(const vector3& centerOfMass); //added
-        void setAreaVector(const vector3& areaVector); //added
-
+  
         // Getters
         const Cell* Owner() const;
         const Cell* Neighbour() const;

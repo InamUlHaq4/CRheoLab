@@ -29,20 +29,6 @@ csrSpmat::csrSpmat(Mesh& mesh)
     }
   }
 
-  /*
-  // TESTING ADDITIONS
-  // Setters
-  void csrSpmat::setNumNZ(unsigned int& numNZ)
-  {
-    numNZ_ = numNZ;
-  }
-  */
-  
-  // Getters
-
-  //////////////////////////
-
-
   // Store number of non-null values
   numNZ_ = nz;
 

@@ -40,7 +40,7 @@ class Point
         friend std::ostream& operator<<(std::ostream& , const Point& );
        
     private:
-        vector3 p_;
+        vector3 point_;
 
 };
 

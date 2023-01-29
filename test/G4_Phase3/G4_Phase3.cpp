@@ -47,13 +47,6 @@ int main()
         )
     );
     
-    mesh.setnCells(200);   
-    //mesh.setnFaces(100);
-    //std::cout << " mesh nFaces = " << mesh.getnFaces() << std::endl; 
-
-    mesh.setnPatches(10);
-    std::cout << " mesh nPatches = " << mesh.nPatches() << std::endl; 
-
    //Dictionary& banana1 = mesh.lookup<Dictionary>("transportProperties");
   
 

@@ -60,21 +60,6 @@ void Face::setnPointsInFace(const int& nPointsInFace)//Added
     nPointsInFace_ = nPointsInFace;
 }
 
-void Face::setArea(const double& area) //added
-{
-    area_ = area;
-}
-
-void Face::setCenterOfMass(const vector3& centerOfMass) //added
-{
-    centerOfMass_ = centerOfMass;
-}
-
-void Face::setAreaVector(const vector3& areaVector) //added
-{
-    areaVector_ = areaVector;
-}
-
 // Getters
 
 const Cell* Face::Owner() const

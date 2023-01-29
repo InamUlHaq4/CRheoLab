@@ -37,14 +37,6 @@ public:
   template<typename T>
   T& lookup(const std::string& seeking) const;
 
-  // Setters
-  void setnCells(unsigned int nCells);
-  void setnInteriorFaces(unsigned int nInteriorFaces);
-  void setnPoints(unsigned int nPoints);
-  void setnFaces(unsigned int nFaces);
-  void setnBoundaryFaces(unsigned int nBoundaryFaces);
-  void setnPatches(unsigned int nPatches);
-
   //Getters
   const std::vector<Cell> cellList();
   const std::vector<Patch> patchList();

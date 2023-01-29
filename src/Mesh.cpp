@@ -535,26 +535,6 @@ const unsigned int Mesh::nPatches()
     return nPatches_;
  }
 
-<<<<<<< HEAD
-// Setter for nPatches_
- void Mesh::setnPatches(unsigned int nPatches)
- {
-    nPatches_ = nPatches;
- }
-
-   // Getter for pointList_
-/*const std::vector<Point> Mesh::getnPatches()
- {
-    return pointList_;
- }
-
-// Setter for nPatches_
- void Mesh::setnPatches(unsigned int nPatches)
- {
-    nPatches_ = nPatches;
- }*/
-=======
-// Getter for cellList_
   const std::vector<Cell> Mesh::cellList()
   {
     return cellList_;
@@ -589,4 +569,3 @@ const unsigned int Mesh::nPatches()
   {
     return dataBase_;
   }
->>>>>>> 6d59b7ad3d5ca257d4a308aba88856d0ca318283

@@ -7,13 +7,8 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
-<<<<<<< HEAD
-  numRows_ = mesh.nCells();
-  numCols_ = mesh.nCells();
-=======
   setNumRows(mesh.nCells());
   setNumCols(mesh.nCells());
->>>>>>> 6d59b7ad3d5ca257d4a308aba88856d0ca318283
 
   // Declaration of variables
   unsigned int nz, aux;

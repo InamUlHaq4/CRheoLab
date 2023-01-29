@@ -37,33 +37,6 @@ public:
   template<typename T>
   T& lookup(const std::string& seeking) const;
 
-<<<<<<< HEAD
-  std::vector<IOObject*> dataBase_;
-
-  const unsigned int nCells();
-  
-  void setnCells(unsigned int nCells);
-
-  const unsigned int nInteriorFaces();
-  
-  void setnInteriorFaces(unsigned int nInteriorFaces);
-
-  const unsigned int nPoints();
-  
-  void setnPoints(unsigned int nPoints);
-
-  const unsigned int nFaces();
-  
-  void setnFaces(unsigned int nFaces);
-
-  const unsigned int nBoundaryFaces();
-  
-  void setnBoundaryFaces(unsigned int nBoundaryFaces);
-
-  const unsigned int nPatches();
-  
-  void setnPatches(unsigned int nPatches);
-=======
   //Getters
   const std::vector<Cell> cellList();
   const std::vector<Patch> patchList();
@@ -77,7 +50,6 @@ public:
   const unsigned int nPatches();
   const std::vector<IOObject*> dataBase();
   std::vector<IOObject*> dataBaseRW();
->>>>>>> 6d59b7ad3d5ca257d4a308aba88856d0ca318283
 
 private:
 

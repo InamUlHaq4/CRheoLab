@@ -20,28 +20,28 @@ class Face
 
         // Member Functions
         // Setters
-        void setOwner(const Cell&);
-        void setNeighbour(const Cell&);
-        void setID(const int&);
-        void setWeightingFactor(const double&);
-        void setNonOrthogonalityFace(const double&);
-        void setSkewness(const double&);
-
-        void setArea(const double&); //added
-        void setCenterOfMass(const vector3&); //added
-        void setAreaVector(const vector3&); //added
-
+        void setOwner(const Cell& owner);
+        void setNeighbour(const Cell& neighbour);
+        void setID(const int& ID);
+        void setWeightingFactor(const double& g_c);
+        void setNonOrthogonalityFace(const double& nonOrthoAngle);
+        void setSkewness(const double& skewness);
+        void setIntersectionPoint(const vector3& intersectionPoint);//Added
+        void setnPointsInFace(const int& nPointsInFace);//Added
+  
         // Getters
-        const Cell* getOwner() const;
-        const Cell* getNeighbour() const;
-        const vector3& getCenterOfMass() const;
-        const vector3& getAreaVector() const;
-        const double& getWeightingFactor() const;
-        const double& getNonOrthogonality() const;
-        const double& getSkewness() const;
-        const vector3& getIntersectionPoint() const;
+        const Cell* Owner() const;
+        const Cell* Neighbour() const;
+        const vector3& CenterOfMass() const;
+        const vector3& AreaVector() const;
+        const double& WeightingFactor() const;
+        const double& NonOrthogonality() const;
+        const double& Skewness() const;
+        const vector3& IntersectionPoint() const;
 
-        const double& getArea() const; //added
+        const int& ID_cell() const;//Added
+        const int& nPointsInFace_cell() const;//Added
+        const double& Area() const; //added
 
         // Computations
         void computeArea();

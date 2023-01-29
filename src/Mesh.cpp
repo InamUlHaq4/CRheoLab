@@ -504,34 +504,17 @@ const std::vector <IOObject*>& Mesh::dataBase() const
     return nCells_;
  }
 
-// Setter for nCells_
- void Mesh::setnCells(unsigned int nCells)
- {
-    nCells_ = nCells;
- }
-
  // Getter for nPoints_
 const unsigned int Mesh::nPoints()
  {
     return nPoints_;
  }
  
-// Setter for nPoints_
- void Mesh::setnPoints(unsigned int nPoints)
- {
-    nPoints_ = nPoints;
- }
 
   // Getter for nFaces_
 const unsigned int Mesh::nFaces()
  {
     return nFaces_;
- }
- 
-// Setter for nFaces_
- void Mesh::setnFaces(unsigned int nFaces)
- {
-    nFaces_ = nFaces;
  }
 
 // Getter for nInteriorFaces_
@@ -540,22 +523,10 @@ const unsigned int Mesh::nInteriorFaces()
     return nInteriorFaces_;
  }
 
-// Setter for nInteriorFaces_
- void Mesh::setnInteriorFaces(unsigned int nInteriorFaces)
- {
-    nInteriorFaces_ = nInteriorFaces;
- }
-
  // Getter for nBoundaryFaces_
 const unsigned int Mesh::nBoundaryFaces()
  {
     return nBoundaryFaces_;
- }
-
-// Setter for nBoundaryFaces_
- void Mesh::setnBoundaryFaces(unsigned int nBoundaryFaces)
- {
-    nBoundaryFaces_ = nBoundaryFaces;
  }
 
   // Getter for nPatches_
@@ -564,6 +535,7 @@ const unsigned int Mesh::nPatches()
     return nPatches_;
  }
 
+<<<<<<< HEAD
 // Setter for nPatches_
  void Mesh::setnPatches(unsigned int nPatches)
  {
@@ -581,3 +553,40 @@ const unsigned int Mesh::nPatches()
  {
     nPatches_ = nPatches;
  }*/
+=======
+// Getter for cellList_
+  const std::vector<Cell> Mesh::cellList()
+  {
+    return cellList_;
+  }
+
+  // Getter for patchList
+  const std::vector<Patch> Mesh::patchList()
+  {
+    return patchList_;
+  }
+
+  // Getter for pointList
+  const std::vector<Point> Mesh::pointList()
+  {
+    return pointList_;
+  }
+ 
+  // Getter for faceList
+  const std::vector<Face> Mesh::faceList()
+  {
+    return faceList_;
+  }
+
+  // Getter for dataBase not changable
+  const std::vector<IOObject*> Mesh::dataBase()
+  {
+    return dataBase_;
+  }
+  
+  // Getter for dataBase changable
+  std::vector<IOObject*> Mesh::dataBaseRW()
+  {
+    return dataBase_;
+  }
+>>>>>>> 6d59b7ad3d5ca257d4a308aba88856d0ca318283

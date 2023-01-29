@@ -90,7 +90,7 @@ void IOObject::checkIn(IOObject* obj)
 
     if (found == mesh().dataBase().end())
     {
-        const_cast<Mesh&>(mesh_).dataBase_.emplace_back(this); //adicionar ao dataBase
+        const_cast<Mesh&>(mesh_).dataBaseRW().emplace_back(this); //adicionar ao dataBase
     }
 }
 

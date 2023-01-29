@@ -5,7 +5,7 @@ BoundaryField<vectorType>::BoundaryField(const IOObject& IO)
 {
     for (int i = 0; i < nPatches_; i++)
     {
-        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList_[i]));
+        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList()[i]));
     } 
 }
 
@@ -16,7 +16,7 @@ BoundaryField<vectorType>::BoundaryField(const IOObject& IO, const typename vect
 {
     for (int i = 0; i < nPatches_; i++)
     {
-        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList_[i], defaultValue));
+        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList()[i], defaultValue));
     }
 }
 

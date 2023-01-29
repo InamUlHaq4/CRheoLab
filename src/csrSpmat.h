@@ -8,7 +8,7 @@
 // Class to implement a list of lists for a sparse matrix
 class csrSpmat : public spmat {
 
-public: // change to private later
+private: // change to private later //public:
 
   // Number of non-null values
   unsigned int numNZ_;
@@ -65,6 +65,11 @@ public:
 
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
   double xValueProduct(const unsigned int& i, const double& xValue) override;
+
+
+  // TESTING ADDITIONS 
+  // Setters
+  void setNumNZ(unsigned int& numNZ);
 
 };
 

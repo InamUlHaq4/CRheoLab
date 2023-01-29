@@ -7,8 +7,13 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
+<<<<<<< HEAD
   numRows_ = mesh.nCells();
   numCols_ = mesh.nCells();
+=======
+  setNumRows(mesh.nCells());
+  setNumCols(mesh.nCells());
+>>>>>>> 6d59b7ad3d5ca257d4a308aba88856d0ca318283
 
   // Declaration of variables
   unsigned int nz, aux;
@@ -19,9 +24,9 @@ csrSpmat::csrSpmat(Mesh& mesh)
   for (unsigned int i=0;i<mesh.nCells();i++)
   {
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList()[i].getCellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
+      neigh_ptr = mesh.cellList()[i].getCellFaces()[j]->Neighbour();
       if(neigh_ptr != NULL)
       {
          nz++;
@@ -35,7 +40,7 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Allocate memory for the values
   values_.resize(nz);
   columns_.resize(nz);
-  row_ptr_.resize(numRows_+1);
+  row_ptr_.resize(NumRows()+1);
 
   // Clean memory for the values
   // values_ = 0.0;
@@ -48,20 +53,20 @@ csrSpmat::csrSpmat(Mesh& mesh)
     row_ptr_[i] = nz;
     columns_[nz] = i;
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList()[i].getCellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
-      owner_ptr = mesh.cellList_[i].cellFaces_[j]->getOwner();
+      neigh_ptr = mesh.cellList()[i].getCellFaces()[j]->Neighbour();
+      owner_ptr = mesh.cellList()[i].getCellFaces()[j]->Owner();
       if(neigh_ptr != NULL)
       {
-        if(neigh_ptr->ID_ == i)
+        if(neigh_ptr->cellID() == i)
         {
-          columns_[nz] = owner_ptr->ID_;
+          columns_[nz] = owner_ptr->cellID();
           nz++;
         }
         else //if(owner_ptr.ID_ == i)
         {
-          columns_[nz] = neigh_ptr->ID_;
+          columns_[nz] = neigh_ptr->cellID();
           nz++;
         }
       }
@@ -80,13 +85,13 @@ csrSpmat::csrSpmat(Mesh& mesh)
       }
     }
   }
-  row_ptr_[numRows_] = nz;
+  row_ptr_[NumRows()] = nz;
 }
 
 // Returns the sparsity of the matrix
 double csrSpmat::sparsity()
 {
-  return (1.0 - ((double)numNZ_ / ((double)(numRows_ * numCols_))));
+  return (1.0 - ((double)numNZ_ / ((double)(NumRows() * NumCols()))));
 }
 
 // Sets a value to position (i,j) if exists, otherwise inserts a new value
@@ -165,9 +170,9 @@ double csrSpmat::getValue(const unsigned int& i, const unsigned int& j)
 // Returns the sparse matrix in a dense format as a vector of vectors
 std::vector< std::vector<double> > csrSpmat::dense()
 {
-  std::vector< std::vector<double> > denseMatrix(numCols_, std::vector<double>(numCols_));
+  std::vector< std::vector<double> > denseMatrix(NumCols(), std::vector<double>(NumCols()));
   unsigned int id_column = 0;
-  for (unsigned int i=0;i<numRows_;i++)
+  for (unsigned int i=0;i<NumRows();i++)
   {
     for (unsigned int j=row_ptr_[i];j<row_ptr_[i+1];j++)
     {
@@ -183,7 +188,7 @@ std::vector<double> csrSpmat::matMul(const std::vector<double>& vecPhi)
 {
   std::vector<double> v(vecPhi.size());
   unsigned int j = 0;
-  for (unsigned int i=0;i<numRows_;i++)
+  for (unsigned int i=0;i<NumRows();i++)
   {
     v[i] = 0.0;
     while (j<row_ptr_[i+1])

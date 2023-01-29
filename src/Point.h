@@ -12,6 +12,7 @@ class Point
         // Constructor
         Point(double, double, double);
         Point();
+    
 
         // Destructor
         virtual ~Point(){};
@@ -33,13 +34,13 @@ class Point
         Point operator-(Point const &obj) const;
 
         // Return point vector
-        const vector3& getPoint() const;
+        const vector3& point() const;
 
         // Write to stream
         friend std::ostream& operator<<(std::ostream& , const Point& );
        
     private:
-        vector3 p_;
+        vector3 point_;
 
 };
 

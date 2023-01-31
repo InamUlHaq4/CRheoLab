@@ -11,7 +11,7 @@ Cell::Cell()
 
 // Setters
 
-void Cell::setCellID(const int& ID)
+void Cell::setID(const int& ID)
 {
     ID_ = ID;
 }
@@ -31,7 +31,7 @@ const double& Cell::volume() const
     return volume_;
 }
 
-const double& Cell::nonOrthogonality() const
+const double& Cell::maxNonOrthogonality() const
 {
     return maxNonOrthogonality_;
 }
@@ -41,12 +41,12 @@ const double& Cell::skewness() const
     return skewness_;
 }
 
-const int& Cell:: cellID() const
+const int& Cell:: ID() const
 {
     return ID_;
 }
 
-const vector<Face*>& Cell::getCellFaces() const
+const vector<Face*>& Cell::cellFaces() const
 {
     return cellFaces_;
 }

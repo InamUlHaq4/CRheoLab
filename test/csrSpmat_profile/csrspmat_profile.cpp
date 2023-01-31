@@ -15,7 +15,8 @@ int main(int argc, char const *argv[])
       std::cout << "#############################################################" << std::endl;
 
       // Initialize the mesh
-      Mesh mesh;
+      RunTime time;
+      Mesh mesh(time);
 
       // Number of samples
       unsigned int NS = 1000;
@@ -49,22 +50,22 @@ int main(int argc, char const *argv[])
             auto start2 = std::chrono::high_resolution_clock::now();
 
             // Fill-in the sparse matrix with the positions of the non-null values
-            for (unsigned int i = 0; i < mesh.nCells_; i++)
+            for (unsigned int i = 0; i < mesh.nCells(); i++)
             {
                   spmat->addValue(i, i, 1.0);
-                  for (unsigned int j = 0; j < mesh.cellList_[i].cellFaces_.size(); j++)
+                  for (unsigned int j = 0; j < mesh.cellList()[i].cellFaces().size(); j++)
                   {
-                        neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
-                        owner_ptr = mesh.cellList_[i].cellFaces_[j]->getOwner();
+                        neigh_ptr = mesh.cellList()[i].cellFaces()[j]->Neighbour();
+                        owner_ptr = mesh.cellList()[i].cellFaces()[j]->Owner();
                         if (neigh_ptr != NULL)
                         {
-                              if (neigh_ptr->ID_ == i)
+                              if (neigh_ptr->ID() == i)
                               {
-                                    spmat->addValue(i, owner_ptr->ID_, 1.0);
+                                    spmat->addValue(i, owner_ptr->ID(), 1.0);
                               }
                               else // if(owner_ptr.ID_ == i)
                               {
-                                    spmat->addValue(i, neigh_ptr->ID_, 1.0);
+                                    spmat->addValue(i, neigh_ptr->ID(), 1.0);
                               }
                         }
                   }
@@ -79,10 +80,10 @@ int main(int argc, char const *argv[])
 
             // Declaration of variables
             std::vector<double> vecPhi;
-            vecPhi.resize(mesh.nCells_);
+            vecPhi.resize(mesh.nCells());
 
             std::vector<double> v;
-            v.resize(mesh.nCells_);
+            v.resize(mesh.nCells());
 
             // Duration 3 start
             auto start3 = std::chrono::high_resolution_clock::now();

@@ -15,15 +15,15 @@ class Cell
 
         // Setters
         void setCellFaces(const vector<Face*>&);
-        void setCellID(const int&);
+        void setID(const int&);
 
         // Getters
         const vector3& centerOfMass() const;
         const double& volume() const;
-        const double& nonOrthogonality() const;
+        const double& maxNonOrthogonality() const;
         const double& skewness() const;
-        const int& cellID() const;
-        const vector<Face*>& getCellFaces() const;
+        const int& ID() const;
+        const vector<Face*>& cellFaces() const;
 
 
         // Computations
@@ -36,7 +36,7 @@ class Cell
 
     private:
 
-        // cellID
+        // ID
         int ID_;
 
         // Cell Volume

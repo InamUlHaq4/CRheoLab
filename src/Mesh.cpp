@@ -301,7 +301,7 @@ void Mesh::updateCellAndFaceData(std::string pathOwners, std::string pathNeighbo
   for(unsigned int cellI = 0; cellI<cellList_.size(); cellI++)
   {
     cellList_[cellI].setCellFaces(cellFaces[cellI]);
-    cellList_[cellI].setCellID(cellI);
+    cellList_[cellI].setID(cellI);
   }
 
   // Assign the pointers to cell owners and neighbours for each face

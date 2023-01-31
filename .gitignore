@@ -5,3 +5,4 @@ doc/citelist*
 bin/*
 .DS_Store
 .vscode/*
+source/vscode/*

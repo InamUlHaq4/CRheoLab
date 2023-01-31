@@ -29,17 +29,14 @@ void Face::setNeighbour(const Cell& neighbour)
     neighbour_ = &neighbour;
 }
 
-
 void Face::setID(const int& ID)
 {
     ID_ = ID;
 }
 
-void Face::setWeightingFactor(const double& g_c)
-{
-    weightingFactor_ = g_c;
-}
 
+//Removed non-Required Setters:
+/*
 void Face::setNonOrthogonalityFace(const double& nonOrthoAngle)
 {
     nonOrthogonalityAngle_ = nonOrthoAngle;
@@ -48,6 +45,11 @@ void Face::setNonOrthogonalityFace(const double& nonOrthoAngle)
 void Face::setSkewness(const double& skewness)
 {
     skewness_ = skewness;
+}
+
+void Face::setWeightingFactor(const double& g_c)
+{
+    weightingFactor_ = g_c;
 }
 
 void Face::setIntersectionPoint(const vector3& intersectionPoint)//Added
@@ -59,6 +61,8 @@ void Face::setnPointsInFace(const int& nPointsInFace)//Added
 {
     nPointsInFace_ = nPointsInFace;
 }
+*/
+
 
 // Getters
 
@@ -82,11 +86,6 @@ const vector3& Face::AreaVector() const
     return areaVector_;
 }
 
-const double& Face::WeightingFactor() const
-{
-    return weightingFactor_;
-}
-
 const double& Face::NonOrthogonality() const
 {
     return nonOrthogonalityAngle_;
@@ -95,6 +94,14 @@ const double& Face::NonOrthogonality() const
 const double& Face::Skewness() const
 {
     return skewness_;
+}
+
+
+//Removed non-Required Getters:
+/*
+const double& Face::WeightingFactor() const
+{
+    return weightingFactor_;
 }
 
 const vector3& Face::IntersectionPoint() const //Added
@@ -116,7 +123,7 @@ const double& Face::Area() const //added
 {
     return area_;
 }
-
+*/
 
 // Computations
 void Face::computeArea()
@@ -309,11 +316,13 @@ void Face::computeWeightingFactor()
 
         //setweightingFactor( std::abs(d_fF & e_f) / ( std::abs(d_Cf & e_f) + std::abs(d_fF & e_f) ));
 
-        setWeightingFactor( SfdNei / ( SfdOwn + SfdNei ) );
+        //setWeightingFactor( SfdNei / ( SfdOwn + SfdNei ) );
+        weightingFactor_ = SfdNei / ( SfdOwn + SfdNei );
     }
     else
     {
-        setWeightingFactor(1.0);
+        //setWeightingFactor(1.0);
+        weightingFactor_ = 1.0;
     }
 }
 
@@ -354,7 +363,8 @@ void Face::computeNonOrthogonality()
 
     }
 
-    setNonOrthogonalityFace(theta);
+    //setNonOrthogonalityFace(theta);
+    nonOrthogonalityAngle_ = theta;
 }
 
 
@@ -485,7 +495,8 @@ void Face::computeSkewness()
         normSkewness = mag(skewness)/fd;
     }
 
-    setSkewness(normSkewness);
+    //setSkewness(normSkewness);
+    skewness_ = normSkewness;
 }
 
 

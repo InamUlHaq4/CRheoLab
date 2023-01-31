@@ -23,25 +23,30 @@ class Face
         void setOwner(const Cell& owner);
         void setNeighbour(const Cell& neighbour);
         void setID(const int& ID);
-        void setWeightingFactor(const double& g_c);
-        void setNonOrthogonalityFace(const double& nonOrthoAngle);
-        void setSkewness(const double& skewness);
-        void setIntersectionPoint(const vector3& intersectionPoint);//Added
-        void setnPointsInFace(const int& nPointsInFace);//Added
-  
+        
+        //Removed non-Required Setters:
+        //void setNonOrthogonalityFace(const double& nonOrthoAngle);
+        //void setSkewness(const double& skewness);      
+        //void setWeightingFactor(const double& g_c);
+        //void setIntersectionPoint(const vector3& intersectionPoint);//Added
+        //void setnPointsInFace(const int& nPointsInFace);//Added
+
+
         // Getters
         const Cell* Owner() const;
         const Cell* Neighbour() const;
         const vector3& CenterOfMass() const;
         const vector3& AreaVector() const;
-        const double& WeightingFactor() const;
         const double& NonOrthogonality() const;
         const double& Skewness() const;
-        const vector3& IntersectionPoint() const;
 
-        const int& ID_cell() const;//Added
-        const int& nPointsInFace_cell() const;//Added
-        const double& Area() const; //added
+        //Removed non-Required Getters:
+        //const double& WeightingFactor() const;
+        //const vector3& IntersectionPoint() const;
+        //const int& ID_cell() const;//Added
+        //const int& nPointsInFace_cell() const;//Added
+        //const double& Area() const; //added
+
 
         // Computations
         void computeArea();
@@ -65,13 +70,19 @@ class Face
         friend std::ostream& operator<<(std::ostream& , const Face& );
 
     private:
-        int ID_;
 
         int nPointsInFace_;
-        vector<Point*> facePoints_;
+        vector<Point*> facePoints_;        
 
+
+        //Attributes obtained from other classes, require setters
+
+        int ID_;
         const Cell* owner_;
         const Cell* neighbour_;
+
+
+        //Attributes calculated on face.cpp, don't require setters
 
         // Area
         double area_;

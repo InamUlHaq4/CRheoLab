@@ -26,13 +26,13 @@ public: // change to private later
 public:
 
   // Constructor
-  lilSpmat(){}
+  lilSpmat() = default;
 
   // Constructor
   lilSpmat(unsigned int numRows, unsigned int numCols);
 
   // Destructor
-  virtual ~lilSpmat(){};
+  virtual ~lilSpmat()=default;
 
   // Returns the sparsity of the matrix
   double sparsity() const override;

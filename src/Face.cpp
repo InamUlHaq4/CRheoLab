@@ -29,63 +29,72 @@ void Face::setNeighbour(const Cell& neighbour)
     neighbour_ = &neighbour;
 }
 
-
 void Face::setID(const int& ID)
 {
     ID_ = ID;
 }
 
-void Face::setWeightingFactor(const double& g_c)
-{
-    weightingFactor_ = g_c;
-}
-
-void Face::setNonOrthogonalityFace(const double& nonOrthoAngle)
-{
-    nonOrthogonalityAngle_=nonOrthoAngle;
-}
-
-void Face::setSkewness(const double& skewness)
-{
-    skewness_ = skewness;
-}
 
 // Getters
 
-const Cell* Face::getOwner() const
+const Cell* Face::owner() const
 {
     return owner_;
 }
 
-const Cell* Face::getNeighbour() const
+const Cell* Face::neighbour() const
 {
     return neighbour_;
 }
 
-const vector3& Face::getCenterOfMass() const
+const vector3& Face::centerOfMass() const
 {
     return centerOfMass_;
 }
 
-const vector3& Face::getAreaVector() const
+const vector3& Face::areaVector() const
 {
     return areaVector_;
 }
 
-const double& Face::getWeightingFactor() const
-{
-    return weightingFactor_;
-}
-
-const double& Face::getNonOrthogonality() const
+const double& Face::nonOrthogonality() const
 {
     return nonOrthogonalityAngle_;
 }
 
-const double& Face::getSkewness() const
+const double& Face::skewness() const
 {
     return skewness_;
 }
+
+
+//Removed non-Required Getters:
+/*
+const double& Face::WeightingFactor() const
+{
+    return weightingFactor_;
+}
+
+const vector3& Face::IntersectionPoint() const //Added
+{
+    return intersectionPoint_;
+}
+
+const int& Face::ID_cell() const //Added
+{
+    return ID_;
+}
+
+const int& Face::nPointsInFace_cell() const //Added
+{
+    return nPointsInFace_;
+}
+
+const double& Face::Area() const //added
+{
+    return area_;
+}
+*/
 
 // Computations
 void Face::computeArea()
@@ -99,9 +108,9 @@ void Face::computeArea()
     if(nPointsInFace_ == 3)
     {
         // Edge length
-        a = mag(facePoints_[0]->getPoint() - facePoints_[1]->getPoint());
-        b = mag(facePoints_[1]->getPoint() - facePoints_[2]->getPoint());
-        c = mag(facePoints_[2]->getPoint() - facePoints_[0]->getPoint());
+        a = mag(facePoints_[0]->point() - facePoints_[1]->point());
+        b = mag(facePoints_[1]->point() - facePoints_[2]->point());
+        c = mag(facePoints_[2]->point() - facePoints_[0]->point());
 
         // Semi-perimeter
         s = (a + b + c) / 2.0;
@@ -116,7 +125,7 @@ void Face::computeArea()
 
         for(int i = 0; i < nPointsInFace_; i++)
         {
-            centroid = centroid + facePoints_[i]->getPoint();
+            centroid = centroid + facePoints_[i]->point();
         }
 
         centroid = centroid / nPointsInFace_;
@@ -131,16 +140,16 @@ void Face::computeArea()
                 if(i < nPointsInFace_ - 1)
                 {
                     // edges length
-                    a = mag(facePoints_[i]->getPoint() - facePoints_[i+1]->getPoint());
-                    b = mag(facePoints_[i]->getPoint() - centroid);
-                    c = mag(facePoints_[i+1]->getPoint() - centroid);
+                    a = mag(facePoints_[i]->point() - facePoints_[i+1]->point());
+                    b = mag(facePoints_[i]->point() - centroid);
+                    c = mag(facePoints_[i+1]->point() - centroid);
                 }
                 else
                 {
                     // edges length
-                    a = mag(facePoints_[i]->getPoint() - facePoints_[0]->getPoint());
-                    b = mag(facePoints_[i]->getPoint() - centroid);
-                    c = mag(facePoints_[0]->getPoint() - centroid);
+                    a = mag(facePoints_[i]->point() - facePoints_[0]->point());
+                    b = mag(facePoints_[i]->point() - centroid);
+                    c = mag(facePoints_[0]->point() - centroid);
                 }
 
                 // semi-perimeter
@@ -152,13 +161,13 @@ void Face::computeArea()
     }
 }
 
-void Face::computeCenterOfMass()
+void Face::computecenterOfMass()
 {
     // face is a triangle
     if(nPointsInFace_ == 3)
     {
         // face center of mass
-        centerOfMass_ = facePoints_[0]->getPoint() + facePoints_[1]->getPoint() +facePoints_[2]->getPoint();
+        centerOfMass_ = facePoints_[0]->point() + facePoints_[1]->point() +facePoints_[2]->point();
         centerOfMass_ = centerOfMass_ / 3.0;
     }
     else
@@ -168,7 +177,7 @@ void Face::computeCenterOfMass()
 
         for(int i = 0; i < nPointsInFace_; i++)
         {
-            centroid = centroid + facePoints_[i]->getPoint();
+            centroid = centroid + facePoints_[i]->point();
         }
         centroid = centroid / nPointsInFace_;
 
@@ -190,23 +199,23 @@ void Face::computeCenterOfMass()
                 if(i < nPointsInFace_ - 1)
                 {
                     // edges length
-                    a = mag(facePoints_[i]->getPoint() - facePoints_[i+1]->getPoint());
-                    b = mag(facePoints_[i]->getPoint() - centroid);
-                    c = mag(facePoints_[i+1]->getPoint() - centroid);
+                    a = mag(facePoints_[i]->point() - facePoints_[i+1]->point());
+                    b = mag(facePoints_[i]->point() - centroid);
+                    c = mag(facePoints_[i+1]->point() - centroid);
 
                     // subtriangle centroid
-                    subcentroid = facePoints_[i]->getPoint() + facePoints_[i+1]->getPoint() + centroid;
+                    subcentroid = facePoints_[i]->point() + facePoints_[i+1]->point() + centroid;
                     subcentroid = subcentroid / 3.0;
                 }
                 else
                 {
                     // edges length
-                    a = mag(facePoints_[i]->getPoint() - facePoints_[0]->getPoint());
-                    b = mag(facePoints_[i]->getPoint() - centroid);
-                    c = mag(facePoints_[0]->getPoint() - centroid);
+                    a = mag(facePoints_[i]->point() - facePoints_[0]->point());
+                    b = mag(facePoints_[i]->point() - centroid);
+                    c = mag(facePoints_[0]->point() - centroid);
 
                     // subtriangle centroid
-                    subcentroid = facePoints_[i]->getPoint() + facePoints_[0]->getPoint() + centroid;
+                    subcentroid = facePoints_[i]->point() + facePoints_[0]->point() + centroid;
                     subcentroid = subcentroid / 3.0;
                 }
 
@@ -227,12 +236,11 @@ void Face::computeCenterOfMass()
     }
 }
 
-void Face::computeAreaVector()
+void Face::computeareaVector()
 {
-    bool isInteriorFace (getNeighbour());
     //Creates two vectors from the center of mass and one of the points in the face
-    vector3 tmp_vec1 = facePoints_[0]->getPoint() - centerOfMass_;
-    vector3 tmp_vec2 = facePoints_[1]->getPoint() - centerOfMass_;
+    vector3 tmp_vec1 = facePoints_[0]->point() - centerOfMass_;
+    vector3 tmp_vec2 = facePoints_[1]->point() - centerOfMass_;
 
     // Computes the face normal by doing the cross product of the products (this is not the faceAreaVector)
     vector3 areaVector_tmp = (tmp_vec1^tmp_vec2);
@@ -240,49 +248,40 @@ void Face::computeAreaVector()
     // Computes the norm of the cross product between two vectors
     double mag_vector_tmp = mag(areaVector_tmp);
 
-    if (isInteriorFace)
-    {
-        // distance vector between owner and neighbour cell
-        vector3 d_ON = neighbour_->getCenterOfMass() - owner_->getCenterOfMass();
-
-        if( (areaVector_tmp & d_ON) < 0)
-        {
-            // rotates area vector by 180º
-            areaVector_tmp=-1.0*areaVector_tmp;
-        }
-    }
     // Calculates the faceAreaVector
     areaVector_ = (areaVector_tmp/mag_vector_tmp)*area_;
 }
 
 void Face::computeWeightingFactor()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (neighbour());
 
     if (isInteriorFace)
     {
         // linear interpoaltion factor defined as:
         // g_c \phi_P + (1-g_c) \phi_N
-        const vector3& faceCenter = getCenterOfMass();
-        const vector3& C_o = owner_->getCenterOfMass();
-        const vector3& C_n = neighbour_->getCenterOfMass();
+        const vector3& faceCenter = centerOfMass();
+        const vector3& C_o = owner_->centerOfMass();
+        const vector3& C_n = neighbour_->centerOfMass();
 
         const vector3 d_Cf = faceCenter - C_o ;
         const vector3 d_fF = C_n - faceCenter;
-        //const vector3 e_f = getAreaVector()/mag( getAreaVector() );
+        //const vector3 e_f = getareaVector()/mag( getareaVector() );
 
-        const vector3& Sf = getAreaVector();
+        const vector3& Sf = areaVector();
 
         double SfdOwn = std::abs(Sf & d_Cf);
         double SfdNei = std::abs(Sf & d_fF);
 
         //setweightingFactor( std::abs(d_fF & e_f) / ( std::abs(d_Cf & e_f) + std::abs(d_fF & e_f) ));
 
-        setWeightingFactor( SfdNei / ( SfdOwn + SfdNei ) );
+        //setWeightingFactor( SfdNei / ( SfdOwn + SfdNei ) );
+        weightingFactor_ = SfdNei / ( SfdOwn + SfdNei );
     }
     else
     {
-        setWeightingFactor(1.0);
+        //setWeightingFactor(1.0);
+        weightingFactor_ = 1.0;
     }
 }
 
@@ -290,11 +289,11 @@ void Face::computeWeightingFactor()
 
 void Face::computeNonOrthogonality()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (neighbour());
 
-    const vector3& C_o = owner_->getCenterOfMass(); //Cell owner
+    const vector3& C_o = owner_->centerOfMass(); //Cell owner
 
-    const vector3& Sf = getAreaVector(); // Face Area vector
+    const vector3& Sf = areaVector(); // Face Area vector
 
     const vector3 nf = Sf/mag(Sf); // Face normal vector
 
@@ -302,7 +301,7 @@ void Face::computeNonOrthogonality()
 
     if (isInteriorFace)
     {
-        const vector3& C_n = neighbour_->getCenterOfMass(); // from neighbor
+        const vector3& C_n = neighbour_->centerOfMass(); // from neighbor
 
         const vector3 d = C_n - C_o;
 
@@ -314,7 +313,7 @@ void Face::computeNonOrthogonality()
     }
     else
     {
-        const vector3& faceCenter= getCenterOfMass();
+        const vector3& faceCenter= centerOfMass();
         const vector3 dn = faceCenter- C_o;
         double thetaRad = std::acos(
                                         (dn & nf)/(mag(dn)*mag(nf))
@@ -323,24 +322,25 @@ void Face::computeNonOrthogonality()
 
     }
 
-    setNonOrthogonalityFace(theta);
+    //setNonOrthogonalityFace(theta);
+    nonOrthogonalityAngle_ = theta;
 }
 
 
 void Face::computeIntersectionPoint()
 {
-    bool isInteriorFace (getNeighbour());
+    bool isInteriorFace (neighbour());
 
     if (isInteriorFace)
     {
-        const vector3& Cf = getCenterOfMass();
+        const vector3& Cf = centerOfMass();
 
-        const vector3& Sf = getAreaVector();
+        const vector3& Sf = areaVector();
 
         // Owner Cell Center of Mass (CM)
-        const vector3& Co = owner_->getCenterOfMass();
+        const vector3& Co = owner_->centerOfMass();
         // Neighbour Cell Center of Mass
-        const vector3& Cn = neighbour_->getCenterOfMass();
+        const vector3& Cn = neighbour_->centerOfMass();
 
         // Vector Owner CM to Face CM
         vector3 vecOF = Cf - Co;
@@ -361,7 +361,7 @@ void Face::computeIntersectionPoint()
     //boundary faces
     {
         // Owner CM
-        vector3 Co = owner_->getCenterOfMass();
+        vector3 Co = owner_->centerOfMass();
 
         // Vector Owner CM to Face CM
         vector3 vecOF = centerOfMass_ - Co;
@@ -380,15 +380,15 @@ void Face::computeIntersectionPoint()
 
 void Face::computeSkewness()
 {
-    bool isInteriorFace ( getNeighbour() );
+    bool isInteriorFace ( neighbour() );
 
-    const vector3& Cf = getCenterOfMass();
+    const vector3& Cf = centerOfMass();
 
-    const vector3& Sf = getAreaVector();
+    const vector3& Sf = areaVector();
 
-    const vector3& Co = owner_->getCenterOfMass();
+    const vector3& Co = owner_->centerOfMass();
 
-    const vector3& Cn = neighbour_->getCenterOfMass();
+    const vector3& Cn = neighbour_->centerOfMass();
 
     //const vector3& intersectionPoint = getIntersectionPoint();
 
@@ -414,7 +414,7 @@ void Face::computeSkewness()
 
         for (unsigned int i = 0; i < facePoints_.size(); i++)
         {
-            const vector3& tmp_point = facePoints_[i]->getPoint();
+            const vector3& tmp_point = facePoints_[i]->point();
 
             double tmp = std::abs(normSkewnessVector & (tmp_point - Cf) );
 
@@ -443,7 +443,7 @@ void Face::computeSkewness()
 
         for (unsigned int i = 0; i < facePoints_.size(); i++)
         {
-            const vector3& tmp_point = facePoints_[i]->getPoint();
+            const vector3& tmp_point = facePoints_[i]->point();
 
             double tmp = std::abs(normSkewnessVector & (tmp_point - Cf) );
 
@@ -454,9 +454,29 @@ void Face::computeSkewness()
         normSkewness = mag(skewness)/fd;
     }
 
-    setSkewness(normSkewness);
+    skewness_ = normSkewness;
 }
 
+void Face::correctSf(){
+    
+    vector3 d{0};
+
+    if (neighbour())
+    {
+        // distance vector between owner and neighbour cell
+        d = neighbour_->centerOfMass() - owner_->centerOfMass();
+    }
+    else
+    {
+        d = centerOfMass_ - owner_->centerOfMass();
+    }
+
+    if( (areaVector_ & d) < 0)
+    {
+        // rotates area vector by 180º
+        areaVector_=-1.0*areaVector_;
+    }
+}
 
 std::ostream& operator<<(std::ostream& os, const Face& p)
 {

@@ -2,14 +2,14 @@
 
 
 Mesh::Mesh(const RunTime& time)
-: nPoints_(0),
+: time_(time),
+  nCells_(0),
+  nPoints_(0),
   nFaces_(0),
   nInteriorFaces_(0),
   nBoundaryFaces_(0),
-  nCells_(0),
   nPatches_(0),
-  dataBase_(),
-  time_(time)
+  dataBase_()
 { 
   readMesh();
 }
@@ -301,7 +301,7 @@ void Mesh::updateCellAndFaceData(std::string pathOwners, std::string pathNeighbo
   for(unsigned int cellI = 0; cellI<cellList_.size(); cellI++)
   {
     cellList_[cellI].setCellFaces(cellFaces[cellI]);
-    cellList_[cellI].setCellID(cellI);
+    cellList_[cellI].setID(cellI);
   }
 
   // Assign the pointers to cell owners and neighbours for each face
@@ -319,8 +319,8 @@ void Mesh::updateCellAndFaceData(std::string pathOwners, std::string pathNeighbo
 
     // Update face parameters
     faceList_[faceI].computeArea();
-    faceList_[faceI].computeCenterOfMass();
-    faceList_[faceI].computeAreaVector();
+    faceList_[faceI].computecenterOfMass();
+    faceList_[faceI].computeareaVector();
   }
 
   //Update Cell Centers and Volume
@@ -328,6 +328,11 @@ void Mesh::updateCellAndFaceData(std::string pathOwners, std::string pathNeighbo
   {
       cellList_[cellI].computeVolume();
       cellList_[cellI].computeCenter();
+  }
+
+  for (unsigned int faceI = 0; faceI< nFaces_; faceI++)
+  {
+      faceList_[faceI].correctSf();
   }
 
   // Update face weighting factors
@@ -498,7 +503,63 @@ const std::vector <IOObject*>& Mesh::dataBase() const
     return dataBase_;
 }
 
+// Getter for nCells_ 
+ const unsigned int Mesh::nCells()  const
+ {
+    return nCells_;
+ }
 
+ // Getter for nPoints_
+const unsigned int Mesh::nPoints()  const
+ {
+    return nPoints_;
+ }
+ 
 
+  // Getter for nFaces_
+const unsigned int Mesh::nFaces()  const
+ {
+    return nFaces_;
+ }
 
+// Getter for nInteriorFaces_
+const unsigned int Mesh::nInteriorFaces()  const
+ {
+    return nInteriorFaces_;
+ }
+
+ // Getter for nBoundaryFaces_
+const unsigned int Mesh::nBoundaryFaces()  const
+ {
+    return nBoundaryFaces_;
+ }
+
+  // Getter for nPatches_
+const unsigned int Mesh::nPatches() const
+ {
+    return nPatches_;
+ }
+
+  const std::vector<Cell>& Mesh::cellList() const
+  {
+    return cellList_;
+  }
+
+  // Getter for patchList
+  const std::vector<Patch>& Mesh::patchList() const
+  {
+    return patchList_;
+  }
+
+  // Getter for pointList
+  const std::vector<Point>& Mesh::pointList() const
+  {
+    return pointList_;
+  }
+ 
+  // Getter for faceList
+  const std::vector<Face>& Mesh::faceList() const
+  {
+    return faceList_;
+  }
 

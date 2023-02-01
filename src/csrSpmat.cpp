@@ -7,8 +7,8 @@
 csrSpmat::csrSpmat(Mesh& mesh)
 {
   // Store number of rows and columns
-  numRows_ = mesh.nCells_;
-  numCols_ = mesh.nCells_;
+  numRows_ = mesh.nCells();
+  numCols_ = mesh.nCells();
 
   // Declaration of variables
   unsigned int nz, aux;
@@ -16,12 +16,12 @@ csrSpmat::csrSpmat(Mesh& mesh)
 
   // Determine the total number of non-zeros values (number of cells plus its neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.nCells_;i++)
+  for (unsigned int i=0;i<mesh.nCells();i++)
   {
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList()[i].cellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
+      neigh_ptr = mesh.cellList()[i].cellFaces()[j]->neighbour();
       if(neigh_ptr != NULL)
       {
          nz++;
@@ -43,25 +43,25 @@ csrSpmat::csrSpmat(Mesh& mesh)
   // Fill-in the sparse matrix with the positions of the non-null values
   // (number of cells plus their neighbours)
   nz = 0;
-  for (unsigned int i=0;i<mesh.nCells_;i++)
+  for (unsigned int i=0;i<mesh.nCells();i++)
   {
     row_ptr_[i] = nz;
     columns_[nz] = i;
     nz++;
-    for (unsigned int j=0;j<mesh.cellList_[i].cellFaces_.size();j++) // getter?
+    for (unsigned int j=0;j<mesh.cellList()[i].cellFaces().size();j++) // getter?
     {
-      neigh_ptr = mesh.cellList_[i].cellFaces_[j]->getNeighbour();
-      owner_ptr = mesh.cellList_[i].cellFaces_[j]->getOwner();
+      neigh_ptr = mesh.cellList()[i].cellFaces()[j]->neighbour();
+      owner_ptr = mesh.cellList()[i].cellFaces()[j]->owner();
       if(neigh_ptr != NULL)
       {
-        if(neigh_ptr->ID_ == i)
+        if((unsigned int)neigh_ptr->ID() == i)
         {
-          columns_[nz] = owner_ptr->ID_;
+          columns_[nz] = owner_ptr->ID();
           nz++;
         }
-        else //if(owner_ptr.ID_ == i)
+        else //if(owner_ptr.ID() == i)
         {
-          columns_[nz] = neigh_ptr->ID_;
+          columns_[nz] = neigh_ptr->ID();
           nz++;
         }
       }
@@ -184,13 +184,13 @@ double csrSpmat::getValue(const unsigned int& i, const unsigned int& j) const
 std::vector< std::vector<double> > csrSpmat::dense() const
 {
   std::vector< std::vector<double> > denseMatrix(numCols_, std::vector<double>(numCols_));
-  unsigned int id_column = 0;
+  unsigned int ID_column = 0;
   for (unsigned int i=0;i<numRows_;i++)
   {
     for (unsigned int j=row_ptr_[i];j<row_ptr_[i+1];j++)
     {
-      id_column = columns_[j];
-      denseMatrix[i][id_column] = values_[j];
+      ID_column = columns_[j];
+      denseMatrix[i][ID_column] = values_[j];
     }
   }
   return denseMatrix;

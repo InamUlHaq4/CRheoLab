@@ -5,22 +5,22 @@ BoundaryField<vectorType>::BoundaryField
     const IOObject& IO
 )
 :     
-nPatches_(IO.mesh().nPatches_)
+nPatches_(IO.mesh().nPatches())
 {
     for (int i = 0; i < nPatches_; i++)
     {
-        boundaryData_.emplace_back(Boundary<vectorType>(IO, IO.mesh().patchList_[i]));
+        boundaryData_.emplace_back(Boundary<vectorType>(IO, IO.mesh().patchList()[i]));
     } 
 }
 
 // BoundaryField constructor by setting a default value for the field  
 template <typename vectorType>
 BoundaryField<vectorType>::BoundaryField(const IOObject& IO, const typename vectorType::value_type& defaultValue)
-:     nPatches_(IO.mesh().nPatches_)
+:     nPatches_(IO.mesh().nPatches())
 {
     for (int i = 0; i < nPatches_; i++)
     {
-        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList_[i], defaultValue));
+        boundaryData_.push_back(Boundary<vectorType>(IO, IO.mesh().patchList()[i], defaultValue));
     }
 }
 

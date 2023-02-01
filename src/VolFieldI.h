@@ -20,7 +20,7 @@ header_(IO.path())
     }
     else if (readOp() == IOObject::NO_READ)
     {
-        internalField_.resize(this->mesh().nCells_);
+        internalField_.resize(this->mesh().nCells());
     }
     else
     {
@@ -38,7 +38,7 @@ VolField<vectorType>::VolField
 IOObject(IO),
 boundaryField_(IO, defaultValue)
 {
-    internalField_.resize(this->mesh().nCells_, defaultValue);
+    internalField_.resize(this->mesh().nCells(), defaultValue);
     initHeader();
 }
 

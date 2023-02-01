@@ -7,12 +7,12 @@
 CXX = g++
 
 # define any compile-time flags
-CXXFLAGS := -std=c++11 -g -Wall -I/usr/local/Cellar/boost/1.78.0_1/include/
+CXXFLAGS := -std=c++14 -g -Wall
 
 # define library paths in addition to /usr/lib
 # if I wanted to include libraries not in /usr/lib I'd specify
 # their path using -Lpath, something like:
-LFLAGS = -lboost_filesystem -lboost_system -L/usr/local/Cellar/boost/1.78.0_1/lib/
+LFLAGS = -lboost_filesystem -lboost_system
 
 # define output directory
 OUTPUT := run

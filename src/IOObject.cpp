@@ -48,7 +48,7 @@ const std::string& IOObject::name() const
     return name_;
 }
 
-const std::string& IOObject::file() const
+const std::string& IOObject::fileLocation() const
 {
     return fileLocation_;
 }

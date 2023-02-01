@@ -58,7 +58,7 @@ class IOObject
         virtual ~IOObject(){std::cout << "IOobject " << name() << " is being destroyed" << std::endl;}
 
         virtual const std::string& name() const;
-        const std::string& file() const;
+        const std::string& fileLocation() const;
         const std::string& path() const;
         //const Mesh& mesh() const;
         Mesh& mesh() const;

@@ -64,14 +64,14 @@ int main(int argc, char const *argv[]) {
       std::cout << "#############################################################" << std::endl;
 
       std::vector<double> vecPhi;
-      vecPhi.resize(mesh.nCells_);
+      vecPhi.resize(mesh.nCells());
 
       std::cout << "Phi vector for multiplication:" << std::endl;
       for (double valuePhi : vecPhi)
             std::cout << valuePhi << std::endl;
 
       std::vector<double> v;
-      v.resize(mesh.nCells_);
+      v.resize(mesh.nCells());
 
       // Call the function that calculates the product matrix-vector as a vector
       v = spmat.matMul(vecPhi);

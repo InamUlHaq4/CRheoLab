@@ -11,20 +11,20 @@ class Cell
         Cell();
 
         // Destructor
-        virtual  ~Cell(){};
+        virtual  ~Cell()=default;
 
         // Setters
-        void setCellFaces(const vector<Face*>& );
-        void setCellID(const int& );
-        void setCenterOfMass(const vector3&);
-        void setNonOrthogonality(const double&);
-        void setSkewness(const double&);
+        void setCellFaces(const vector<Face*>&);
+        void setID(const int&);
 
         // Getters
-        const vector3& getCenterOfMass() const;
-        const double& getVolume() const;
-        const double& getNonOrthogonality() const;
-        const double& getSkewness() const;
+        const vector3& centerOfMass() const;
+        const double& volume() const;
+        const double& maxNonOrthogonality() const;
+        const double& skewness() const;
+        const int& ID() const;
+        const vector<Face*>& cellFaces() const;
+
 
         // Computations
         void computeCenter();
@@ -34,9 +34,9 @@ class Cell
         void computeMaxNonOrthogonality();
         void computeSkewness();
 
-    public:
+    private:
 
-        // cellID
+        // ID
         int ID_;
 
         // Cell Volume

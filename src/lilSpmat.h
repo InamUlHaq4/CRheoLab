@@ -7,7 +7,7 @@
 // Class to implement a list of lists for a sparse matrix
 class lilSpmat : public spmat {
 
-public: // change to private later
+private: // change to private later
 
   // vector of vector for the values
   // values_[i] is the vector for row i
@@ -26,13 +26,13 @@ public: // change to private later
 public:
 
   // Constructor
-  lilSpmat(){}
+  lilSpmat() = default;
 
   // Constructor
   lilSpmat(unsigned int numRows, unsigned int numCols);
 
   // Destructor
-  virtual ~lilSpmat(){};
+  virtual ~lilSpmat()=default;
 
   // Returns the sparsity of the matrix
   double sparsity() const override;

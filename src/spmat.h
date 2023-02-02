@@ -18,7 +18,7 @@ public:
 public:
 
   // Returns the sparsity of the matrix
-  double virtual sparsity() const = 0;
+  virtual double sparsity() const = 0;
 
   // Returns the number of rows
   unsigned int getNumRows() const

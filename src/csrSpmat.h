@@ -8,7 +8,7 @@
 // Class to implement a list of lists for a sparse matrix
 class csrSpmat : public spmat {
 
-public: // change to private later
+private: // change to private later
 
   // Number of non-null values
   unsigned int numNZ_;

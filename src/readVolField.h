@@ -68,12 +68,12 @@ void VolField<vectorType>::readInternalField()
                     errorMessage(in_file, "Something is wrong with number of points in non-uniform field ", lineCounter);
                 }
 
-                if (nPointsInNonUniformField != (int)mesh().nCells_)
+                if (nPointsInNonUniformField != (int)mesh().nCells())
                 {
                     std::string message = "Number of points in internalField of file"  + this->name()
                                           + "does not match the number of cells in the mesh.\n"
                                           + "There are: " + std::to_string(nPointsInNonUniformField) 
-                                          + " in the the file and " + std::to_string(mesh().nCells_) + " in the mesh."; 
+                                          + " in the the file and " + std::to_string(mesh().nCells()) + " in the mesh."; 
                     errorMessage(in_file, message);
                 }
 

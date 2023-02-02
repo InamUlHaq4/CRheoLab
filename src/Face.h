@@ -16,34 +16,30 @@ class Face
         Face();
 
         // Destructor
-        virtual  ~Face(){};
+        virtual  ~Face()=default;
 
         // Member Functions
         // Setters
-        void setOwner(const Cell&);
-        void setNeighbour(const Cell&);
-        void setID(const int&);
-        void setWeightingFactor(const double&);
-        void setNonOrthogonalityFace(const double&);
-        void setSkewness(const double&);
+        void setOwner(const Cell& owner);
+        void setNeighbour(const Cell& neighbour);
+        void setID(const int& ID);
+
 
         // Getters
-        const Cell* getOwner() const;
-        const Cell* getNeighbour() const;
-        const vector3& getCenterOfMass() const;
-        const vector3& getAreaVector() const;
-        const double& getWeightingFactor() const;
-        const double& getNonOrthogonality() const;
-        const double& getSkewness() const;
-        const vector3& getIntersectionPoint() const;
+        const Cell* owner() const;
+        const Cell* neighbour() const;
+        const vector3& centerOfMass() const;
+        const vector3& areaVector() const;
+        const double& nonOrthogonality() const;
+        const double& skewness() const;
 
         // Computations
         void computeArea();
 
         /// @brief Computes the face area vector \f$\vec{S}_f\f$
-        void computeAreaVector();
+        void computeareaVector();
 
-        void computeCenterOfMass();
+        void computecenterOfMass();
         /// @brief Computation of cells face weighting factor, \f$g_{c}\f$.
         /// @brief \f[ g_{c} =  \frac{ \left | \vec{d}_{fF} \cdot \vec{S}_f \right | }{ \left | \vec{d}_{Cf} \cdot \vec{S}_f \right | + \left | \vec{d}_{fF} \cdot \vec{S}_f \right |} \f]
 
@@ -55,33 +51,30 @@ class Face
 
         void computeSkewness();
 
+        void correctSf();
+
         // Write to stream
         friend std::ostream& operator<<(std::ostream& , const Face& );
 
     private:
         int ID_;
-
         int nPointsInFace_;
-        vector<Point*> facePoints_;
-
+        vector<Point*> facePoints_;        
+        //Attributes obtained from other classes, require setters
         const Cell* owner_;
         const Cell* neighbour_;
 
+        //Attributes calculated on face.cpp, don't require setters
         // Area
         double area_;
-
         // Center of mass
         vector3 centerOfMass_;
-
         /// Area vector, \f$\vec{S}_f\f$
         vector3 areaVector_;
-
         // Weighting factor
         double weightingFactor_;
-
         // Non-orthogonality angle
         double nonOrthogonalityAngle_;
-
         // Face Skewness
         double skewness_;
 

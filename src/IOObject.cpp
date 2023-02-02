@@ -108,7 +108,7 @@ void IOObject::checkIn(IOObject* obj)
 
     if (found == mesh().dataBase().end())
     {
-        const_cast<Mesh&>(mesh_).dataBase_.emplace_back(this); //adicionar ao dataBase
+        const_cast<Mesh&>(mesh_).dataBaseRef().emplace_back(this); //adicionar ao dataBase
     }
 }
 
@@ -153,7 +153,7 @@ const char* IOObject::CRheoHeader =
 R"""(/*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\        /  C            | Computational Rheology Group                    |
-|  \\      /   R            | Insitute for Polymers and Composites            |
+|  \\      /   R            | Institute for Polymers and Composites            |
 |   \\    /    H            | Univeristy of Minho                             |
 |    \\  /     E            | Web:         http://www.crheo.org               |
 |     \\/      0            |                                                 |

@@ -5,53 +5,52 @@ Cell::Cell()
     ID_(-1),
     volume_(-1),
     centerOfMass_({-1,-1,-1}),
-    skewness_(-1),
+    skewness_(0),
     cellFaces_()
 {}
 
 // Setters
-void Cell::setCellID(const int& ID)
+
+void Cell::setID(const int& ID)
 {
     ID_ = ID;
 }
-
 void Cell::setCellFaces(const vector<Face*>& cellFaces)
 {
-    // Deep copy of points
-    cellFaces_ = cellFaces;   
-}
-
-void Cell::setNonOrthogonality(const double& angle)
-{
-    maxNonOrthogonality_ = angle;
-    
-}
-
-void Cell::setSkewness(const double& skewness)
-{
-    skewness_ = skewness;
+    cellFaces_= cellFaces;
 }
 
 // Getters
-const vector3& Cell::getCenterOfMass() const
+const vector3& Cell::centerOfMass() const
 {
     return centerOfMass_;
 }
 
-const double& Cell::getVolume() const
+const double& Cell::volume() const
 {
     return volume_;
 }
 
-const double& Cell::getNonOrthogonality() const
+const double& Cell::maxNonOrthogonality() const
 {
     return maxNonOrthogonality_;
 }
 
-const double& Cell::getSkewness() const
+const double& Cell::skewness() const
 {
     return skewness_;
 }
+
+const int& Cell:: ID() const
+{
+    return ID_;
+}
+
+const vector<Face*>& Cell::cellFaces() const
+{
+    return cellFaces_;
+}
+
 
 // Computations
 void Cell::computeVolume()
@@ -62,9 +61,9 @@ void Cell::computeVolume()
     
     for(unsigned int faceI = 0; faceI < cellFaces_.size(); faceI++)
     {    
-			const vector3& Sf = cellFaces_[faceI]->getAreaVector();   
+			const vector3& Sf = cellFaces_[faceI]->areaVector();   
 
-      const vector3& Cf = cellFaces_[faceI]->getCenterOfMass();
+      const vector3& Cf = cellFaces_[faceI]->centerOfMass();
 
       //Accumulate volume-weighted face-pyramid center
       double pyrvol = computepyrVol(Sf, Cf, geometricCenter);
@@ -85,9 +84,9 @@ void Cell::computeCenter()
 
     for(unsigned int faceI = 0; faceI < cellFaces_.size(); faceI++)
     {     
-      const vector3& Sf = cellFaces_[faceI]->getAreaVector();
+      const vector3& Sf = cellFaces_[faceI]->areaVector();
       
-      const vector3& Cf = cellFaces_[faceI]->getCenterOfMass();
+      const vector3& Cf = cellFaces_[faceI]->centerOfMass();
 
       double pyrVol  = computepyrVol(Sf, Cf, geometricCenter);
      
@@ -130,7 +129,7 @@ vector3 Cell::computeGeometricCenter() const
 
     for(unsigned int faceI = 0; faceI <cellFaces_.size(); faceI++)
     {
-      const vector3& Cf = cellFaces_[faceI]->getCenterOfMass();  
+      const vector3& Cf = cellFaces_[faceI]->centerOfMass();  
 
       geometricCenter = geometricCenter + Cf;
   
@@ -147,24 +146,23 @@ void Cell::computeMaxNonOrthogonality()
     {
         maxNonOrthogonalityAngle= std::max(
                                                 maxNonOrthogonalityAngle,
-                                                cellFaces_[i]->getNonOrthogonality()
+                                                cellFaces_[i]->nonOrthogonality()
                                             );
     }
 
-    setNonOrthogonality(maxNonOrthogonalityAngle);
+    maxNonOrthogonality_= maxNonOrthogonalityAngle;
 }
 
 void Cell::computeSkewness()
 {
-    double maxSkewness = 0.0;
     for (unsigned int i=0; i< this->cellFaces_.size(); i++)
     {
 
-        maxSkewness = std::max(
-                                                maxSkewness,
-                                                cellFaces_[i]->getSkewness()
+        skewness_ = std::max(
+                                                skewness_,
+                                                cellFaces_[i]->skewness()
                                             );
     }
 
-    setSkewness(maxSkewness);
+
 }

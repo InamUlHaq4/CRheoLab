@@ -123,27 +123,28 @@ int main(int argc, char const *argv[]) {
       std::cout << "Test sparse matrix addition" << std::endl;
       std::cout << "#############################################################" << std::endl;
 
-      lilSpmat spmatB, spmatC;
-
       // Create new matrix B with addValue functions
+      lilSpmat spmatB = lilSpmat(4,4);
+
+      spmatB.addValue(0,0,2.0);
+      spmatB.addValue(0,2,3.0);
+      spmatB.addValue(1,1,4.0);
+      spmatB.addValue(2,1,5.0);
+      spmatB.addValue(2,3,6.0);
+      spmatB.addValue(3,3,7.0);
+
+      std::cout << "B " << spmatB << std::endl;
 
       // Add matrices
+      lilSpmat spmatC;  	//default C matrix
+      lilSpmat spmatD;  	//default D matrix
+
       spmatC = spmatA + spmatA;
+      spmatD = spmatA + spmatB;
 
-      // Returns the sparse matrix in a dense format as a vector of vectors
-      denseMatrix = spmatC.dense();
-
-      std::cout << "Dense matrix:" << std::endl;
-
-      for (unsigned int i = 0; i < denseMatrix.size(); i++)
-      {
-            for (unsigned int j = 0; j < denseMatrix[i].size(); j++)
-            {
-                  std::cout << denseMatrix[i][j] << " ";
-            }
-            std::cout << std::endl;
-      }
-
+      std::cout << "C " << spmatC << std::endl;
+      std::cout << "D " << spmatD << std::endl;
+     
       std::cout << "#############################################################" << std::endl;
       std::cout << "Test sparse matrix subtraction" << std::endl;
       std::cout << "#############################################################" << std::endl;

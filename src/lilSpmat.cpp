@@ -247,3 +247,20 @@ lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B)
   }
   return C;
 }
+
+// Dense matrix printing
+std::ostream& operator<<(std::ostream& os,const lilSpmat& spmat)
+{
+  std::vector< std::vector<double> > denseMatrix;
+  denseMatrix = spmat.dense();
+  os << "Dense matrix:" << std::endl;
+  for (unsigned int i = 0; i < denseMatrix.size(); i++)
+    {
+          for (unsigned int j = 0; j < denseMatrix[i].size(); j++)
+          {
+                os << denseMatrix[i][j] << " ";
+          }
+          os << std::endl;
+    }
+  return os;
+}

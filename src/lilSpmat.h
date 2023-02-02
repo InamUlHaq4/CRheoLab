@@ -3,6 +3,7 @@
 
 #include "spmat.h"
 #include <vector>
+#include <ostream>
 
 // Class to implement a list of lists for a sparse matrix
 class lilSpmat : public spmat {
@@ -75,7 +76,7 @@ public:
 
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
   double xValueProduct(const unsigned int& i, const double& xValue) const override;
-
+  
 };
 
 // Addition operator
@@ -89,5 +90,8 @@ lilSpmat operator-(const lilSpmat& A,const lilSpmat& B);
 
 // Subtraction operator
 lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B);
+
+// Prints the dense form of a matrix
+std::ostream& operator<<(std::ostream& os,const lilSpmat& spmat);
 
 #endif // LILSPMAT_H

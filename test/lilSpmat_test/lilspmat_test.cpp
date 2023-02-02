@@ -135,6 +135,8 @@ int main(int argc, char const *argv[]) {
 
       std::cout << "B " << spmatB << std::endl;
 
+      // test --------------------------------------- 
+      
       // Add matrices
       lilSpmat spmatC;  	//default C matrix
       lilSpmat spmatD;  	//default D matrix

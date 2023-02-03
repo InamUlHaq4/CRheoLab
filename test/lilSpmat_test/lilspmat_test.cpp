@@ -148,7 +148,7 @@ int main(int argc, char const *argv[]) {
       std::cout << "D " << spmatD << std::endl;
 
 
-// Jayesh Feb 2023 (Testing for Matrix Substration and Multiplication)
+// Jayesh Feb 2023 (Testing for Matrix Substration and Multiplication) test ------------------------------------------
 /////////////////////////////////////////////////////////////////////////////
 std::cout << "A " << spmatA << std::endl;
       

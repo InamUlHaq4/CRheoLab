@@ -56,6 +56,9 @@ public:
   // Subtracts a value to position (i,j) if exists, otherwise inserts a new value with oposite sign
   void subValue(const unsigned int& i, const unsigned int& j, const double& val) override;
 
+  // Multiply a value to position (i,j) if exists
+  void mulValue(const unsigned int& i, const unsigned int& j, const double& val);
+
   // Deletes the value in position (i,j) if exists, otherwise does nothing
   void delValue(const unsigned int& i, const unsigned int& j) override;
 
@@ -90,6 +93,12 @@ lilSpmat operator-(const lilSpmat& A,const lilSpmat& B);
 
 // Subtraction operator
 lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B);
+
+// Multiplication operator
+lilSpmat operator*(const lilSpmat& A,const double& val);
+
+// Multiplication operator
+lilSpmat* operator*(const lilSpmat& A,const double* val);
 
 // Prints the dense form of a matrix
 std::ostream& operator<<(std::ostream& os,const lilSpmat& spmat);

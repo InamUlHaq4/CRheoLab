@@ -82,12 +82,25 @@ void lilSpmat::subValue(const unsigned int& i, const unsigned int& j, const doub
   {
     if(columns_[i][k] == j)
     {
-      values_[i][k] -= val;
+      values_[i][k] -= val; 
       return;
     }
   }
   columns_[i].push_back(j);
   values_[i].push_back(-val);
+}
+
+// Jayesh Feb 2023
+void lilSpmat::mulValue(const unsigned int& i, const unsigned int& j, const double& val)
+{
+  for(unsigned int k=0;k<columns_[i].size();k++)
+  {
+    if(columns_[i][k] == j)
+    {
+      values_[i][k] *= val;
+      return;
+    }
+  }
 }
 
 // Deletes the value in position (i,j) if exists, otherwise does nothing
@@ -245,6 +258,36 @@ lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B)
       C->subValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
     }
   }
+  return C;
+}
+
+// Multiplication operator
+lilSpmat operator*(const lilSpmat& A,const double& val)
+{
+  lilSpmat C = A;
+
+      for (unsigned int i = 0; i < C.getNumRows();i++)
+      {
+          for (unsigned int j = 0; j < C.getNbNZ(i);j++)
+          {
+            C.values_[i][j] *= val;
+          }
+      }   
+  return C;
+}
+
+// Multiplication operator
+lilSpmat* operator*(const lilSpmat& A,const double* val)
+{
+  lilSpmat* C = new lilSpmat(A);
+
+      for (unsigned int i = 0; i < C->getNumRows();i++)
+      {
+          for (unsigned int j = 0; j < C->getNbNZ(i);j++)
+          {
+            C->values_[i][j] *= *val;
+          }
+      }   
   return C;
 }
 

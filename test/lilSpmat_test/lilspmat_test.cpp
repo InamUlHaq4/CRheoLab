@@ -146,10 +146,41 @@ int main(int argc, char const *argv[]) {
 
       std::cout << "C " << spmatC << std::endl;
       std::cout << "D " << spmatD << std::endl;
-     
+
+
+// Jayesh Feb 2023 (Testing for Matrix Substration and Multiplication)
+/////////////////////////////////////////////////////////////////////////////
+std::cout << "A " << spmatA << std::endl;
+      
+      lilSpmat spmatE = lilSpmat(4,4);
+
+      spmatE.addValue(0,0,9.0);
+      spmatE.addValue(0,3,1.0);
+      spmatE.addValue(1,2,7.0);
+      spmatE.addValue(2,0,8.0);
+      spmatE.addValue(2,3,3.0);
+      spmatE.addValue(3,0,5.0);
+
+      std::cout << "E " << spmatE << std::endl;
+      
+      lilSpmat spmatF;  	
+      lilSpmat spmatG;  
+
       std::cout << "#############################################################" << std::endl;
       std::cout << "Test sparse matrix subtraction" << std::endl;
       std::cout << "#############################################################" << std::endl;
 
+      spmatF = spmatA - spmatE;
+
+      std::cout << "F " << spmatF << std::endl;
+
+      std::cout << "#############################################################" << std::endl;
+      std::cout << "Test sparse matrix Multiplication" << std::endl;
+      std::cout << "#############################################################" << std::endl;
+
+      spmatG = spmatA * 7;
+
+      std::cout << "G " << spmatG << std::endl;
+      ///////////////////////////////////////////////////////////////////
       return 0;
 }

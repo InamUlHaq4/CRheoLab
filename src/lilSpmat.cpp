@@ -276,7 +276,7 @@ lilSpmat operator*(const lilSpmat& A,const double& val)
   return C;
 }
 
-// Multiplication operator
+// Multiplication operator with pointer
 lilSpmat* operator*(const lilSpmat& A,const double* val)
 {
   lilSpmat* C = new lilSpmat(A);

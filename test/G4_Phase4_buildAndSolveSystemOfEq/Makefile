@@ -26,7 +26,7 @@ OBJ_DIR := ../../obj
 # define bin directory
 BIN_DIR := ../../bin
 
-MAIN := ../../bin/buildSolveSystemOfEq
+MAIN := ../../bin/G4_Phase4_buildAndSolveSystemOfEq
 FIXPATH = $1
 RM = rm -f
 MD := mkdir -p

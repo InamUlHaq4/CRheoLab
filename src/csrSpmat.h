@@ -28,10 +28,10 @@ public:
   csrSpmat(){}
 
   // Constructor
-  csrSpmat(Mesh& mesh);
+  csrSpmat(const Mesh& mesh);
 
   // Destructor
-  virtual ~csrSpmat(){};
+  virtual ~csrSpmat() {};
 
   // Returns the sparsity of the matrix
   double sparsity() const override;

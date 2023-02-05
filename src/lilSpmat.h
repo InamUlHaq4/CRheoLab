@@ -32,7 +32,7 @@ public:
   lilSpmat(unsigned int numRows, unsigned int numCols);
 
   // Destructor
-  virtual ~lilSpmat()=default;
+  virtual ~lilSpmat() {};
 
   // Returns the sparsity of the matrix
   double sparsity() const override;

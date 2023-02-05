@@ -32,6 +32,9 @@ public:
     return numCols_;
   }
 
+  //Virtual Destructor
+  virtual ~spmat() = default;
+
   // Returns the number of non-zero values in row i
   virtual unsigned int getNbNZ(const unsigned int &i) const = 0;
 

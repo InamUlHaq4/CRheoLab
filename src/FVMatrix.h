@@ -24,33 +24,39 @@
 class FVMatrix
 {
     
-    public:
+public:
 
-    FVMatrix(VolField<scalarField>& field);
+FVMatrix(VolField<scalarField>& field);
+
+virtual ~FVMatrix();
+
+/// Function to create random sparse matrix, it also creates a random vector \f$ b\f$
+void createRandomSparseaMatrixbVector(const Mesh &mesh);
+
+// Solve The System of Equations
+void solve();
+
+/// Reset the \f$ X\f$ vector to zero
+void resetxVector();
+
+//Getters
+SolverPerf solverPerf();
+
+private:
+spmat* aMatrix_;
+
+std::vector<double> bVector_;
+
+SolverPerf solverPerf_;
+
+VolField<scalarField>& field_;
+
     
-    spmat* aMatrix_;
+inline double residualValue();
     
-    std::vector<double> bVector_;
+inline double residualNormFactor();
+          
 
-    SolverPerf solverPerf_;
-
-    VolField<scalarField>& field_;
-
-     
-    inline double residualValue();
-
-      
-    inline double residualNormFactor();
-
-
-    void solve();
-
-    virtual ~FVMatrix();
-
-
-
-    private:
-           
 };
 
 #endif

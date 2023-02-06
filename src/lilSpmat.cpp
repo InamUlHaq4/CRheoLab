@@ -89,7 +89,7 @@ void lilSpmat::subValue(const unsigned int& i, const unsigned int& j, const doub
   values_[i].push_back(-val);
 }
 
-// Jayesh Feb 2023
+// Multiplies a value to position (i,j) if exists
 void lilSpmat::mulValue(const unsigned int& i, const unsigned int& j, const double& val)
 {
   for(unsigned int k=0;k<columns_[i].size();k++)
@@ -275,7 +275,7 @@ lilSpmat operator*(const lilSpmat& A,const double& val)
   return C;
 }
 
-// Multiplication operator with pointer
+// Multiplication operator
 lilSpmat* operator*(const lilSpmat& A,const double* val)
 {
   lilSpmat* C = new lilSpmat(A);

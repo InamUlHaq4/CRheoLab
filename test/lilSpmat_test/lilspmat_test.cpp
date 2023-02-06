@@ -121,7 +121,7 @@ int main(int argc, char const *argv[]) {
 
       std::cout << "#############################################################" << std::endl;
       std::cout << "Test sparse matrix addition" << std::endl;
-      std::cout << "#############################################################" << std::endl;
+      std::cout << "#############################################################" << std::endl << std::endl;
 
       // Create new matrix B with addValue functions
       lilSpmat spmatB = lilSpmat(4,4);
@@ -133,9 +133,7 @@ int main(int argc, char const *argv[]) {
       spmatB.addValue(2,3,6.0);
       spmatB.addValue(3,3,7.0);
 
-      std::cout << "B " << spmatB << std::endl;
-
-      // test --------------------------------------- 
+      std::cout << spmatB << std::endl;
       
       // Add matrices
       lilSpmat spmatC;  	//default C matrix
@@ -144,12 +142,21 @@ int main(int argc, char const *argv[]) {
       spmatC = spmatA + spmatA;
       spmatD = spmatA + spmatB;
 
-      std::cout << "C " << spmatC << std::endl;
-      std::cout << "D " << spmatD << std::endl;
+      // giving the matrices a name
+      spmatC.setName("C");
+      spmatD.setName("D");
 
+      std::cout << spmatC << std::endl;
+      std::cout << spmatD << std::endl;
+
+      // Create a matrix with name
+      lilSpmat spmatAA = lilSpmat(4,4,"AA mat");
+
+      std::cout << spmatAA << std::endl;
 
 // Jayesh Feb 2023 (Testing for Matrix Substration and Multiplication) test ------------------------------------------
 /////////////////////////////////////////////////////////////////////////////
+
 std::cout << "A " << spmatA << std::endl;
       
       lilSpmat spmatE = lilSpmat(4,4);
@@ -182,5 +189,6 @@ std::cout << "A " << spmatA << std::endl;
 
       std::cout << "G " << spmatG << std::endl;
       ///////////////////////////////////////////////////////////////////
+      
       return 0;
 }

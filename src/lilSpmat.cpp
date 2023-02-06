@@ -2,18 +2,17 @@
 #include <iostream>
 
 // Constructor
-// Constructs an empty sparse matrix and allocates memory for the rows
-lilSpmat::lilSpmat(unsigned int numRows, unsigned int numCols)
+// Same as before but with name
+lilSpmat::lilSpmat(unsigned int numRows, unsigned int numCols, const std::string& name)
 {
-  // Store number of rows and columns
   numRows_ = numRows;
   numCols_ = numCols;
 
-  // Allocate memory for the rows since any row might be accessed at any time
-  // Do not do the same for each columns_[i] and values_[i] vector since their size
-  // should only increase as new entries are added
   values_.resize(numRows_);
   columns_.resize(numRows_);
+
+  //renames the matrix
+  name_ = name;
 }
 
 // Returns the sparsity of the matrix
@@ -296,7 +295,7 @@ std::ostream& operator<<(std::ostream& os,const lilSpmat& spmat)
 {
   std::vector< std::vector<double> > denseMatrix;
   denseMatrix = spmat.dense();
-  os << "Dense matrix:" << std::endl;
+  os << spmat.name_ << " dense matrix:" << std::endl;
   for (unsigned int i = 0; i < denseMatrix.size(); i++)
     {
           for (unsigned int j = 0; j < denseMatrix[i].size(); j++)
@@ -306,4 +305,10 @@ std::ostream& operator<<(std::ostream& os,const lilSpmat& spmat)
           os << std::endl;
     }
   return os;
+}
+
+// Add name
+void lilSpmat::setName(const std::string& name)
+{
+  name_ = name;
 }

@@ -24,13 +24,16 @@ public: // change to private later
   // columns_[i] has as many entries as non-null values in row i
   std::vector< std::vector<unsigned int> > columns_;
 
+  // name for the matrix
+  std::string name_;
+
 public:
 
-  // Constructor
+  // Default Constructor
   lilSpmat(){}
 
-  // Constructor
-  lilSpmat(unsigned int numRows, unsigned int numCols);
+  // Constructor with matrix size and name
+  lilSpmat(unsigned int numRows, unsigned int numCols, const std::string& name = "default");
 
   // Destructor
   virtual ~lilSpmat(){};
@@ -79,6 +82,9 @@ public:
 
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
   double xValueProduct(const unsigned int& i, const double& xValue) const override;
+
+  // Add a name to a matrix
+  void setName(const std::string& name);
   
 };
 

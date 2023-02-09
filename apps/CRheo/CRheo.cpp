@@ -3,6 +3,7 @@
 #include "Dictionary.h"
 #include "VolField.h"
 #include "Mesh.h"
+#include "fvSolution.h"
 
 int main()
 {

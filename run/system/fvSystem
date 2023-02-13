@@ -15,11 +15,30 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-absNormResidual	1E-6;
-relNormResidual	1E-3;
-wSOR  1.2;
-solverModel	Jacobi; // Jacobi, GaussSiedel, SOR
-matrixFormat  CSR; //lOLists // CSR
+absNormResidual 1E-6;
+relNormResidual 1E-3;
+wSOR 1.2;
+solverModel Jacobi; // Jacobi, GaussSiedel, SOR
+matrixFormat CSR; //lOLists // CSR
+
+
+T1
+{
+absNormResidual 1E-6;
+relNormResidual 1E-3;
+wSOR 1.2;
+solverModel Jacobi; // Jacobi, GaussSiedel, SOR
+matrixFormat CSR; //lOLists // CSR
+}
+
+T2
+{
+absNormResidual 1E-6;
+relNormResidual 1E-3;
+wSOR 1.2;
+solverModel Jacobi; // Jacobi, GaussSiedel, SOR
+matrixFormat CSR; //lOLists // CSR
+}
 
 
 // ************************************************************************* //

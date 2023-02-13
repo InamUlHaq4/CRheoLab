@@ -32,6 +32,27 @@ solvers
         tolerance       1e-07;
         relTol          0.1;
     }
+
+    T1
+    {
+        absNormResidual 1E-6;
+        relNormResidual 1E-3;
+        wSOR 1.2;
+        solverModel Jacobi; // Jacobi, GaussSiedel, SOR
+        matrixFormat CSR; //lOLists // CSR
+        maximumIterations 1000;
+    }
+
+    T2
+    {
+        absNormResidual 1E-6;
+        relNormResidual 1E-3;
+        wSOR 1.2;
+        solverModel Jacobi; // Jacobi, GaussSiedel, SOR
+        matrixFormat CSR; //lOLists // CSR
+        maximumIterations 1000;
+    }
+
 }
 
 relaxationFactors

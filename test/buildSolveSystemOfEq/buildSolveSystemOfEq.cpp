@@ -21,32 +21,8 @@
 
 #include "fvc.h"
 
+#include "./fvSchemes/laplacian/Laplacian.h"
 
-/*
-void foo(VolField<std::vector<double>>& field)
-{
-    Dictionary& banana2 = field.mesh().lookup<Dictionary>( "transportProperties");
-    double d1 = banana2.lookup<double>("abc");
-
-    VolField<std::vector<double>> banana
-    (
-        IOObject
-        (
-            "p",
-            field.mesh().time().constant(),
-            field.mesh(),
-            fileAction::NO_READ,
-            fileAction::NO_WRITE,
-            false
-        ),
-         d1
-    );
-
-    field = field+banana;
-
-    
-}
-*/
 int main()
 {
 
@@ -56,36 +32,99 @@ int main()
     
     RunTime time;
 
-    
-
     Mesh polyMesh(time);
-   
-    //Testing System of equations    std::vector<double> T1(polyMesh.nCells_,0.);
-    
-    VolField<scalarField> T1
-    (
-        IOObject
-        (
-            "T1",
-            time.timeName(),
-            polyMesh,
-            fileAction::MUST_READ,
-            fileAction::NO_WRITE,
-            true
-        )
-    );
 
-    FVMatrix TEquation1 = fvm::laplacian(1.0,T1);
+    // std::shared_ptr<Laplacian> laplacianCreator;
+    // Laplacian::banana();
+    std::shared_ptr<Laplacian> laplacianCreator = Laplacian::New("Orthogonal");
+    std::cout << "\n\n----------------------\n\n" << std::endl;
+    std::cout << "I am a "; laplacianCreator->print();
+    std::cout << "\n\n----------------------\n\n" << std::endl;
+    laplacianCreator = Laplacian::New("Corrected");
+    std::cout << "\n\n----------------------\n\n" << std::endl;
+    std::cout << "I am a "; laplacianCreator->print();
+    std::cout << "\n\n----------------------\n\n" << std::endl;
+    laplacianCreator = Laplacian::New("NonExisting");
+    
+            
+            // #include "../../src/fvSchemes/fvSchemes.h"
+            // laplacianFactoryRaw laplacianCreator;
+            // laplacianBase* lapRawOrthoA = laplacianCreator.create(OrthoA);
+            // laplacianBase* lapRawOrthoB = laplacianCreator.create(OrthoB);
+            // laplacianBase* lapRawOrthoC = laplacianCreator.create(OrthoC);
+            
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            // std::cout << "I am a "+lapRawOrthoA->getOperator() << std::endl;
+            // std::cout << "I am a "+lapRawOrthoB->getOperator() << std::endl;
+            // std::cout << "I am a "+lapRawOrthoC->getOperator() << std::endl;
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            // std::cout << lapRawOrthoA->getType() << std::endl;
+            // std::cout << lapRawOrthoB->getType() << std::endl;
+            // std::cout << lapRawOrthoC->getType() << std::endl;
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            
+            // delete lapRawOrthoA;
+            // delete lapRawOrthoB;
+            // delete lapRawOrthoC;
+
+            // laplacianFactorySmart laplacianSmartSharedCreator;
+            // std::shared_ptr<laplacianBase> lapSmartSharedOrthoA = laplacianSmartSharedCreator.create(OrthoA);
+            // std::shared_ptr<laplacianBase> lapSmartSharedOrthoB = laplacianSmartSharedCreator.create(OrthoB);
+            // std::shared_ptr<laplacianBase> lapSmartSharedOrthoC = laplacianSmartSharedCreator.create(OrthoC);
+            
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            // std::cout << "I am a "+lapSmartSharedOrthoA->getOperator() << std::endl;
+            // std::cout << "I am a "+lapSmartSharedOrthoB->getOperator() << std::endl;
+            // std::cout << "I am a "+lapSmartSharedOrthoC->getOperator() << std::endl;
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            
+            // std::cout << lapSmartSharedOrthoA->getType() << std::endl;
+            // std::cout << lapSmartSharedOrthoB->getType() << std::endl;
+            // std::cout << lapSmartSharedOrthoC->getType() << std::endl;
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            
+            // lapSmartSharedOrthoB->operatorType="MODIFIED Laplacian Operator";
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            // std::cout << lapSmartSharedOrthoA->getType() << std::endl;
+            // std::cout << lapSmartSharedOrthoB->getType() << std::endl;
+            // std::cout << lapSmartSharedOrthoC->getType() << std::endl;
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+
+            // laplacianBase::operatorType="2nd TIME MODIFIED Laplacian Operator";
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+            // std::cout << lapSmartSharedOrthoA->getType() << std::endl;
+            // std::cout << lapSmartSharedOrthoB->getType() << std::endl;
+            // std::cout << lapSmartSharedOrthoC->getType() << std::endl;
+            // std::cout << "\n\n----------------------\n\n" << std::endl;
+
+    // //Testing System of equations    std::vector<double> T1(polyMesh.nCells_,0.);
+    
+    // VolField<scalarField> T1
+    // (
+    //     IOObject
+    //     (
+    //         "T",
+    //         time.timeName(),
+    //         polyMesh,
+    //         fileAction::MUST_READ,
+    //         fileAction::NO_WRITE,
+    //         true
+    //     )
+    // );
+
+    // FVMatrix TEquation1 = fvm::laplacian(1.0,T1);
  
-    TEquation1.solve();
+    // TEquation1.solve();
+    // TEquation1.solverPerf_.perfShow();
 
 
-    std::vector<double> TEquation2 = fvc::laplacian(1.0,T1);
-
-    TEquation1.solve();
+    // // FvFactory FVNULL;
+    // // FVNULL.create(NULL);
     
 
-    TEquation1.solverPerf_.perfShow();
+    // std::vector<double> TEquation2 = fvc::laplacian(1.0,T1);
+    
+
 
 
     /*
@@ -114,44 +153,6 @@ int main()
     //     )
     // );
     // fvBoundaryConditionsField<scalarField> TBoundaryCondition(T);
-
-    // //** --- Tests WdCG ---------------------- **//
-    // FVMatrix TMatrix(T);
-    // std::vector<double> diagonalTerms(9,0.0);
-    // double diffusionK=1e-3;
-
-    // long unsigned int patchesSize = T.mesh().nPatches_;
-    // for ( long unsigned int patchI = 0; patchI < patchesSize; patchI++)
-    // { 
-    //     std::cout << "This is the patch: " << patchI << std::endl;
-    //     // Loading the faces controls for this patch
-    //     int sizeOfPatch( TBoundaryCondition.coefficientsData().at(patchI).gradientInternalCoeffs.size() );
-    //     int startPatchFaceID = T.mesh().patchList_[patchI].startFace();
-
-    //     // Looping in all the faces for this patch
-    //     for (int faceI = 0; faceI < sizeOfPatch; faceI++)
-    //     { 
-    //         std::cout << "\t\tThis is the Patch face: " << startPatchFaceID+faceI << std::endl;
-    //         // Retrieving the boundary face owner cell ID
-    //         int ownInd = T.mesh().faceList_[startPatchFaceID+faceI].getOwner()->ID_;
-            
-    //         vector3 areaVec = T.mesh().faceList_[startPatchFaceID+faceI].getAreaVector();
-    //         double  areaMag = mag(areaVec);
-
-    //         ((ownInd == 0) || (ownInd == 3) || (ownInd == 6) ) ? (diffusionK = 1e-3) : (diffusionK = 100);
-
-    //         std::cout << "\t\t\t\tIt's Owner Cell is the cell: " << ownInd << std::endl;
-    //         // Loading the values to added for the laplacian term
-    //         double valueToAddDiagonal( TBoundaryCondition.coefficientsData().at(patchI).gradientInternalCoeffs.at(faceI));
-    //         double valueToAddSource( TBoundaryCondition.coefficientsData().at(patchI).gradientBoundaryCoeffs.at(faceI));
-            
-    //         // Adding the loaded values to the proper places
-    //         TMatrix.aMatrix_->addValue(ownInd,ownInd,valueToAddDiagonal*areaMag);
-    //         diagonalTerms.at(ownInd)+=-diffusionK*valueToAddDiagonal*areaMag;
-    //         TMatrix.bVector_.at(ownInd)+=diffusionK*valueToAddSource*areaMag;
-    //     }
-    // }
-    // //** ---End-of-Tests----- WdCG ----------- **//
 
     return 0;
 }

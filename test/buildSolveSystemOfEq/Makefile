@@ -32,14 +32,16 @@ RM = rm -f
 MD := mkdir -p
 
 # define the C source files
-SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp *.cpp)
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/fvSchemes/laplacian/*.cpp *.cpp)
 
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+# $(info $$OBJ_FILES is [${OBJ_FILES}]) # Printout Variable when running make 
+OBJ_FILES := $(patsubst $(OBJ_DIR)/fvSchemes/laplacian/%.o,$(OBJ_DIR)/%.o,$(OBJ_FILES))
+# $(info $$OBJ_FILES is [${OBJ_FILES}]) # Printout Variable when running make
 
 # The following part of the makefile is generic; it can be used to
 # build any executable just by changing the definitions above and by
 # deleting dependencies appended to the file from 'make depend'
-
 all: $(OUTPUT) $(MAIN)
 	@echo Executing 'all' complete!
 
@@ -58,6 +60,9 @@ $(MAIN): $(OBJ_FILES)
 # the rule(a .c file) and $@: the name of the target of the rule (a .o file)
 # (see the gnu make manual section about automatic variables)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c  -o $@ $<
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/fvSchemes/laplacian/%.cpp
 	$(CXX) $(CXXFLAGS) -c  -o $@ $<
 
 .PHONY: clean

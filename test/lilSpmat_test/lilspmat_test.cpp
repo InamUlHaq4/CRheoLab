@@ -43,11 +43,11 @@ int main(int argc, char const *argv[]) {
       spmatA.addValue(2,1,4.0);
       spmatA.addValue(2,3,5.0);
       spmatA.addValue(3,3,6.0);
-
+      
       // add some garbage values
       spmatA.addValue(2,2,100.0);
       spmatA.addValue(3,2,100.0);
-
+     
       // delete garbage values
       spmatA.delValue(2,2);
       spmatA.delValue(3,2);
@@ -114,17 +114,17 @@ int main(int argc, char const *argv[]) {
       unsigned int rowMatVecProd = 2;
 
       // Call the function that calculates the product (row-of-matrix)-vector
-      double ProdRowMatVec = spmatA.vecMul(rowMatVecProd, vecPhi);
+      double ProdRowMatVec = spmatA.vecRowMul(rowMatVecProd, vecPhi);
 
       std::cout << "Double resulting from the (row-of-matrix)-vector product:" << std::endl;
       std::cout << "For row: " << rowMatVecProd << ", Product: " << ProdRowMatVec << std::endl;
 
       std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix addition" << std::endl;
+      std::cout << "JCastro tests" << std::endl;
       std::cout << "#############################################################" << std::endl << std::endl;
 
       // Create new matrix B with addValue functions
-      lilSpmat spmatB = lilSpmat(4,4);
+      lilSpmat spmatB = lilSpmat(4,4,"B");
 
       spmatB.addValue(0,0,2.0);
       spmatB.addValue(0,2,3.0);
@@ -132,6 +132,8 @@ int main(int argc, char const *argv[]) {
       spmatB.addValue(2,1,5.0);
       spmatB.addValue(2,3,6.0);
       spmatB.addValue(3,3,7.0);
+      // spmatB.addValue(4,4,8.0);
+      // spmatB.addValue(6,7,9.0);
 
       std::cout << spmatB << std::endl;
       
@@ -154,9 +156,33 @@ int main(int argc, char const *argv[]) {
 
       std::cout << spmatAA << std::endl;
 
+      // Test addition/subtraction compatibility
+      lilSpmat spmatBB = lilSpmat(4,3,"BB mat");
+      // lilSpmat spmatCC = spmatAA + spmatBB;
+      // std::cout << spmatCC << std::endl;
+
+      // Test multiplication compatibility
+      std::vector<double> vec1{1.0, 2.0, 3.0, 4.0};
+      // lilSpmat spmatDD = spmatBB * vecTest;
+
+      std::vector<std::vector<double>> vec2{{1.0, 2.0, 3.0, 4.0}};
+      // lilSpmat spmatDD = spmatBB * vecTest2;
+
+      //std::vector<std::vector<double>> vecTest3 = vecTest * vecTest2
+
+      // Test matrix multiplication
+      lilSpmat spmatEE = spmatB * spmatB;
+      std::cout << spmatEE << std::endl;
+
+
 // Jayesh Feb 2023 (Testing for Matrix Substration and Multiplication)
 ////////////////////////////////////////////////////////////////////////////
-std::cout << "A " << spmatA << std::endl;
+      std::cout << "#############################################################" << std::endl;
+      std::cout << "Jayesh tests" << std::endl;
+      std::cout << "#############################################################" << std::endl << std::endl;
+
+
+      std::cout << "A " << spmatA << std::endl;
       
       lilSpmat spmatE = lilSpmat(4,4);
 

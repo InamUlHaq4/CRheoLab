@@ -37,7 +37,7 @@ public:
   double sparsity() const override;
 
   // Returns the number of non-zero values in row i
-  unsigned int getNbNZ(const unsigned int &i) const override;
+  unsigned int getNumNZ(const unsigned int &i) const override;
 
   // Returns the j-th non-zero value in row i (j is not the column)
   double getNZValue(const unsigned int &i, const unsigned int &j) const override;
@@ -67,10 +67,10 @@ public:
   std::vector<double> matMul(const std::vector<double>& vecPhi) const override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
-  double vecMul(const unsigned int& i, const std::vector<double>& vecPhi) const override;
+  double vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
-  double vecMulNoDiagonal(const unsigned int& i, const std::vector<double>& vecPhi) const override;
+  double vecRowMulNoDiagonal(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
   double xValueProduct(const unsigned int& i, const double& xValue) const override;

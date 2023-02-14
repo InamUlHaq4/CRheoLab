@@ -85,7 +85,7 @@ int main(int argc, char const *argv[]) {
       unsigned int rowMatVecProd = 2;
 
       // Call the function that calculates the product (row-of-matrix)-vector
-      double ProdRowMatVec = spmatA.vecMul(rowMatVecProd, vecPhi);
+      double ProdRowMatVec = spmatA.vecRowMul(rowMatVecProd, vecPhi);
 
       std::cout << "Double resulting from the (row-of-matrix)-vector product:" << std::endl;
       std::cout << "For row: " << rowMatVecProd << ", Product: " << ProdRowMatVec << std::endl;

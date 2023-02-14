@@ -3,6 +3,7 @@
 
 #include "spmat.h"
 #include <vector>
+#include <numeric>
 #include <ostream>
 
 // Class to implement a list of lists for a sparse matrix
@@ -24,16 +25,13 @@ public: // change to private later
   // columns_[i] has as many entries as non-null values in row i
   std::vector< std::vector<unsigned int> > columns_;
 
-  // name for the matrix
-  std::string name_;
-
 public:
 
   // Default Constructor
   lilSpmat(){}
 
   // Constructor with matrix size and name
-  lilSpmat(unsigned int numRows, unsigned int numCols, const std::string& name = "default");
+  lilSpmat(unsigned int numRows, unsigned int numCols, const std::string name = "default");
 
   // Destructor
   virtual ~lilSpmat(){};
@@ -42,7 +40,7 @@ public:
   double sparsity() const override;
 
   // Returns the number of non-zero values in row i
-  unsigned int getNbNZ(const unsigned int &i) const override;
+  unsigned int getNumNZ(const unsigned int &i) const override;
 
   // Returns the j-th non-zero value in row i (j is not the column)
   double getNZValue(const unsigned int &i, const unsigned int &j) const override;
@@ -75,38 +73,37 @@ public:
   std::vector<double> matMul(const std::vector<double>& vecPhi) const override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
-  double vecMul(const unsigned int& i, const std::vector<double>& vecPhi) const override;
+  double vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
-  double vecMulNoDiagonal(const unsigned int& i, const std::vector<double>& vecPhi) const override;
+  double vecRowMulNoDiagonal(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
   double xValueProduct(const unsigned int& i, const double& xValue) const override;
-
-  // Add a name to a matrix
-  void setName(const std::string& name);
   
+  // // Check if addition/subtraction operation is possible
+  void checkAdd(const lilSpmat& A,const lilSpmat& B);
+  void checkAdd(const lilSpmat& A,const lilSpmat* B);
+
+  // Check if multiplication operation is possible
+  void checkProd(const lilSpmat& A, const lilSpmat& B);
+  void checkProd(const lilSpmat& A, const std::vector<double>& B);
+  void checkProd(const lilSpmat& A, const std::vector<std::vector<double>>& B);
 };
 
 // Addition operator
 lilSpmat operator+(const lilSpmat& A,const lilSpmat& B);
-
-// Addition operator
 lilSpmat* operator+(const lilSpmat& A,const lilSpmat* B);
 
 // Subtraction operator
 lilSpmat operator-(const lilSpmat& A,const lilSpmat& B);
-
-// Subtraction operator
 lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B);
 
 // Multiplication operator
 lilSpmat operator*(const lilSpmat& A,const double& val);
-
-// Multiplication operator
 lilSpmat* operator*(const lilSpmat& A,const double* val);
-
-// Prints the dense form of a matrix
-std::ostream& operator<<(std::ostream& os,const lilSpmat& spmat);
+lilSpmat operator*(const lilSpmat& A,const lilSpmat& B);
+std::vector<double> operator*(const lilSpmat& A,const std::vector<double>& B);
+//std::vector<std::vector<double>> operator*(const lilSpmat& A,const std::vector<std::vector<double>>& B);
 
 #endif // LILSPMAT_H

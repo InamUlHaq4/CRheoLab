@@ -90,7 +90,7 @@ double csrSpmat::sparsity() const
 }
 
 // Returns the number of non-zero values in row i
-unsigned int csrSpmat::getNbNZ(const unsigned int &i) const
+unsigned int csrSpmat::getNumNZ(const unsigned int &i) const
 {
       return (row_ptr_[i+1]-row_ptr_[i]);
 }
@@ -214,7 +214,7 @@ std::vector<double> csrSpmat::matMul(const std::vector<double>& vecPhi) const
 }
 
 // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
-double csrSpmat::vecMul(const unsigned int& i, const std::vector<double>& vecPhi) const
+double csrSpmat::vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const
 {
   double sumProdRow = 0.0;
   unsigned int j = row_ptr_[i];
@@ -227,7 +227,7 @@ double csrSpmat::vecMul(const unsigned int& i, const std::vector<double>& vecPhi
 }
 
 // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
-double csrSpmat::vecMulNoDiagonal(const unsigned int& i,const std::vector<double>& vecPhi) const
+double csrSpmat::vecRowMulNoDiagonal(const unsigned int& i,const std::vector<double>& vecPhi) const
 {
   double sumProdRow = 0.0;
   unsigned int j = row_ptr_[i];
@@ -261,7 +261,7 @@ csrSpmat operator+(const csrSpmat& A,const csrSpmat& B)
   csrSpmat C = A;
   for(unsigned int i=0;i<B.getNumRows();i++)
   {
-    for(unsigned int j=0;j<B.getNbNZ(i);j++)
+    for(unsigned int j=0;j<B.getNumNZ(i);j++)
     {
       C.addValue(i,B.getNZColumn(i,j),B.getNZValue(i,j));
     }
@@ -275,7 +275,7 @@ csrSpmat* operator+(const csrSpmat& A,const csrSpmat* B)
   csrSpmat* C = new csrSpmat(A);
   for(unsigned int i=0;i<B->getNumRows();i++)
   {
-    for(unsigned int j=0;j<B->getNbNZ(i);j++)
+    for(unsigned int j=0;j<B->getNumNZ(i);j++)
     {
       C->addValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
     }
@@ -289,7 +289,7 @@ csrSpmat operator-(const csrSpmat& A,const csrSpmat& B)
   csrSpmat C = A;
   for(unsigned int i=0;i<B.getNumRows();i++)
   {
-    for(unsigned int j=0;j<B.getNbNZ(i);j++)
+    for(unsigned int j=0;j<B.getNumNZ(i);j++)
     {
       C.subValue(i,B.getNZColumn(i,j),B.getNZValue(i,j));
     }
@@ -303,7 +303,7 @@ csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B)
   csrSpmat* C = new csrSpmat(A);
   for(unsigned int i=0;i<B->getNumRows();i++)
   {
-    for(unsigned int j=0;j<B->getNbNZ(i);j++)
+    for(unsigned int j=0;j<B->getNumNZ(i);j++)
     {
       C->subValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
     }

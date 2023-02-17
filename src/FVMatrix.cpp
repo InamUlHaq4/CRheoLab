@@ -91,16 +91,19 @@ void FVMatrix::solve()
 
      if(solverModel == "Jacobi")
     {
-        Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
+        //Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
+        Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef());
     }
     else if(solverModel == "GaussSiedel")
     {
-        Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
+        //Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
+        Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef());
     }
     else if(solverModel == "SOR")
     {        
         double wSOR (fvSystemDict.lookup<double> ("wSOR"));
-        Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
+        //Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
+        Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
     } 
 
     while (residual > absNormResidual && relResidual > relNormResidual)

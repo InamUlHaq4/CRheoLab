@@ -18,24 +18,21 @@ field_(field)
    unsigned int nCells=field_.mesh().nCells();
    bVector_.resize(nCells);
 
-    Dictionary fvSystemDict
-    (
-        Dictionary 
+fvSolutionDict_ = Dictionary
             (
                 IOObject
                     (
-                        "fvSystem",
+                        "fvSolution",
                         field_.mesh().time().system(), //"constant",
                         field_.mesh(),
                         IOObject::MUST_READ,
                         IOObject::NO_WRITE,
                         true
                     )
-            )
-    );
+            );
     //Dictionary fieldDict = fvSystemDict.subDict (field_.name());
     //std::string matrixFormat (fieldDict.lookup<std::string> ("matrixFormat"));
-    std::string matrixFormat (fvSystemDict.lookup<std::string> ("matrixFormat"));
+    std::string matrixFormat (fvSolutionDict_.lookup<std::string> ("matrixFormat"));
     
 
     if (matrixFormat== "lOLists")
@@ -106,7 +103,8 @@ void FVMatrix::solve()
         Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
     } 
 
-    while (residual > absNormResidual && relResidual > relNormResidual)
+    //while (residual > absNormResidual && relResidual > relNormResidual)
+    while (solverPerf_.proceed())
     {
         
         result = Solver->doSolverStep();

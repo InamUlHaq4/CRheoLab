@@ -13,26 +13,27 @@
 //Constructor
 
 FVMatrix::FVMatrix(VolField<scalarField>& field):
-field_(field)
+field_(field), fvSolutionDict_(field.mesh().time().system()+"fvSolution")
 {
    unsigned int nCells=field_.mesh().nCells();
    bVector_.resize(nCells);
 
-fvSolutionDict_ = Dictionary
-            (
-                IOObject
-                    (
-                        "fvSolution",
-                        field_.mesh().time().system(), //"constant",
-                        field_.mesh(),
-                        IOObject::MUST_READ,
-                        IOObject::NO_WRITE,
-                        true
-                    )
-            );
+// fvSolutionDict_ = Dictionary
+//             (
+//                 IOObject
+//                     (
+//                         "fvSolution",
+//                         field_.mesh().time().system(), //"constant",
+//                         field_.mesh(),
+//                         IOObject::MUST_READ,
+//                         IOObject::NO_WRITE,
+//                         true
+//                     )
+//             );
     //Dictionary fieldDict = fvSystemDict.subDict (field_.name());
     //std::string matrixFormat (fieldDict.lookup<std::string> ("matrixFormat"));
-    std::string matrixFormat (fvSolutionDict_.lookup<std::string> ("matrixFormat"));
+
+    std::string matrixFormat (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("matrixFormat"));
     
 
     if (matrixFormat== "lOLists")
@@ -100,8 +101,8 @@ void FVMatrix::solve()
         Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
     } 
 
-    //while (residual > absNormResidual && relResidual > relNormResidual)
-    while (solverPerf_.proceed())
+    while (residual > absNormResidual && relResidual > relNormResidual)
+    //while (solverPerf_.proceed())
     {
         
         result = Solver->doSolverStep();

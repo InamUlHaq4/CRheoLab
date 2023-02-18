@@ -15,8 +15,8 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-absNormResidual 1E-6;
-relNormResidual 1E-3;
+absNormResidual	1E-6;
+relNormResidual	1E-3;
 wSOR 1.2;
 solverModel Jacobi; // Jacobi, GaussSiedel, SOR
 matrixFormat CSR; //lOLists // CSR

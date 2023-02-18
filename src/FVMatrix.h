@@ -51,7 +51,7 @@ SolverPerf solverPerf_;
 
 VolField<scalarField>& field_;
 
-Dictionary& fvSolutionDict_;
+Dictionary fvSolutionDict_;
     
 inline double residualValue();
     

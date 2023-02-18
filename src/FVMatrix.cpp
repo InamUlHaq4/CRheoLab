@@ -18,6 +18,8 @@ field_(field), fvSolutionDict_(field.mesh().time().system()+"fvSolution")
    unsigned int nCells=field_.mesh().nCells();
    bVector_.resize(nCells);
 
+ std::cout << field.mesh().time().system()+"fvSolution" << std::endl;
+//fvSolutionDict_(Dictionary() field.mesh().time().system());
 // fvSolutionDict_ = Dictionary
 //             (
 //                 IOObject
@@ -32,9 +34,10 @@ field_(field), fvSolutionDict_(field.mesh().time().system()+"fvSolution")
 //             );
     //Dictionary fieldDict = fvSystemDict.subDict (field_.name());
     //std::string matrixFormat (fieldDict.lookup<std::string> ("matrixFormat"));
-
+    //fvSolutionDict_.readDict();
+    std::cout << fvSolutionDict_;
     std::string matrixFormat (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("matrixFormat"));
-    
+    //std::string matrixFormat ("none");
 
     if (matrixFormat== "lOLists")
         aMatrix_ = new lilSpmat(nCells,nCells);

@@ -10,7 +10,8 @@ class SGaussSiedel: public FVMatrixSolver
     public:
 
         /// Constructor
-        SGaussSiedel( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, const int nCells);
+        //SGaussSiedel( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, const int nCells);
+        SGaussSiedel( spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector);
 
         /// Destructor
         virtual ~SGaussSiedel();

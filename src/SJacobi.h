@@ -9,8 +9,8 @@ class SJacobi: public FVMatrixSolver
     public:
 
         /// Constructor
-        SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const int nCells);
-
+        // SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const int nCells);
+        SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector);
         /// Destructor
         virtual ~SJacobi();
         /// Solver for the system of equations using Jacobi procedure

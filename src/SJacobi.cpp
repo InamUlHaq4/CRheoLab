@@ -1,9 +1,9 @@
 #include "SJacobi.h"
 
     //Constructor
-    SJacobi::SJacobi(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const int nCells)
+    SJacobi::SJacobi(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector)
     :
-    FVMatrixSolver(aMatrix,bVector,xVector, nCells)
+    FVMatrixSolver(aMatrix,bVector,xVector)
     {}
    
     // Destructor

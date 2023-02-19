@@ -31,7 +31,7 @@ FVMatrix(VolField<scalarField>& field);
 virtual ~FVMatrix();
 
 /// Function to create random sparse matrix, it also creates a random vector \f$ b\f$
-void createRandomSparseaMatrixbVector(const Mesh &mesh);
+void createRandomSparseaMatrixbVector();
 
 // Solve The System of Equations
 void solve();

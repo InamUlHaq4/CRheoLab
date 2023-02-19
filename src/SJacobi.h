@@ -14,7 +14,7 @@ class SJacobi: public FVMatrixSolver
         /// Destructor
         virtual ~SJacobi();
         /// Solver for the system of equations using Jacobi procedure
-        std::vector<double> doSolverStep() const override;
+        void doSolverStep() const override;
 
     private:
                        

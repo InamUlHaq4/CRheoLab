@@ -16,7 +16,7 @@ class SGaussSiedel: public FVMatrixSolver
         /// Destructor
         virtual ~SGaussSiedel();
         /// Solver for the system of equations using Gauss Siedel procedure
-        std::vector<double> doSolverStep()  const override ;
+        void doSolverStep()  const override ;
 
     private:
                        

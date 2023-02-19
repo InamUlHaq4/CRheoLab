@@ -15,29 +15,11 @@
 FVMatrix::FVMatrix(VolField<scalarField>& field):
 field_(field), fvSolutionDict_(field.mesh().time().system()+"fvSolution")
 {
-   unsigned int nCells=field_.mesh().nCells();
-   bVector_.resize(nCells);
-
- std::cout << field.mesh().time().system()+"fvSolution" << std::endl;
-//fvSolutionDict_(Dictionary() field.mesh().time().system());
-// fvSolutionDict_ = Dictionary
-//             (
-//                 IOObject
-//                     (
-//                         "fvSolution",
-//                         field_.mesh().time().system(), //"constant",
-//                         field_.mesh(),
-//                         IOObject::MUST_READ,
-//                         IOObject::NO_WRITE,
-//                         true
-//                     )
-//             );
-    //Dictionary fieldDict = fvSystemDict.subDict (field_.name());
-    //std::string matrixFormat (fieldDict.lookup<std::string> ("matrixFormat"));
-    //fvSolutionDict_.readDict();
-    std::cout << fvSolutionDict_;
+    unsigned int nCells=field_.mesh().nCells();
+    bVector_.resize(nCells);
+    fvSolutionDict_.readDict("solvers");
+      
     std::string matrixFormat (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("matrixFormat"));
-    //std::string matrixFormat ("none");
 
     if (matrixFormat== "lOLists")
         aMatrix_ = new lilSpmat(nCells,nCells);
@@ -70,21 +52,9 @@ void FVMatrix::solve()
     auto start = std::chrono::high_resolution_clock::now();
 
     // Read control data from file
-    Dictionary fvSystemDict
-    (
-        IOObject
-        (
-            "fvSystem",
-            field_.mesh().time().system(), //"constant",
-            field_.mesh(),
-            IOObject::MUST_READ,
-            IOObject::NO_WRITE,
-            false
-        )
-    );
-    double absNormResidual (fvSystemDict.lookup<double> ("absNormResidual"));
-    double relNormResidual (fvSystemDict.lookup<double> ("relNormResidual"));
-    std::string solverModel (fvSystemDict.lookup<std::string> ("solverModel"));
+    double absNormResidual (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("absNormResidual"));
+    double relNormResidual (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("relNormResidual"));
+    std::string solverModel (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("solverModel"));
     
     std::cout << std::string(90, '#') << std::endl;
 
@@ -102,7 +72,7 @@ void FVMatrix::solve()
     }
     else if(solverModel == "SOR")
     {        
-        double wSOR (fvSystemDict.lookup<double> ("wSOR"));
+        double wSOR (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("wSOR"));
         //Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
         Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
     } 
@@ -111,8 +81,7 @@ void FVMatrix::solve()
     //while (solverPerf_.proceed())
     {
         
-        result = Solver->doSolverStep();
-        field_.internalFieldRef() = result;
+        Solver->doSolverStep();
 
         residual = residualValue()/residualNormFactor(); 
         relResidual = residual/residualFirst;
@@ -159,7 +128,7 @@ inline double FVMatrix::residualNormFactor()
     return nNormalize;
 }
 
-void FVMatrix::createRandomSparseaMatrixbVector(const Mesh &mesh)
+void FVMatrix::createRandomSparseaMatrixbVector()
 {
     std::cout << ">> entered create Sparse aMatrix and bVector" << std::endl;
 

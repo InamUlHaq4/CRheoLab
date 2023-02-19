@@ -6,7 +6,6 @@ FVMatrixSolver::FVMatrixSolver(spmat* aMatrix, std::vector<double> &bVector,std:
 aMatrix_(aMatrix),
 bVector_(&bVector),
 xVector_(&xVector)
-//nCells_(nCells)
 {}
  
 FVMatrixSolver::~FVMatrixSolver()

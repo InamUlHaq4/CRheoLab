@@ -22,7 +22,7 @@ class FVMatrixSolver
         // double axMultiplicationNoDiagonal(const unsigned int& i) const;
         
         /// Function to solve the system of equations, defined in the specific solver classes i.e. in the Jacobi, Gauss Siedel, and SOR classes.
-        virtual  std::vector<double> doSolverStep() const = 0;
+        virtual  void doSolverStep() const = 0;
        
         
     protected:
@@ -32,9 +32,6 @@ class FVMatrixSolver
         std::vector<double>* bVector_;
         /// \f$ X \f$ vector
         std::vector<double>* xVector_;
-        /// Number of the elements in the system i.e. the size of the system
-        unsigned int nCells_;
-
 
     private:
            

@@ -16,7 +16,7 @@ class SSOR: public FVMatrixSolver
         virtual ~SSOR();
        
         /// Solver for the system of equations using SOR procedure 
-        std::vector<double> doSolverStep() const override ;
+        void doSolverStep() const override ;
 
     private:
     /// SOR parameter

@@ -75,7 +75,7 @@ int main()
 
     FVMatrix TEqn1(T1);
     
-    TEqn1.createRandomSparseaMatrixbVector(T1.mesh());
+    TEqn1.createRandomSparseaMatrixbVector();
     TEqn1.solve();
     TEqn1.solverPerf().perfShow();
     TEqn1.resetxVector();
@@ -97,7 +97,7 @@ int main()
 
     FVMatrix TEqn2(T2);
         
-    TEqn2.createRandomSparseaMatrixbVector(T1.mesh());
+    TEqn2.createRandomSparseaMatrixbVector();
     TEqn2.solve();
     TEqn2.solverPerf().perfShow();
     TEqn2.resetxVector();

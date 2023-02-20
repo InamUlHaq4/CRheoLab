@@ -10,7 +10,7 @@ class csrSpmat : public spmat {
 
 public: // change to private later
 
-  // Number of non-null values
+  // Number of total non-null values
   unsigned int numNZ_;
 
   // Vector of vector for the values
@@ -88,5 +88,10 @@ csrSpmat operator-(const csrSpmat& A,const csrSpmat& B);
 
 // Subtraction operator
 csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B);
+
+// Multiplication operator
+csrSpmat operator*(const csrSpmat& A,const double& val);
+
+csrSpmat* operator*(const csrSpmat& A,const double* val);
 
 #endif // CSRSPMAT_H

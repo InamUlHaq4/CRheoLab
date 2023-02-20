@@ -308,5 +308,28 @@ csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B)
       C->subValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
     }
   }
+
+  return C;
+}
+
+// Multiplication operator
+csrSpmat operator*(const csrSpmat& A, const double& val)
+{
+  csrSpmat C = A;
+  for(unsigned int i=0; i<C.numNZ_;i++)
+  {
+    C.values_[i] *= val;
+  }
+  return C;
+}
+
+// Multiplication operator
+csrSpmat* operator*(const csrSpmat& A, const double* val)
+{
+  csrSpmat* C = new csrSpmat(A);
+  for(unsigned int i=0; i<C->numNZ_;i++)
+  {
+    C->values_[i] *= *val;
+  }
   return C;
 }

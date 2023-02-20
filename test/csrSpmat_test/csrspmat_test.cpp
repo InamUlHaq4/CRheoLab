@@ -141,5 +141,25 @@ int main(int argc, char const *argv[]) {
       std::cout << "Test sparse matrix subtraction" << std::endl;
       std::cout << "#############################################################" << std::endl;
 
+                  //Jayesh Feb 2023
+
+      std::cout << "#############################################################" << std::endl;
+      std::cout << "Test sparse matrix Multiplication" << std::endl;
+      std::cout << "#############################################################" << std::endl;
+
+      csrSpmat spmatE;
+      csrSpmat spmatF;
+
+      spmatE.numRows_ = 4;
+      spmatE.numCols_ = 4;
+      spmatE.numNZ_ = 9;
+      spmatE.columns_ = {0,2,1,1,3,0,1,2,3};
+      spmatE.values_ = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0};
+      spmatE.row_ptr_ = {0,2,3,5,9};
+
+      std::cout << "E " << spmatE << std::endl;
+      spmatF = spmatE * 2;
+      std::cout << "F " << spmatF << std::endl;
+
       return 0;
 }

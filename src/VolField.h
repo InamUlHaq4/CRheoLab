@@ -62,6 +62,12 @@ class VolField
 
         const DimensionedSet& dimensions() {return dimensions_;}
 
+        // Give access to the field/file path in the OS directory tree
+        const std::string& fieldFilePath();
+
+        // Give access to the field/file name
+        const std::string& fieldFileName();
+
         VolField& operator=(const VolField &vf); // provisional
 
         template<class T>

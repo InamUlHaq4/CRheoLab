@@ -32,6 +32,7 @@ class Face
         const vector3& areaVector() const;
         const double& nonOrthogonality() const;
         const double& skewness() const;
+        const vector3& cellsCentroidsVect() const;
 
         // Computations
         void computeArea();
@@ -50,6 +51,8 @@ class Face
         void computeIntersectionPoint();
 
         void computeSkewness();
+
+        void computeCellsCentroidsVect();
 
         void correctSf();
 
@@ -80,6 +83,9 @@ class Face
 
         // Intersection point (IP)
         vector3 intersectionPoint_;
+
+        // Vector between cell centers (interior faces) / or boundary face centroid to cell centrois (boundary face)
+        vector3 cellsCentroidsVect_; 
 };
 
 #endif // FACE_H

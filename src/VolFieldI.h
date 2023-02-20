@@ -79,6 +79,21 @@ const vectorType& VolField<vectorType>::internalField() const
     return internalField_;
 }
 
+// Give access to the boundary entities
+template <typename vectorType>
+const std::string& VolField<vectorType>::fieldFilePath()
+{
+  return this->path();
+}
+
+// Give access to the boundary entities
+template <typename vectorType>
+const std::string& VolField<vectorType>::fieldFileName()
+{
+  return this->name();
+}
+
+
 template <typename vectorType>
 void VolField<vectorType>::initHeader() const
 {

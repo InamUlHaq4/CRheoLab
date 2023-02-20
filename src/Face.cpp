@@ -12,7 +12,8 @@ Face::Face(int nPointsInFace, vector<Point*> facePoints)
     areaVector_({-1,-1,-1}),
     weightingFactor_(-1),
     nonOrthogonalityAngle_(-1),
-    skewness_(-1)
+    skewness_(-1),
+    cellsCentroidsVect_({0,0,0})
 {}
 
 Face::Face()
@@ -67,6 +68,36 @@ const double& Face::skewness() const
     return skewness_;
 }
 
+
+// Calculate Cells centroids distances, and  cell to face centroids for Boundary faces
+void Face::computeCellsCentroidsVect()
+{
+    // Checking if it is an interior face!
+    bool isInteriorFace (neighbour());
+    // Retrieving owner cell centroid vector position 
+    const vector3& C_o = owner_->centerOfMass(); //Cell owner
+    // Initializing distances between cell centroid and Cell to Boundary face centroid distance.  
+    vector3 dC{0,0,0},dBf{0,0,0};
+
+    // If it is a interior face calculate the distances between the cell centroids
+    if (isInteriorFace)
+    {
+        // Cell centroid for the neighbor cell
+        const vector3& C_n = neighbour_->centerOfMass();
+        // Vector distance from the Owner cell to the neighbor cell
+        dC = C_n - C_o;
+    }
+    // Else calculate the distances between the cell centroid to the boundary face centroid
+    else
+    {   
+        // Face centroid for the boundary face
+        const vector3& boundaryFaceCentroid= centerOfMass();
+        // Vector distance from the cell to the boundary face
+        dBf = boundaryFaceCentroid - C_o;
+    }
+    // Writing the centroidsDist_ with the proper value depending on the type of the face with the ternary operator
+    ( isInteriorFace ) ? ( cellsCentroidsVect_ = dC ) : ( cellsCentroidsVect_ = dBf );
+}
 
 //Removed non-Required Getters:
 /*
@@ -490,4 +521,9 @@ std::ostream& operator<<(std::ostream& os, const Face& p)
     os << "]" << std::endl;
 
     return os;
+}
+
+const vector3& Face::cellsCentroidsVect() const
+{
+    return cellsCentroidsVect_;
 }

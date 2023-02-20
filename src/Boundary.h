@@ -49,7 +49,10 @@ class Boundary
         void readBoundaryPatch(const std::string& patchName);
 
         ///@brief Member function to access the boundary patch defined values
-        vectorType& definedValues();
+        // vectorType& definedValues();
+
+        ///@brief Member function to access the boundary patch faceI defined value
+        typename vectorType::value_type definedValues(int& faceI) const;
 
         ///@brief Member function to access the boundary patch defined name
         const std::string& name() const;

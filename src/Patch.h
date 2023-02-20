@@ -15,7 +15,9 @@ class Patch
 
         const std::string& name() const;
 
+        //Getters
         int nFaces() const;
+        int startFace() const;
 
     protected:
 

@@ -16,6 +16,8 @@
 //#include "fvBoundaryConditionsField.h"
 
 #include "FVMatrix.h"
+#include "fvm.h"
+
 
 //#include "fvm.h"
 
@@ -73,9 +75,12 @@ int main()
         )
     );
 
-    FVMatrix TEqn1(T1);
+    //MCN at the point the boundaryField_.nPatches_ from T1 is not correct, but the number of elements boundaryField_.boundaryData_ is not correct
+    //MCN the nPatches is deleted in the volume field in the constructor after the following line >> header_.readDict("FoamFile");
+
+    FVMatrix TEqn1 (fvm::laplacian(23, T1));
     
-    TEqn1.createRandomSparseaMatrixbVector();
+    //TEqn1.createRandomSparseaMatrixbVector();
     TEqn1.solve();
     TEqn1.solverPerf().perfShow();
     TEqn1.resetxVector();

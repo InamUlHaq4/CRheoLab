@@ -175,3 +175,13 @@ SolverPerf FVMatrix::solverPerf()
 {
     return solverPerf_;
 }
+
+spmat* FVMatrix::aMatrix()
+{
+    return aMatrix_;
+}
+
+std::vector<double> FVMatrix::bVector()
+{
+    return bVector_;
+}

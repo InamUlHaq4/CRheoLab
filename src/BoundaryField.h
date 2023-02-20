@@ -43,12 +43,21 @@ class BoundaryField
         ///@brief Returns the name in the boundaryField patch list for the give patch index 
         const std::string& patchName(const int& ID) const;
 
+         ///@brief Returns for a patch I, the face J defined value
+        typename vectorType::value_type patchIFaceJValue(int patchI, int faceJ) const;
+
         BoundaryField& operator=(const BoundaryField &bf); //provisional
         const Boundary<vectorType>& operator[](int index) const;
 
         template<class T>
         friend std::ostream& operator<<(std::ostream& os, const BoundaryField<T>& bf);
 
+        //Getters
+        const int& nPatches() const;
+
+        ///@brief Returns the Type of Boundary Condition
+        const std::string& patchTypeOfBCondition(int i) const;
+  
     private:
 
         // Private Data Members

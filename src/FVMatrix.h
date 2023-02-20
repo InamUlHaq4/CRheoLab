@@ -41,6 +41,9 @@ void resetxVector();
 
 //Getters
 SolverPerf solverPerf();
+spmat* aMatrix();
+std::vector<double> bVector();
+
 
 private:
 spmat* aMatrix_;

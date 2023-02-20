@@ -15,7 +15,14 @@ const std::string& Patch::name() const
     return name_;
 }
 
+//Getters
 int Patch::nFaces() const
 {
     return nFaces_;
+}
+
+
+int Patch::startFace() const
+{
+    return startFace_;
 }

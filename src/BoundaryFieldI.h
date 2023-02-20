@@ -98,3 +98,24 @@ std::ostream& operator<<(std::ostream& os, const BoundaryField<vectorType>& bf)
    return os;
 }
 
+// Returns for a patch I, the face J defined value
+template <typename vectorType>
+typename vectorType::value_type BoundaryField<vectorType>::patchIFaceJValue(int patchI, int faceJ) const
+{
+    return boundaryData_[patchI].definedValues(faceJ);
+}
+
+template <typename vectorType> 
+const int& BoundaryField<vectorType>::nPatches() const
+{
+    return nPatches_;
+}
+
+///Returns the Type of Boundary Condition
+template <typename vectorType>
+const std::string& BoundaryField<vectorType>::patchTypeOfBCondition(int i) const
+{
+    return boundaryData_[i].type();
+}
+
+

@@ -102,7 +102,7 @@ int main()
 
     FVMatrix TEqn2(T2);
         
-    TEqn2.createRandomSparseaMatrixbVector();
+    //TEqn2.createRandomSparseaMatrixbVector();
     TEqn2.solve();
     TEqn2.solverPerf().perfShow();
     TEqn2.resetxVector();

@@ -149,6 +149,8 @@ int main(int argc, char const *argv[]) {
 
       csrSpmat spmatE;
       csrSpmat spmatF;
+      csrSpmat* spmatG;
+
 
       spmatE.numRows_ = 4;
       spmatE.numCols_ = 4;
@@ -160,6 +162,11 @@ int main(int argc, char const *argv[]) {
       std::cout << "E " << spmatE << std::endl;
       spmatF = spmatE * 2;
       std::cout << "F " << spmatF << std::endl;
+      double* testVal = new double(3);
+
+      spmatG = spmatE * testVal;
+      
+      std::cout << "G " << *spmatG << std::endl;
 
       return 0;
 }

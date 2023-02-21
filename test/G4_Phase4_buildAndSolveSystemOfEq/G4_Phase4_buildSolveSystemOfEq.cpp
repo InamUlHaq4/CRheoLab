@@ -78,36 +78,38 @@ int main()
     //MCN at the point the boundaryField_.nPatches_ from T1 is not correct, but the number of elements boundaryField_.boundaryData_ is not correct
     //MCN the nPatches is deleted in the volume field in the constructor after the following line >> header_.readDict("FoamFile");
 
-    FVMatrix TEqn1 (fvm::laplacian(23, T1));
-    
-    //TEqn1.createRandomSparseaMatrixbVector();
-    TEqn1.solve();
-    TEqn1.solverPerf().perfShow();
+    //FVMatrix TEqn1 (fvm::laplacian(23, T1));
+    FVMatrix TEqn1 (T1);
+
+    TEqn1.createRandomSparseaMatrixbVector();
     TEqn1.resetxVector();
     TEqn1.solve();
     TEqn1.solverPerf().perfShow();
+    //TEqn1.resetxVector();
+    TEqn1.solve();
+    TEqn1.solverPerf().perfShow();
     
-    VolField<scalarField> T2
-    (
-        IOObject
-        (
-            "T2",
-            time.timeName(),
-            polyMesh,
-            IOObject::MUST_READ,
-            IOObject::NO_WRITE,
-            true
-        )
-    );
+    // VolField<scalarField> T2
+    // (
+    //     IOObject
+    //     (
+    //         "T2",
+    //         time.timeName(),
+    //         polyMesh,
+    //         IOObject::MUST_READ,
+    //         IOObject::NO_WRITE,
+    //         true
+    //     )
+    // );
 
-    FVMatrix TEqn2(T2);
+    // FVMatrix TEqn2(T2);
         
-    //TEqn2.createRandomSparseaMatrixbVector();
-    TEqn2.solve();
-    TEqn2.solverPerf().perfShow();
-    TEqn2.resetxVector();
-    TEqn2.solve();
-    TEqn2.solverPerf().perfShow();
+    // TEqn2.createRandomSparseaMatrixbVector();
+    // TEqn2.solve();
+    // TEqn2.solverPerf().perfShow();
+    // TEqn2.resetxVector();
+    // TEqn2.solve();
+    // TEqn2.solverPerf().perfShow();
 
     //std::vector<double> TEquation2 = fvc::laplacian(1.0,T1);
 

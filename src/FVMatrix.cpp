@@ -40,68 +40,49 @@ FVMatrix::~FVMatrix()
 
 void FVMatrix::solve()
 {
-    std::vector<double> result(field_.mesh().nCells());
-    //std::vector<double> result(50);
-
-    double residualNormFactorValue = residualNormFactor();
-    double residual = residualValue()/residualNormFactorValue;
+    double residualNormFactorVal = residualNormFactor();
+    double residual = residualValue()/residualNormFactorVal;
     double residualFirst = residual;
-    double relResidual = 1.0;
-    
-    int countIter = 0;
+        
     auto start = std::chrono::high_resolution_clock::now();
 
-    // Read control data from file
-    double absNormResidual (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("absNormResidual"));
-    double relNormResidual (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("relNormResidual"));
-    std::string solverModel (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("solverModel"));
-    unsigned int maxNumberOfIter (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<unsigned int> ("maxNumberOfIter"));
-
-
-    std::cout << std::string(90, '#') << std::endl;
-
+    // Initialize solver performance Object
+    solverPerf_ = SolverPerf(fvSolutionDict_.subDict("solvers").subDict(field_.name()), residualFirst);
+  
     FVMatrixSolver* Solver;
 
-     if(solverModel == "Jacobi")
+     if(solverPerf_.solverModel() == "Jacobi")
     {
         //Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
         Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef());
     }
-    else if(solverModel == "GaussSiedel")
+    else if(solverPerf_.solverModel() == "GaussSiedel")
     {
         //Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
         Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef());
     }
-    else if(solverModel == "SOR")
+    else if(solverPerf_.solverModel() == "SOR")
     {        
         double wSOR (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("wSOR"));
         //Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
         Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
     } 
 
-    solverPerf_.init (solverModel , absNormResidual , relNormResidual , maxNumberOfIter , 1.0 );
-
-    solverPerf_.update (1.0 , 1.0 , 0.0 );
-
-   // while (residual > absNormResidual && relResidual > relNormResidual)
     while (solverPerf_.proceed())
     {
         
         Solver->doSolverStep();
 
         residual = residualValue()/residualNormFactor(); 
-        relResidual = residual/residualFirst;
-
-        countIter++;
-
-        solverPerf_.update (residual , relResidual , countIter);
+        
+        solverPerf_.update (residual);
 
     }
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
 
     //solverPerf_ = SolverPerf(solverModel, residualFirst, residual, countIter, duration.count());
-    solverPerf_.final ( residual,  relResidual, duration.count());
+    solverPerf_.final (duration.count());
 }
 
 ///////////////////////////////////////////////

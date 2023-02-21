@@ -35,22 +35,22 @@ solvers
 
     T1
     {
-        absNormResidual 1E-6;
-        relNormResidual 1E-3;
+        maxAbsResidual 1E-6;
+        maxRelResidual 1E-3;
         wSOR 1.2;
         solverModel Jacobi; // Jacobi, GaussSiedel, SOR
         matrixFormat CSR; //lOLists // CSR
-        maximumIterations 1000;
+        maxNumberOfIter 5;
     }
 
     T2
     {
-        absNormResidual 1E-6;
-        relNormResidual 1E-3;
+        maxAbsResidual 1E-6;
+        maxRelResidual 1E-3;
         wSOR 1.2;
         solverModel Jacobi; // Jacobi, GaussSiedel, SOR
         matrixFormat CSR; //lOLists // CSR
-        maximumIterations 1000;
+        maxNumberOfIter 1000;
     }
 
 }

@@ -39,15 +39,23 @@ void VolField<vectorType>::readInternalField()
                 line = line.substr(line.find("uniform") + 7); 
 
                 iss.str(line);
-                
-                internalField_.resize(1);
-                
+
+                // MCN BUG in - Expand the Interfield vector for all Cells
+
+                //internalField_.resize(1);
+                internalField_.resize(this->mesh().nCells());
+            
                 if (!(iss >> internalField_[0]))
                 {
                     errorMessage(in_file, "Error while parsing uniform field at line: ", lineCounter);
                 }
+                for (unsigned int i=0;i<this->mesh().nCells();i++)
+                {
+                    internalField_[i] = internalField_[0];                    
+                }
+                // MCN BUG out - Expand the Interfield vector for all Cells
 
-                // Exits the loop (not necessary to continue looking into the file)
+                // Exits the loop (not necessary to continue looking into   the file)
                 break;
 
             } // If the internalField is non-uniform

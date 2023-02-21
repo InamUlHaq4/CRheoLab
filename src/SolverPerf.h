@@ -4,38 +4,44 @@
 #include <string>
 #include <iostream>
 
+#include "Dictionary.h"
+
 /// Main class for solving the system of equations 
 class SolverPerf
 {
   public:
     SolverPerf();
 
-    SolverPerf(std::string solverModel, double residualFirst,double residualFinal, unsigned int countIter, unsigned int duration);
+    //Constructor
+    SolverPerf(const Dictionary& fvSolutionSubDict, double residualFirst);
+
+    //Destructor
+    virtual ~SolverPerf()  = default;
 
     void perfShow();
 
-    virtual ~SolverPerf();
-
     bool proceed();
 
-    void init (std::string solverModel , double maxAbsResidual , double maxRelResidual , unsigned int maxNumberOfIter , double residualFirst); 
+    void update (double absResidual);
 
-    void update (double absResidual,double relResidual, unsigned int countIter);
+    void final (unsigned int duration);
 
-    void final (double residualFinal, unsigned int countIter, unsigned int duration);
+    //Getters
+    std::string solverModel();
 
   private:
-    bool converged;
+    Dictionary fvSolutionSubDict_;
+    bool converged_;
     std::string solverModel_;
-    double residualFirst_;
-    double residualFinal_;
-    unsigned int countIter_;
-    unsigned int duration_;
     double maxAbsResidual_;
     double maxRelResidual_;
     unsigned int maxNumberOfIter_;
+    double residualFirst_;
+    double residualFinal_;
+    unsigned int duration_;
     double absResidual_;
     double relResidual_;
+    unsigned int numberOfIter_;
 
 };
 

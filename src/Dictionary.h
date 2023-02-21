@@ -88,6 +88,10 @@ class Dictionary
         template <typename T>
         T lookup(const std::string& keyWord) const;
 
+        //- LookupOrDefault
+        template <typename T>
+        T lookupOrDefault(const std::string& keyWord, T defaultV) const;
+
         const Dictionary& subDict(const std::string& dictName) const;
 
         //- Print

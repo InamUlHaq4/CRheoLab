@@ -55,7 +55,9 @@ void FVMatrix::solve()
     double absNormResidual (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("absNormResidual"));
     double relNormResidual (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("relNormResidual"));
     std::string solverModel (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("solverModel"));
-    
+    unsigned int maxNumberOfIter (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<unsigned int> ("maxNumberOfIter"));
+
+
     std::cout << std::string(90, '#') << std::endl;
 
     FVMatrixSolver* Solver;
@@ -77,8 +79,12 @@ void FVMatrix::solve()
         Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
     } 
 
-    while (residual > absNormResidual && relResidual > relNormResidual)
-    //while (solverPerf_.proceed())
+    solverPerf_.init (solverModel , absNormResidual , relNormResidual , maxNumberOfIter , 1.0 );
+
+    solverPerf_.update (1.0 , 1.0 , 0.0 );
+
+   // while (residual > absNormResidual && relResidual > relNormResidual)
+    while (solverPerf_.proceed())
     {
         
         Solver->doSolverStep();
@@ -87,12 +93,15 @@ void FVMatrix::solve()
         relResidual = residual/residualFirst;
 
         countIter++;
+
+        solverPerf_.update (residual , relResidual , countIter);
+
     }
     auto stop = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(stop - start);
 
-    solverPerf_ = SolverPerf(solverModel, residualFirst, residual, countIter, duration.count());
-   
+    //solverPerf_ = SolverPerf(solverModel, residualFirst, residual, countIter, duration.count());
+    solverPerf_.final ( residual,  relResidual, duration.count());
 }
 
 ///////////////////////////////////////////////

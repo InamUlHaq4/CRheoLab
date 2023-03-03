@@ -18,6 +18,8 @@
 #include "FVMatrix.h"
 #include "fvm.h"
 
+#include "math.h"   //added
+
 
 //#include "fvm.h"
 
@@ -78,8 +80,10 @@ int main()
     //MCN at the point the boundaryField_.nPatches_ from T1 is not correct, but the number of elements boundaryField_.boundaryData_ is not correct
     //MCN the nPatches is deleted in the volume field in the constructor after the following line >> header_.readDict("FoamFile");
 
-    //FVMatrix TEqn1 (fvm::laplacian(23, T1));
-    FVMatrix TEqn1 (T1);
+    std::cout << std::endl << "Solving for T1" << std::endl;
+
+    FVMatrix TEqn1 (fvm::laplacian(23, T1) + fvm::laplacian(36, T1));
+    //FVMatrix TEqn1 (T1);
 
     TEqn1.createRandomSparseaMatrixbVector();
     TEqn1.resetxVector();
@@ -89,6 +93,7 @@ int main()
     TEqn1.solve();
     TEqn1.solverPerf().perfShow();
     
+
     // VolField<scalarField> T2
     // (
     //     IOObject
@@ -102,12 +107,15 @@ int main()
     //     )
     // );
 
+
+    // std::cout << std::endl << "Solving for T2" << std::endl;
+
     // FVMatrix TEqn2(T2);
         
     // TEqn2.createRandomSparseaMatrixbVector();
     // TEqn2.solve();
     // TEqn2.solverPerf().perfShow();
-    // TEqn2.resetxVector();
+    // //TEqn2.resetxVector();
     // TEqn2.solve();
     // TEqn2.solverPerf().perfShow();
 
@@ -126,6 +134,9 @@ int main()
     TEquation1.solve();
     std::cout << "end solve " << std::endl; 
     */
+
+    //FVMatrix TEqnTotal = TEqn1 + TEqn2;
+
 
 
     return 0;

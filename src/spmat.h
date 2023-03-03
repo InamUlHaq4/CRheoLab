@@ -82,4 +82,18 @@ public:
 
 };
 
+/*
+// Addition operator
+spmat operator+(const spmat& A,const spmat& B);
+
+// Addition operator
+spmat* operator+(const spmat& A,const spmat* B);
+
+// Subtraction operator
+spmat operator-(const spmat& A,const spmat& B);
+
+// Subtraction operator
+spmat* operator-(const spmat& A,const spmat* B);
+*/
+
 #endif // SPMAT_H

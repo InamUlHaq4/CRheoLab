@@ -63,17 +63,14 @@ public:
   // Returns the sparse matrix in a dense format as a vector of vectors
   std::vector< std::vector<double> > dense() const override;
 
-  // Returns the product matrix-vector as a vector
-  std::vector<double> matMul(const std::vector<double>& vecPhi) const override;
-
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
   double vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
   double vecRowMulNoDiagonal(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
-  // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
-  double xValueProduct(const unsigned int& i, const double& xValue) const override;
+  // Returns the sum of the products of a double for the elements of the iRow matrix row
+  // double valueProduct(const unsigned int& i, const double& val) const override;
 
 };
 

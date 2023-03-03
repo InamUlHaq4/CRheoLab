@@ -69,41 +69,49 @@ public:
   // Returns the sparse matrix in a dense format as a vector of vectors
   std::vector< std::vector<double> > dense() const override;
 
-  // Returns the product matrix-vector as a vector
-  std::vector<double> matMul(const std::vector<double>& vecPhi) const override;
-
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
   double vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
   double vecRowMulNoDiagonal(const unsigned int& i, const std::vector<double>& vecPhi) const override;
 
-  // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
-  double xValueProduct(const unsigned int& i, const double& xValue) const override;
+  // Returns the sum of the products of a double for the elements of the iRow matrix row
+  // double valueProduct(const unsigned int& i, const double& val) const override;
   
-  // // Check if addition/subtraction operation is possible
-  void checkAdd(const lilSpmat& A,const lilSpmat& B);
-  void checkAdd(const lilSpmat& A,const lilSpmat* B);
-
-  // Check if multiplication operation is possible
-  void checkProd(const lilSpmat& A, const lilSpmat& B);
-  void checkProd(const lilSpmat& A, const std::vector<double>& B);
-  void checkProd(const lilSpmat& A, const std::vector<std::vector<double>>& B);
 };
 
 // Addition operator
 lilSpmat operator+(const lilSpmat& A,const lilSpmat& B);
+// Addition operator (pointer)
 lilSpmat* operator+(const lilSpmat& A,const lilSpmat* B);
 
 // Subtraction operator
 lilSpmat operator-(const lilSpmat& A,const lilSpmat& B);
+// Subtraction operator (pointer)
 lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B);
 
-// Multiplication operator
+// Multiplication operator (mat-scalar)
 lilSpmat operator*(const lilSpmat& A,const double& val);
+// Multiplication operator (mat-scalar) (pointer)
 lilSpmat* operator*(const lilSpmat& A,const double* val);
+
+// Multiplication operator (mat-mat)
 lilSpmat operator*(const lilSpmat& A,const lilSpmat& B);
-std::vector<double> operator*(const lilSpmat& A,const std::vector<double>& B);
-//std::vector<std::vector<double>> operator*(const lilSpmat& A,const std::vector<std::vector<double>>& B);
+// Multiplication operator (mat-mat) (pointer)
+lilSpmat* operator*(const lilSpmat& A,const lilSpmat* B);
+
+// Multiplication operator (mat-vec)
+std::vector<double> operator*(const lilSpmat& A,const std::vector<double>& vec);
+// Multiplication operator (mat-vec) (pointer)
+std::vector<double>* operator*(const lilSpmat& A,const std::vector<double>* vec);
+// Multiplication operator (mat-vec) (pointer)
+std::vector<double>* operator*(const lilSpmat* A,const std::vector<double>& vec);
+
+// Multiplication operator (mat-vec(vec)) 
+std::vector<std::vector<double>> operator*(const lilSpmat& A,const std::vector<std::vector<double>>& vec);
+// Multiplication operator (mat-vec(vec)) (pointer)
+std::vector<std::vector<double>>* operator*(const lilSpmat& A,const std::vector<std::vector<double>>* vec);
+// Multiplication operator (mat-vec(vec)) (pointer)
+std::vector<std::vector<double>>* operator*(const lilSpmat* A,const std::vector<std::vector<double>>& vec);
 
 #endif // LILSPMAT_H

@@ -63,33 +63,36 @@ public:
   // Returns the sparse matrix in a dense format as a vector of vectors
   virtual std::vector<std::vector<double>> dense() const = 0;
 
-  // Returns the product matrix-vector as a vector
-  virtual std::vector<double> matMul(const std::vector<double> &vecPhi) const = 0;
-
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
   virtual double vecRowMul(const unsigned int &i, const std::vector<double> &vecPhi) const = 0;
 
   // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double excluding the diagonal
   virtual double vecRowMulNoDiagonal(const unsigned int &i, const std::vector<double> &vecPhi) const = 0;
 
-  // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
-  virtual double xValueProduct(const unsigned int &i, const double &xValue) const = 0;
-
-  // // Check if addition/subtraction operation is possible
-  // bool checkAdd(const spmat& A,const spmat& B);
-  // bool checkAdd(const spmat& A,const spmat* B);
-
-  // // Overloaded operators
-  // // Addition operator
-  // virtual spmat operator+(const spmat& A,const spmat& B);
-  // virtual spmat* operator+(const spmat& A,const spmat* B);
-
-  // Subtraction operator
-  // virtual spmat& operator-(const spmat& A,const spmat& B) = 0;
+  // Returns the sum of the products of a double for the elements of the iRow matrix row
+  // virtual double valueProduct(const unsigned int& i, const double& val) const = 0;
 
 };
 
+// Check if requested position exists
+void checkPos(const spmat* A, const unsigned int& i, const unsigned int& j);
+
+// Check if addition/subtraction operation is possible
+void checkAdd(const spmat& A, const spmat& B);
+
+// Check if multiplication operation is possible (mat-mat)
+void checkProd(const spmat& A, const spmat& B);
+// Check if multiplication operation is possible (mat-vec)
+void checkProd(const spmat& A, const std::vector<double>& vec);
+// Check if multiplication operation is possible (mat-vec(vec))
+void checkProd(const spmat& A, const std::vector<std::vector<double>>& vec);
+
 // Prints the dense form of a matrix
 std::ostream& operator<<(std::ostream& os,const spmat& spmat);
+// Prints the dense form of a vector
+std::ostream& operator<<(std::ostream& os,const std::vector<double>& vec);
+// Prints the dense form of a vector of vectors
+std::ostream& operator<<(std::ostream& os,const std::vector<std::vector<double>>& vec);
+
 
 #endif // SPMAT_H

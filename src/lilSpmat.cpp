@@ -47,6 +47,7 @@ unsigned int lilSpmat::getNZColumn(const unsigned int &i, const unsigned int &j)
 // Sets a value to position (i,j) if exists, otherwise inserts a new value
 void lilSpmat::setValue(const unsigned int& i, const unsigned int& j, const double& val)
 {
+  checkPos(this, i, j);
   for(unsigned int k=0;k<columns_[i].size();k++)
   {
     if(columns_[i][k] == j)
@@ -62,6 +63,7 @@ void lilSpmat::setValue(const unsigned int& i, const unsigned int& j, const doub
 // Adds a value to position (i,j) if exists, otherwise inserts a new value
 void lilSpmat::addValue(const unsigned int& i, const unsigned int& j, const double& val)
 {
+  checkPos(this, i, j);
   for(unsigned int k=0;k<columns_[i].size();k++)
   {
     if(columns_[i][k] == j)
@@ -77,6 +79,7 @@ void lilSpmat::addValue(const unsigned int& i, const unsigned int& j, const doub
 // Subtracts a value to position (i,j) if exists, otherwise inserts a new value
 void lilSpmat::subValue(const unsigned int& i, const unsigned int& j, const double& val)
 {
+  checkPos(this, i, j);
   for(unsigned int k=0;k<columns_[i].size();k++)
   {
     if(columns_[i][k] == j)
@@ -92,6 +95,7 @@ void lilSpmat::subValue(const unsigned int& i, const unsigned int& j, const doub
 // Multiplies a value to position (i,j) if exists
 void lilSpmat::mulValue(const unsigned int& i, const unsigned int& j, const double& val)
 {
+  checkPos(this, i, j);
   for(unsigned int k=0;k<columns_[i].size();k++)
   {
     if(columns_[i][k] == j)
@@ -105,6 +109,7 @@ void lilSpmat::mulValue(const unsigned int& i, const unsigned int& j, const doub
 // Deletes the value in position (i,j) if exists, otherwise does nothing
 void lilSpmat::delValue(const unsigned int& i, const unsigned int& j)
 {
+  checkPos(this, i, j);
   for(unsigned int k=0;k<columns_[i].size();k++)
   {
     if(columns_[i][k] == j)
@@ -119,6 +124,7 @@ void lilSpmat::delValue(const unsigned int& i, const unsigned int& j)
 // Returns the value in position (i,j) if exists, otherwise returns 0
 double lilSpmat::getValue(const unsigned int& i, const unsigned int& j) const
 {
+  checkPos(this, i, j);
   for(unsigned int k=0;k<columns_[i].size();k++)
   {
     if(columns_[i][k] == j)
@@ -150,38 +156,6 @@ std::vector< std::vector<double> > lilSpmat::dense() const
   return denseMatrix;
 }
 
-// Function that returns the product matrix-vector as a vector
-std::vector<double> lilSpmat::matMul(const std::vector<double>& vecPhi) const
-{
-  std::vector<double> v(vecPhi.size());
-  unsigned int id_column = 0;
-  for(unsigned int i=0;i<numRows_;i++)
-  {
-    v[i] = 0.0;
-    for(unsigned int j=0;j<columns_[i].size();j++)
-    {
-      id_column = columns_[i][j];
-      v[i] += values_[i][j] * vecPhi[id_column];
-    }
-  }
-  return v;
-}
-// std::vector<std::vector<double>> lilSpmat::matMul(const std::vector<std::vector<double>>& vecPhi) const
-// {
-//   lilSpmat C = (A.numRows_, B.numCols_);
-//   double val = 0.0
-//   for(unsigned int i=0; i<A.numRows_; i++)
-//   {
-//     for(unsigned int j=0; j<A.columns_; j++)
-//     {
-//       double val =+ A.getValue(i,j) * B.getValue(j,i);
-//       C.setValue(i,j, val);
-//     }
-//   }
-//   return C;
-//   return v;
-// }
-
 // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
 double lilSpmat::vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const
 {
@@ -208,56 +182,16 @@ double lilSpmat::vecRowMulNoDiagonal(const unsigned int& i, const std::vector<do
   return sumProdRow;
 }
 
-// Returns a double given by the sum of the products of xValue (a double) for a specific row of the matrix
-double lilSpmat::xValueProduct(const unsigned int& i, const double& xValue) const
-{
-  double sumProdRow = 0.0;
-  for(unsigned int j=0;j<columns_[i].size();j++)
-  {
-    sumProdRow += values_[i][j] * xValue;
-  }
-  return sumProdRow;
-}
-
-// Check if addition/subtraction operation is possible
-void checkAdd(const lilSpmat& A,const lilSpmat* B)
-{
-  if (A.numRows_ != B->numRows_ || A.numCols_ != B->numCols_)
-  {
-    // Throws exception to stop the program
-    throw std::runtime_error("ERROR: Matrices cannot be added/subtracted due to size incompatibility.");
-  } 
-}
-void checkAdd(const lilSpmat& A,const lilSpmat& B)
-{
-  if (A.numRows_ != B.numRows_ || A.numCols_ != B.numCols_)
-  {
-    throw std::runtime_error("ERROR: Matrices cannot be added/subtracted due to size incompatibility.");
-  }
-}
-
-// Check if multiplication operation is possible
-void checkProd(const lilSpmat& A,const lilSpmat& B)
-{
-  if (A.getNumCols() != B.getNumRows())
-  {
-    throw std::runtime_error("ERROR: Matrices cannot be multiplied due to size incompatibility.");
-  }
-}
-void checkProd(const lilSpmat& A, const std::vector<double>& B)
-{
-  if (A.getNumCols() != B.size())
-  {
-    throw std::runtime_error("ERROR: Matrix and vector cannot be multiplied due to size incompatibility.");
-  }
-}
-void checkProd(const lilSpmat& A, const std::vector<std::vector<double>>& B)
-{
-  if (A.getNumCols() != B[0].size())
-  {
-    throw std::runtime_error("ERROR: Matrix" +A.name_+ "and vector cannot be multiplied due to size incompatibility.");
-  }
-}
+// Returns the sum of the products of a double for the elements of the iRow matrix row
+// double valueProduct(const unsigned int& i, const double& val)
+// {
+//   double sumProdRow = 0.0;
+//   for(unsigned int j=0;j<columns_[i].size();j++)
+//   {
+//     sumProdRow += values_[i][j] * val;
+//   }
+//   return sumProdRow;
+// }
 
 // Addition operator
 lilSpmat operator+(const lilSpmat& A,const lilSpmat& B)
@@ -273,17 +207,12 @@ lilSpmat operator+(const lilSpmat& A,const lilSpmat& B)
   }
   return C;
 }
+
+// Addition operator (pointer)
 lilSpmat* operator+(const lilSpmat& A,const lilSpmat* B)
 {
-  checkAdd(A,*B);
-  lilSpmat* C = new lilSpmat(A);
-  for(unsigned int i=0;i<B->getNumRows();i++)
-  {
-    for(unsigned int j=0;j<B->getNumNZ(i);j++)
-    {
-      C->addValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
-    }
-  }
+  lilSpmat* C = new lilSpmat();
+  *C = A + *B;
   return C;
 }
 
@@ -301,21 +230,15 @@ lilSpmat operator-(const lilSpmat& A,const lilSpmat& B)
   }
   return C;
 }
+// Subtraction operator (pointer)
 lilSpmat* operator-(const lilSpmat& A,const lilSpmat* B)
 {
-  checkAdd(A, B);
-  lilSpmat* C = new lilSpmat(A);
-  for(unsigned int i=0;i<B->getNumRows();i++)
-  {
-    for(unsigned int j=0;j<B->getNumNZ(i);j++)
-    {
-      C->subValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
-    }
-  }
+  lilSpmat* C = new lilSpmat();
+  *C = A - *B;
   return C;
 }
 
-// Multiplication operator
+// Multiplication operator (mat-scalar)
 lilSpmat operator*(const lilSpmat& A,const double& val)
 {
   lilSpmat C = A;
@@ -328,19 +251,15 @@ lilSpmat operator*(const lilSpmat& A,const double& val)
   }   
   return C;
 }
+// Multiplication operator (mat-scalar) (pointer)
 lilSpmat* operator*(const lilSpmat& A,const double* val)
 {
-  lilSpmat* C = new lilSpmat(A);
-  for (unsigned int i = 0; i < C->getNumRows();i++)
-  {
-    for (unsigned int j = 0; j < C->getNumNZ(i);j++)
-    {
-      C->mulValue(i,j,*val);
-    }
-  }   
+  lilSpmat* C = new lilSpmat();
+  *C = A * *val;
   return C;
 }
 
+// Multiplication operator (mat-mat)
 lilSpmat operator*(const lilSpmat& A,const lilSpmat& B)
 {
   checkProd(A,B);
@@ -374,13 +293,86 @@ lilSpmat operator*(const lilSpmat& A,const lilSpmat& B)
   }
   return C;
 }
-std::vector<double> operator*(const lilSpmat& A,const std::vector<double>& B)
+// Multiplication operator (mat-mat) (pointer)
+lilSpmat* operator*(const lilSpmat& A,const lilSpmat* B)
 {
-  checkProd(A, B);
-  return A.matMul(B);
+  lilSpmat* C = new lilSpmat();
+  *C = A * *B;
+  return C;
 }
-// std::vector<double> operator*(const lilSpmat& A,const std::vector<std::vector<double>>& B)
-// {
-//   checkProd(A, B);
-//   return A.matMul(B);;
-// }
+
+// Multiplication operator (mat-vec)
+std::vector<double> operator*(const lilSpmat& A,const std::vector<double>& vec)
+{
+  checkProd(A, vec);
+  std::vector<double> v(A.numCols_);
+  for(unsigned int i=0; i<A.numRows_; i++)
+  {
+    v[i] = 0.0;
+    for(unsigned int j=0; j<A.columns_[i].size(); j++)
+    {
+      v[i] += A.values_[i][j] * vec[A.columns_[i][j]];
+    }
+  }
+  return v;
+}
+// Multiplication operator (mat-vec) (pointer)
+std::vector<double>* operator*(const lilSpmat& A,const std::vector<double>* vec)
+{
+  std::vector<double>* v = new std::vector<double>;
+  *v = A * *vec;
+  return v;
+}
+// Multiplication operator (mat-vec) (pointer)
+std::vector<double>* operator*(const lilSpmat* A,const std::vector<double>& vec)
+{
+  std::vector<double>* v = new std::vector<double>;
+  *v = *A * vec;
+  return v;
+}
+
+// Multiplication operator (mat-vec(vec))
+std::vector<std::vector<double>> operator*(const lilSpmat& A,const std::vector<std::vector<double>>& vec)
+{
+  checkProd(A, vec);
+  std::vector<std::vector<double>> v(A.numRows_);
+  for (unsigned int x=0; x<v.size(); x++)
+  {
+    v[x].resize(vec[0].size());
+  }
+  double val;
+  for(unsigned int i=0; i<A.numRows_; i++)
+  {
+    for(unsigned int j=0; j<A.numCols_; j++)
+    {
+      val = 0.0;
+      for(unsigned int k=0; k<vec.size(); k++)
+      {
+        for(unsigned int l=0; l<A.columns_[i].size(); l++)
+        {
+          if(A.columns_[i][l] == k)
+          {
+            val += A.values_[i][l] * vec[A.columns_[i][l]][j];
+            break;
+          }
+        }
+        v[i][j] = val;
+      }
+    }
+  }
+  return v;
+}
+// Multiplication operator (mat-vec(vec)) (pointer)
+std::vector<std::vector<double>>* operator*(const lilSpmat& A,const std::vector<std::vector<double>>* vec)
+{
+  std::vector<std::vector<double>>* v = new std::vector<std::vector<double>>;
+  *v = A * *vec;
+  return v;
+}
+// Multiplication operator (mat-vec(vec)) (pointer)
+std::vector<std::vector<double>>* operator*(const lilSpmat* A,const std::vector<std::vector<double>>& vec)
+{
+  std::vector<std::vector<double>>* v = new std::vector<std::vector<double>>;
+  *v = *A * vec;
+  return v;
+}

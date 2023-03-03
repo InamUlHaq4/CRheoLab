@@ -197,21 +197,21 @@ std::vector< std::vector<double> > csrSpmat::dense() const
 }
 
 // Function that returns the product matrix-vector as a vector
-std::vector<double> csrSpmat::matMul(const std::vector<double>& vecPhi) const
-{
-  std::vector<double> v(vecPhi.size());
-  unsigned int j = 0;
-  for (unsigned int i=0;i<numRows_;i++)
-  {
-    v[i] = 0.0;
-    while (j<row_ptr_[i+1])
-    {
-      v[i] += values_[j] * vecPhi[columns_[j]];
-      j += 1;
-    }
-  }
-  return v;
-}
+// std::vector<double> csrSpmat::matMul(const std::vector<double>& vecPhi) const
+// {
+//   std::vector<double> v(vecPhi.size());
+//   unsigned int j = 0;
+//   for (unsigned int i=0;i<numRows_;i++)
+//   {
+//     v[i] = 0.0;
+//     while (j<row_ptr_[i+1])
+//     {
+//       v[i] += values_[j] * vecPhi[columns_[j]];
+//       j += 1;
+//     }
+//   }
+//   return v;
+// }
 
 // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
 double csrSpmat::vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const
@@ -242,18 +242,18 @@ double csrSpmat::vecRowMulNoDiagonal(const unsigned int& i,const std::vector<dou
   return sumProdRow;
 }
 
-// Returns a double given by the sum of the products of xValue (a double) for a specific row of the matrix
-double csrSpmat::xValueProduct(const unsigned int& i, const double& xValue) const
-{
-  double sumProdRow = 0.0;
-  unsigned int j = row_ptr_[i];
-  while (j<row_ptr_[i+1])
-  {
-    sumProdRow += values_[j] * xValue;
-    j += 1;
-  }
-  return sumProdRow;
-}
+// Returns the sum of the products of a double for the elements of the iRow matrix row
+// double valueProduct(const unsigned int& i, const double& val)
+// {
+//   double sumProdRow = 0.0;
+//   unsigned int j = row_ptr_[i];
+//   while (j<row_ptr_[i+1])
+//   {
+//     sumProdRow += values_[j] * val;
+//     j += 1;
+//   }
+//   return sumProdRow;
+// }
 
 // Addition operator
 csrSpmat operator+(const csrSpmat& A,const csrSpmat& B)

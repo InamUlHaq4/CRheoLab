@@ -105,7 +105,7 @@ int main(int argc, char const *argv[]) {
       std::vector<double> v(4);
 
       // Call the function that calculates the product matrix-vector
-      v = spmatA.matMul(vecPhi);
+      v = spmatA * vecPhi;
 
       std::cout << "Vector resulting from the matrix-vector product:" << std::endl;
       for (double valueV : v)
@@ -132,14 +132,13 @@ int main(int argc, char const *argv[]) {
       spmatB.addValue(2,1,5.0);
       spmatB.addValue(2,3,6.0);
       spmatB.addValue(3,3,7.0);
-      // spmatB.addValue(4,4,8.0);
-      // spmatB.addValue(6,7,9.0);
+      // spmatB.addValue(4,3,8.0);
 
       std::cout << spmatB << std::endl;
       
       // Add matrices
       lilSpmat spmatC;  	//default C matrix
-      lilSpmat spmatD;  	//default D matrix
+      lilSpmat spmatD;  	//default D matrix    
 
       spmatC = spmatA + spmatA;
       spmatD = spmatA + spmatB;
@@ -148,8 +147,8 @@ int main(int argc, char const *argv[]) {
       spmatC.setName("C");
       spmatD.setName("D");
 
-      std::cout << spmatC << std::endl;
-      std::cout << spmatD << std::endl;
+      // std::cout << spmatC << std::endl;
+      // std::cout << spmatD << std::endl;
 
       // Create a matrix with name
       lilSpmat spmatAA = lilSpmat(4,4,"AA mat");
@@ -163,12 +162,12 @@ int main(int argc, char const *argv[]) {
 
       // Test multiplication compatibility
       std::vector<double> vec1{1.0, 2.0, 3.0, 4.0};
-      // lilSpmat spmatDD = spmatBB * vecTest;
+      std::vector<double> vecTest = spmatB * vec1;
+      std::cout << vecTest << std::endl;
 
-      std::vector<std::vector<double>> vec2{{1.0, 2.0, 3.0, 4.0}};
-      // lilSpmat spmatDD = spmatBB * vecTest2;
-
-      //std::vector<std::vector<double>> vecTest3 = vecTest * vecTest2
+      std::vector<std::vector<double>> vec2{{0.0, 1.0, 2.0, 3.0},{3.0, 2.0, 1.0, 0.0},{0.0, 1.0, 2.0, 3.0},{3.0, 2.0, 1.0, 0.0}};
+      std::vector<std::vector<double>> vecTest2 = spmatB * vec2;
+      std::cout << vecTest2 << std::endl;
 
       // Test matrix multiplication
       lilSpmat spmatEE = spmatB * spmatB;
@@ -177,43 +176,43 @@ int main(int argc, char const *argv[]) {
 
 // Jayesh Feb 2023 (Testing for Matrix Substration and Multiplication)
 ////////////////////////////////////////////////////////////////////////////
-      std::cout << "#############################################################" << std::endl;
-      std::cout << "Jayesh tests" << std::endl;
-      std::cout << "#############################################################" << std::endl << std::endl;
+      // std::cout << "#############################################################" << std::endl;
+      // std::cout << "Jayesh tests" << std::endl;
+      // std::cout << "#############################################################" << std::endl << std::endl;
 
 
-      std::cout << "A " << spmatA << std::endl;
+      // std::cout << "A " << spmatA << std::endl;
       
-      lilSpmat spmatE = lilSpmat(4,4);
+      // lilSpmat spmatE = lilSpmat(4,4);
 
-      spmatE.addValue(0,0,9.0);
-      spmatE.addValue(0,3,1.0);
-      spmatE.addValue(1,2,7.0);
-      spmatE.addValue(2,0,8.0);
-      spmatE.addValue(2,3,3.0);
-      spmatE.addValue(3,0,5.0);
+      // spmatE.addValue(0,0,9.0);
+      // spmatE.addValue(0,3,1.0);
+      // spmatE.addValue(1,2,7.0);
+      // spmatE.addValue(2,0,8.0);
+      // spmatE.addValue(2,3,3.0);
+      // spmatE.addValue(3,0,5.0);
 
-      std::cout << "E " << spmatE << std::endl;
+      // std::cout << "E " << spmatE << std::endl;
       
-      lilSpmat spmatF;  	
-      lilSpmat spmatG;  
+      // lilSpmat spmatF;  	
+      // lilSpmat spmatG;  
 
-      std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix subtraction" << std::endl;
-      std::cout << "#############################################################" << std::endl;
+      // std::cout << "#############################################################" << std::endl;
+      // std::cout << "Test sparse matrix subtraction" << std::endl;
+      // std::cout << "#############################################################" << std::endl;
 
-      spmatF = spmatA - spmatE;
+      // spmatF = spmatA - spmatE;
 
-      std::cout << "F " << spmatF << std::endl;
+      // std::cout << "F " << spmatF << std::endl;
 
-      std::cout << "#############################################################" << std::endl;
-      std::cout << "Test sparse matrix Multiplication" << std::endl;
-      std::cout << "#############################################################" << std::endl;
+      // std::cout << "#############################################################" << std::endl;
+      // std::cout << "Test sparse matrix Multiplication" << std::endl;
+      // std::cout << "#############################################################" << std::endl;
 
-      spmatG = spmatA * 7;
+      // spmatG = spmatA * 7;
 
-      std::cout << "G " << spmatG << std::endl;
-      ///////////////////////////////////////////////////////////////////
+      // std::cout << "G " << spmatG << std::endl;
+      // ///////////////////////////////////////////////////////////////////
       
       return 0;
 }

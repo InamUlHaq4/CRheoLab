@@ -25,6 +25,49 @@ std::string spmat::getName() const
     return name_;
 }
 
+// Check if requested position exists
+void checkPos(const spmat* A, const unsigned int& i, const unsigned int& j)
+{
+  if (A->numRows_-1 < i || A->numCols_-1 < j)
+  {
+    throw std::runtime_error("ERROR: Cannot perform operation because the desired position does not exist.");
+  }
+}
+
+// Check if addition/subtraction operation is possible
+void checkAdd(const spmat& A,const spmat& B)
+{
+  if (A.numRows_ != B.numRows_ || A.numCols_ != B.numCols_)
+  {
+    throw std::runtime_error("ERROR: " +A.name_+ " matrix and " +B.name_+ " cannot be added/subtracted due to size incompatibility.");
+  }
+}
+
+// Check if multiplication operation is possible (mat-mat)
+void checkProd(const spmat& A,const spmat& B)
+{
+  if (A.numCols_ != B.numRows_)
+  {
+    throw std::runtime_error("ERROR: " +A.name_+ " matrix and " +B.name_+ " cannot be multiplied due to size incompatibility.");
+  }
+}
+// Check if multiplication operation is possible (mat-vec)
+void checkProd(const spmat& A, const std::vector<double>& vec)
+{
+  if (A.numCols_ != vec.size())
+  {
+    throw std::runtime_error("ERROR: " +A.name_+ " matrix and vector cannot be multiplied due to size incompatibility.");
+  }
+}
+// Check if multiplication operation is possible (mat-vec(vec))
+void checkProd(const spmat& A, const std::vector<std::vector<double>>& vec)
+{
+  if (A.numCols_ != vec.size())
+  {
+    throw std::runtime_error("ERROR: " +A.name_+ " matrix and vector of vectores cannot be multiplied due to size incompatibility.");
+  }
+}
+
 // Dense matrix printing
 std::ostream& operator<<(std::ostream& os,const spmat& spmat)
 {
@@ -41,61 +84,40 @@ std::ostream& operator<<(std::ostream& os,const spmat& spmat)
     }
   return os;
 }
-
-// Check if addition/subtraction operation is possible
-// bool checkAdd(const spmat& A,const spmat* B)
-// {
-//   if (A.numRows_ != B->numRows_)
-//   {
-//     std::cout << A.name_ << " and " << B->name_ << " cannot be added/subtracted." << std::endl;
-//     return false;
-//   } else
-//     {
-//       return true;
-//     }
-// }
-// bool checkAdd(const spmat& A,const spmat& B)
-// {
-//   if (A.getNumRows() != B.getNumRows() || A.getNumCols() != B.getNumCols())
-//   {
-//     // Throws exception to stop the program
-//     // throw std::runtime_error("Error: invalid column for sparse structure matrix");
-//     std::cout << "ERROR: "<< A.name_ << " and " << B.name_ << " cannot be added/subtracted due to size incompatibility." << std::endl;
-//     return false;
-//   } else
-//     {
-//       return true;
-//     }
-// }
-
-// // Addition operator
-// spmat operator+(const spmat& A,const spmat& B)
-// {
-//   if (checkAdd(A, B))
-//   {
-//     spmat C = A;
-//     for(unsigned int i=0;i<B.getNumRows();i++)
-//     {
-//       for(unsigned int j=0;j<B.getNumNZ(i);j++)
-//       {
-//         C.addValue(i,B.getNZColumn(i,j),B.getNZValue(i,j));
-//       }
-//     }
-//     return C;
-//   }
-// }
-// spmat* operator+(const spmat& A,const spmat* B)
-// {
-//   if (checkAdd(A,*B) == true)
-//   {
-//     spmat* C = new lilSpmat(A);
-//     for(unsigned int i=0;i<B->getNumRows();i++)
-//     {
-//       for(unsigned int j=0;j<B->getNumNZ(i);j++)
-//       {
-//         C->addValue(i,B->getNZColumn(i,j),B->getNZValue(i,j));
-//       }
-//     }
-//     return C;
-//   }
-// }
+// Prints the dense form of a vector
+std::ostream& operator<<(std::ostream& os,const std::vector<double>& vec)
+{
+  os << "Vector: (";
+  for (unsigned int i=0; i<vec.size(); i++)
+  {
+    os << vec[i];
+    if (i != vec.size() - 1)
+    {
+      os << ", "; 
+    }
+  }
+  os << ")" << std::endl;
+  return os;
+}
+// Prints the dense form of a vector of vectors
+std::ostream& operator<<(std::ostream& os,const std::vector<std::vector<double>>& vec)
+{
+  os << "Vector:  (";
+  for (unsigned int i=0; i<vec.size(); i++)
+  {
+    if (i != 0)
+    {
+      os << "\t (" ;
+    }
+    for (unsigned int j=0; j<vec[i].size(); j++)
+    {
+      os << vec[i][j];
+      if (j != vec[i].size() - 1)
+      {
+        os << ", "; 
+      }
+    }
+    os << ")" << std::endl;
+  }
+  return os;
+}

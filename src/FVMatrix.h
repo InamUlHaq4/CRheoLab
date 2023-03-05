@@ -28,6 +28,8 @@ public:
 
 FVMatrix(VolField<scalarField>& field);
 
+FVMatrix(const FVMatrix& fvMatrixA);
+
 virtual ~FVMatrix();
 
 /// Function to create random sparse matrix, it also creates a random vector \f$ b\f$
@@ -44,9 +46,11 @@ SolverPerf solverPerf();
 spmat* aMatrix() const;
 spmat* aMatrixRef();
 const std::vector<double> bVector() const;
-std::vector<double> bVectorRef();
+std::vector<double>& bVectorRef();
+VolField<scalarField>& field() const;
+Dictionary& fvSolutionDict();
 
-FVMatrix operator+(const FVMatrix& fvmB);
+//FVMatrix operator+(const FVMatrix& fvmB);
 
 private:
 spmat* aMatrix_;
@@ -65,6 +69,6 @@ inline double residualNormFactor();
 
 };
 
-//FVMatrix operator+(FVMatrix& fvmA, FVMatrix& fvmB);
+FVMatrix operator+(const FVMatrix& fvmA, const FVMatrix& fvmB);
 
 #endif

@@ -82,12 +82,15 @@ int main()
 
     std::cout << std::endl << "Solving for T1" << std::endl;
 
-    //FVMatrix TEqn1 (fvm::laplacian(23, T1) + fvm::laplacian(36, T1));
+    //FVMatrix LapA = fvm::laplacian(25, T1);
+    //FVMatrix LapB = fvm::laplacian(25, T1);
+    
+    //FVMatrix TEqn1 (LapA + LapB);
+    //FVMatrix TEqn1 (fvm::laplacian(23, T1) + fvm::laplacian(30, T1));
     FVMatrix TEqn1 (fvm::laplacian(23, T1));
-    //FVMatrix TEqn1 (T1);
 
-    TEqn1.createRandomSparseaMatrixbVector();
-    TEqn1.resetxVector();
+    //TEqn1.createRandomSparseaMatrixbVector();
+    //TEqn1.resetxVector();
     TEqn1.solve();
     TEqn1.solverPerf().perfShow();
     //TEqn1.resetxVector();

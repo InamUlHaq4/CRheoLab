@@ -30,7 +30,14 @@ field_(field), fvSolutionDict_(field.mesh().time().system()+"fvSolution")
         exit(0);
     }
 }
- 
+
+FVMatrix::FVMatrix(const FVMatrix& fvMatrixA):
+field_(fvMatrixA.field()), fvSolutionDict_(fvMatrixA.fvSolutionDict_)
+{
+    bVector_ = fvMatrixA.bVector();
+    aMatrix_ = fvMatrixA.aMatrix();
+}
+
 FVMatrix::~FVMatrix()
 {
     //std::cout << "delete aMAtrix_" << std::endl;
@@ -182,27 +189,41 @@ const std::vector<double> FVMatrix::bVector() const
     return bVector_;
 }
 
-std::vector<double> FVMatrix::bVectorRef()
+std::vector<double>& FVMatrix::bVectorRef()
 {
     return bVector_;
 }
 
-
-// FVMatrix operator+(const FVMatrix& fvmA, const FVMatrix& fvmB)
-// {
-//     FVMatrix fvmC = fvmA;
-
-//     fvmC.bVectorRef() = fvmA.bVector() + fvmB.bVector();
-
-//     *fvmC.aMatrixRef() = fvmA.aMatrix() + fvmB.aMatrix();
-
-// }
-
-FVMatrix FVMatrix::operator+(const FVMatrix& fvmB)
+VolField<scalarField>& FVMatrix::field() const
 {
-    FVMatrix fvmC = *this;
-    fvmC.bVectorRef() = bVector_ + fvmB.bVector();
+    return field_;
+}
+
+Dictionary& FVMatrix::fvSolutionDict()
+{
+    return fvSolutionDict_;
+}
+
+/////////////////////////////
+
+FVMatrix operator+(const FVMatrix& fvmA, const FVMatrix& fvmB)
+{
+    FVMatrix fvmC(fvmA);
+
+    fvmC.bVectorRef() = fvmA.bVector() + fvmB.bVector();
 
     fvmC.aMatrixRef()->operator+=(fvmB.aMatrix());
 
+    return fvmC;
+
 }
+
+// FVMatrix FVMatrix::operator+(const FVMatrix& fvmB)
+// {
+//     FVMatrix fvmC = *this;
+//     fvmC.bVectorRef() = bVector_ + fvmB.bVector();
+
+//     fvmC.aMatrixRef()->operator+=(fvmB.aMatrix());
+
+//     return fvmC;
+// }

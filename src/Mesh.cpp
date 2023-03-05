@@ -341,6 +341,7 @@ void Mesh::updateCellAndFaceData(std::string pathOwners, std::string pathNeighbo
     faceList_[faceI].computeWeightingFactor();
     faceList_[faceI].computeNonOrthogonality();
     faceList_[faceI].computeSkewness(); 
+    faceList_[faceI].computeCellsCentroidsVect(); 
   }
 
   for (unsigned int cellI = 0; cellI < nCells_; cellI++)

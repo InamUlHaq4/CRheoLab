@@ -62,7 +62,7 @@ class BoundaryField
 
         // Private Data Members
         vector<Boundary<vectorType>> boundaryData_;
-        const int& nPatches_;
+        const int nPatches_;
         
 };
 

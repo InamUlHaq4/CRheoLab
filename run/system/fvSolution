@@ -40,7 +40,7 @@ solvers
         wSOR 1.2;
         solverModel Jacobi; // Jacobi, GaussSiedel, SOR
         matrixFormat CSR; //lOLists // CSR
-        maxNumberOfIter 5;
+        //maxNumberOfIter 100;
     }
 
     T2

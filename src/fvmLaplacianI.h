@@ -67,7 +67,7 @@ namespace fvm
             
             // Adding the loaded values to the proper places
             fvMatrix.aMatrix()->addValue(ownInd,ownInd,(+diffusionK*valueToAddDiagonal*areaMag));
-            fvMatrix.bVector().at(ownInd) += (-diffusionK*valueToAddSource*areaMag) ;
+            fvMatrix.bVectorRef().at(ownInd) += (-diffusionK*valueToAddSource*areaMag) ;
           }
         }
   

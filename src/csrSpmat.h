@@ -75,6 +75,8 @@ public:
   // Returns a double given by the sum of the products of xValue (a double) for the elements of the iRow matrix row
   double xValueProduct(const unsigned int& i, const double& xValue) const override;
 
+  // Addition operator inside the class
+  //void operator+(const spmat* B) override;
 };
 
 // Addition operator

@@ -18,11 +18,7 @@ field_(field), fvSolutionDict_(field.mesh().time().system()+"fvSolution")
     unsigned int nCells=field_.mesh().nCells();
     bVector_.resize(nCells);
     fvSolutionDict_.readDict("solvers");
-
-//###########################
-    numRows_ = nCells;
-//###########################
-
+      
     std::string matrixFormat (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<std::string> ("matrixFormat"));
 
     if (matrixFormat== "lOLists")
@@ -155,8 +151,6 @@ void FVMatrix::createRandomSparseaMatrixbVector()
         bVector_[iCell] = (static_cast<double>(rand() % maxValue));
     }
 
-    std::cout << ">>" << bVector_ << std::endl; ////////////////
-
     std::cout << ">> leaving create Sparse aMatrix and bVector " << std::endl;
 }
 
@@ -172,62 +166,43 @@ SolverPerf FVMatrix::solverPerf()
     return solverPerf_;
 }
 
-spmat* FVMatrix::aMatrix()
+spmat* FVMatrix::aMatrix() const
 {
     return aMatrix_;
 }
 
-std::vector<double> FVMatrix::bVector()
+spmat* FVMatrix::aMatrixRef()
+{
+    return aMatrix_;
+}
+
+
+const std::vector<double> FVMatrix::bVector() const
+{
+    return bVector_;
+}
+
+std::vector<double> FVMatrix::bVectorRef()
 {
     return bVector_;
 }
 
 
-//###########################
-//ADDED
+// FVMatrix operator+(const FVMatrix& fvmA, const FVMatrix& fvmB)
+// {
+//     FVMatrix fvmC = fvmA;
 
-unsigned int FVMatrix::numRows()
+//     fvmC.bVectorRef() = fvmA.bVector() + fvmB.bVector();
+
+//     *fvmC.aMatrixRef() = fvmA.aMatrix() + fvmB.aMatrix();
+
+// }
+
+FVMatrix FVMatrix::operator+(const FVMatrix& fvmB)
 {
-    return numRows_;
-}
+    FVMatrix fvmC = *this;
+    fvmC.bVectorRef() = bVector_ + fvmB.bVector();
 
-/*
-// Adds a value to position (i,j) if exists, otherwise inserts a new value
-void FVMatrix::addValue(const unsigned int& i, const unsigned int& j, const double& val)
-{
-  for (unsigned int k=row_ptr_[i];k<row_ptr_[i+1];k++)
-  {
-    if (columns_[k] == j)
-    {
-      values_[k] += val;
-      return;
-    }
-  }
-  // Throws exception to stop the program
-  throw std::runtime_error("Error: invalid column for sparse structure matrix");
-}
-*/
-
-// Addition operator
-//std::vector<double> operator+(const std::vector<double>& A,const std::vector<double>& B)
-FVMatrix operator+(FVMatrix fvmA,FVMatrix fvmB)
-{
-  FVMatrix fvmC = fvmA;
-  //std::vector<double> ;
-  //fvmC.aMatrix() = fvmA.aMatrix() + fvmB.aMatrix();
-  fvmC.bVector() = fvmA.bVector() + fvmB.bVector();
-
-/*
-  for(unsigned int i=0;i<fvmA.bVector().size();i++)
-  {
-    //C.addValue(i,B.getNZColumn(i,j),B.getNZValue(i,j));
-     fvmC.bVector()[i] = fvmA.bVector()[i] + fvmB.bVector()[i];
-
-    
-    //C[i] = A[i] + B[i]; 
-  }
-*/
-  return fvmC;
-  //std::cout << ">>" << C << std::endl;
+    fvmC.aMatrixRef()->operator+=(fvmB.aMatrix());
 
 }

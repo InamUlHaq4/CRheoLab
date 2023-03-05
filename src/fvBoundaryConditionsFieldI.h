@@ -4,8 +4,7 @@ template <typename vectorType>
 fvBoundaryConditionsField<vectorType>::fvBoundaryConditionsField(VolField<vectorType>& field)
 {
   const BoundaryField<vectorType>& boundaryPatches=field.boundaryField();
-  //MCN this->coefficients_.resize(boundaryPatches.nPatches());
-  this->coefficients_.resize(5); //MCN - Added because the values stored in the patch is wrong
+  this->coefficients_.resize(boundaryPatches.nPatches());
   for ( long unsigned int patchI = 0; patchI < coefficients_.size(); patchI++)
   {
     // This is to calculate the value of a variable in a patch (used in the divergent)

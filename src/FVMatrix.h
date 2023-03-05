@@ -41,17 +41,12 @@ void resetxVector();
 
 //Getters
 SolverPerf solverPerf();
-spmat* aMatrix();
-std::vector<double> bVector();
+spmat* aMatrix() const;
+spmat* aMatrixRef();
+const std::vector<double> bVector() const;
+std::vector<double> bVectorRef();
 
-//###########################
-// Returns the number of rows
-unsigned int numRows();
-
-// Adds a value to position (i,j) if exists, otherwise inserts a new value
-// virtual void addValue(const unsigned int &i, const unsigned int &j, const double &val) = 0;
-//###########################
-
+FVMatrix operator+(const FVMatrix& fvmB);
 
 private:
 spmat* aMatrix_;
@@ -66,26 +61,10 @@ Dictionary fvSolutionDict_;
     
 inline double residualValue();
     
-inline double residualNormFactor();
-
-//###########################
-unsigned int numRows_;
-//###########################
+inline double residualNormFactor();          
 
 };
 
-// Addition operator
-//std::vector<double> operator+(const std::vector<double>& A,const std::vector<double>& B);
-FVMatrix operator+(FVMatrix fvmA,FVMatrix fvmB);
-
-
-// Addition operator
-//csrSpmat* operator+(const csrSpmat& A,const csrSpmat* B);
-
-// Subtraction operator
-//std::vector<double> operator-(const std::vector<double>& A,const std::vector<double>& B);
-
-// Subtraction operator
-//csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B);
+//FVMatrix operator+(FVMatrix& fvmA, FVMatrix& fvmB);
 
 #endif

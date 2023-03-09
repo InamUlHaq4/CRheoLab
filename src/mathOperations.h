@@ -117,6 +117,29 @@ std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
     return os;
 }
 
+template<class T>
+std::vector<T> operator*(const std::vector<std::vector<T>> &A, const std::vector<T> &v)
+{
+
+    std::vector<T> Result;
+    Result.resize(v.size());
+    
+    for (unsigned int i = 0; i < A.size(); i++)
+    {
+        if (A[i].size() != v.size())
+        {
+            throw std::runtime_error("ERROR: Matrix and vector cannot be multiplied due to size incompatibility.");
+        }
+        
+        for (unsigned int j = 0; j < A[i].size(); j++)
+        {
+            Result[i] += A[i][j] * v[i];
+        } 
+    }
+    return Result;
+    
+}
+
 #endif
 
 

@@ -80,5 +80,4 @@ class Factory
             return registry;
         };        
 };
-
 // #endif

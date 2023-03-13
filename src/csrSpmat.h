@@ -24,11 +24,14 @@ public: // change to private later
 
 public:
 
-  // Constructor
+  // Default constructor
   csrSpmat(){}
 
-  // Constructor
+  // Mesh constructor
   csrSpmat(Mesh& mesh);
+
+  // Constructor with matrix size and name
+  csrSpmat(unsigned int numRows, unsigned int numCols, const std::string name = "default");
 
   // Destructor
   virtual ~csrSpmat(){};
@@ -76,19 +79,25 @@ public:
 
 // Addition operator
 csrSpmat operator+(const csrSpmat& A,const csrSpmat& B);
-
-// Addition operator
+// Addition operator (pointer)
 csrSpmat* operator+(const csrSpmat& A,const csrSpmat* B);
 
-// Subtraction operator
+// Subtraction operator 
 csrSpmat operator-(const csrSpmat& A,const csrSpmat& B);
-
-// Subtraction operator
+// Subtraction operator (pointer)
 csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B);
 
-// Multiplication operator
+// Multiplication operator (mat-scalar)
 csrSpmat operator*(const csrSpmat& A,const double& val);
-
+// Multiplication operator (mat-scalar) (pointer)
 csrSpmat* operator*(const csrSpmat& A,const double* val);
+
+// Multiplication operator (mat-mat)
+csrSpmat operator*(const csrSpmat& A,const csrSpmat& B);
+
+
+// Multiplication operator (mat-vec)
+std::vector<double> operator*(const csrSpmat& A, const std::vector<double>& vec);
+
 
 #endif // CSRSPMAT_H

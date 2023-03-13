@@ -83,6 +83,14 @@ csrSpmat::csrSpmat(Mesh& mesh)
   row_ptr_[numRows_] = nz;
 }
 
+// Constructor with matrix size and name
+csrSpmat::csrSpmat(unsigned int numRows, unsigned int numCols, const std::string name)
+{
+  numRows_ = numRows;
+  numCols_ = numCols;
+  name_ = name;
+}
+
 // Returns the sparsity of the matrix
 double csrSpmat::sparsity() const
 {
@@ -196,23 +204,6 @@ std::vector< std::vector<double> > csrSpmat::dense() const
   return denseMatrix;
 }
 
-// Function that returns the product matrix-vector as a vector
-// std::vector<double> csrSpmat::matMul(const std::vector<double>& vecPhi) const
-// {
-//   std::vector<double> v(vecPhi.size());
-//   unsigned int j = 0;
-//   for (unsigned int i=0;i<numRows_;i++)
-//   {
-//     v[i] = 0.0;
-//     while (j<row_ptr_[i+1])
-//     {
-//       v[i] += values_[j] * vecPhi[columns_[j]];
-//       j += 1;
-//     }
-//   }
-//   return v;
-// }
-
 // Returns the product (row-of-matrix)-vector for a specific row of the matrix as a double
 double csrSpmat::vecRowMul(const unsigned int& i, const std::vector<double>& vecPhi) const
 {
@@ -268,8 +259,7 @@ csrSpmat operator+(const csrSpmat& A,const csrSpmat& B)
   }
   return C;
 }
-
-// Addition operator
+// Addition operator (pointer)
 csrSpmat* operator+(const csrSpmat& A,const csrSpmat* B)
 {
   csrSpmat* C = new csrSpmat(A);
@@ -296,8 +286,7 @@ csrSpmat operator-(const csrSpmat& A,const csrSpmat& B)
   }
   return C;
 }
-
-// Addition operator
+// Subtraction operator (pointer)
 csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B)
 {
   csrSpmat* C = new csrSpmat(A);
@@ -312,7 +301,7 @@ csrSpmat* operator-(const csrSpmat& A,const csrSpmat* B)
   return C;
 }
 
-// Multiplication operator
+// Multiplication operator (mat-scalar)
 csrSpmat operator*(const csrSpmat& A, const double& val)
 {
   csrSpmat C = A;
@@ -322,14 +311,57 @@ csrSpmat operator*(const csrSpmat& A, const double& val)
   }
   return C;
 }
-
-// Multiplication operator
+// Multiplication operator (mat-scalar) (pointer)
 csrSpmat* operator*(const csrSpmat& A, const double* val)
 {
   csrSpmat* C = new csrSpmat(A);
   for(unsigned int i=0; i<C->numNZ_;i++)
   {
     C->values_[i] *= *val;
+  }
+  return C;
+}
+
+// Multiplication operator (mat-vec)
+std::vector<double> operator*(const csrSpmat& A, const std::vector<double>& vec)
+{
+  std::vector<double> v(vec.size());
+  for (unsigned int i=0;i<A.numRows_;i++)
+  {
+    v[i] = 0.0;
+    for (unsigned int j=A.row_ptr_[i]; j<A.row_ptr_[i+1]; j++)
+    {
+      v[i] += A.values_[j] * vec[A.columns_[j]];
+    }
+  }
+  return v;
+}
+
+// Multiplication operator (mat-mat)
+csrSpmat operator*(const csrSpmat& A, const csrSpmat& B)
+{
+  csrSpmat C = csrSpmat(A.numRows_, B.numCols_);
+  double val;
+  for (unsigned int i=0;i<A.numRows_;i++)
+  {
+    for (unsigned int j=0; j<B.numCols_; j++)
+    {
+      val = 0.0;
+      for (unsigned int k=A.row_ptr_[i]; k<A.row_ptr_[i+1]; k++)
+      {
+        for (unsigned int l=0; l<B.row_ptr_.size(); l++)
+        {
+          for (unsigned int m=B.row_ptr_[l]; m<B.row_ptr_[l+1]; m++)
+          {
+            if (B.columns_[m] == j && B.columns_[m] == A.columns_[k])
+            {
+              val += A.values_[k] * B.values_[m];
+            }
+          }
+        }
+      }
+      C.addValue(i,j,val);
+    }
   }
   return C;
 }

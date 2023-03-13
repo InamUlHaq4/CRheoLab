@@ -76,7 +76,7 @@ int main(int argc, char const *argv[]) {
       v.resize(spmatA.getNumCols());
 
       // Call the function that calculates the product matrix-vector as a vector
-      v = spmatA.matMul(vecPhi);
+      v = spmatA * vecPhi;
 
       std::cout << "Vector resulting from the matrix-vector product:" << std::endl;
       for (double valueV : v)
@@ -167,6 +167,48 @@ int main(int argc, char const *argv[]) {
       spmatG = spmatE * testVal;
       
       std::cout << "G " << *spmatG << std::endl;
+
+      std::cout << "#############################################################" << std::endl;
+      std::cout << "JCastro tests" << std::endl;
+      std::cout << "#############################################################" << std::endl << std::endl;
+
+      csrSpmat spmatAA(4,4,"AA csrmat");
+
+      spmatAA.numNZ_ = 6;
+      spmatAA.columns_ = {0,2,1,1,3,3};
+      spmatAA.values_ = {1.0,2.0,3.0,4.0,5.0,6.0};
+      spmatAA.row_ptr_ = {0,2,3,5,6};
+
+      std::cout << spmatAA << std::endl;
+
+      // Test multiplication compatibility
+      std::vector<double> vec1{1.0, 2.0, 3.0, 4.0};
+      std::vector<double> vecTest = spmatAA * vec1;
+      std::cout << vecTest << std::endl;
+
+      csrSpmat spmatBB = spmatAA * spmatAA;
+      std::cout << spmatBB << std::endl;
+      
+      // printf("x= %10.2e\n", x) function for matrices
+
+      // Example matrices in CSR format
+      // vector<double> valuesA = { 1, 2, 3, 4, 5, 6 };
+      // vector<int> rowIndicesA = { 0, 2, 3, 1, 2, 3 };
+      // vector<int> colPointersA = { 0, 2, 3, 6 };
+
+      // vector<double> valuesB = { 1, 2, 3, 4, 5, 6 };
+      // vector<int> rowIndicesB = { 0, 1, 2, 0, 1, 2 };
+      // vector<int> colPointersB = { 0, 3, 6 };
+
+      // // Perform matrix multiplication
+      // vector<vector<double>> result = matrixMultiply(valuesA, rowIndicesA, colPointersA, valuesB, rowIndicesB, colPointersB, 3);
+
+      // // Output result
+      // for (int i = 0; i < result.size(); i++) {
+      //       for (int j = 0; j < result[0].size(); j++) {
+      //             cout << result[i][j] << " ";
+      //       }
+      //       cout << endl;
 
       return 0;
 }

@@ -1,5 +1,3 @@
-// #ifndef NEWTONIAN_H
-// #define NEWTONIAN_H
 #pragma once
 
 #include "Laplacian.h" 

@@ -45,10 +45,3 @@ Factory::registerScheme
     Uncorrected::nonOrthogonalCorrectionScheme_,
     Uncorrected::New
 );
-
-// bool Uncorrected::signToRegistry =
-// Factory::registerScheme
-// (
-//     "NonExisting",
-//     Uncorrected::New
-// );

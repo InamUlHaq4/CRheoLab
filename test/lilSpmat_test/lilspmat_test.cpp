@@ -214,6 +214,19 @@ int main(int argc, char const *argv[]) {
 
       // std::cout << "G " << spmatG << std::endl;
       // ///////////////////////////////////////////////////////////////////
+
+
+      std::cout << "A " << spmatA << std::endl;
+      std::vector <double> vecR;
+      std::vector <double> vecV ={1, 2, 3, 4};
+
+      vecR = spmatA * vecV;
+
+      for (unsigned int i = 0; i < vecR.size(); i++)
+      {
+            std::cout << vecR[i] << std::endl;
+      }
+      
       
       return 0;
 }

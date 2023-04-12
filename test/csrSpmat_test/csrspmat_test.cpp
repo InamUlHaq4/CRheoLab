@@ -5,6 +5,7 @@
 
 int main(int argc, char const *argv[]) {
 
+      /*
       std::cout << "#############################################################" << std::endl;
       std::cout << "Test csrSpmat class" << std::endl;
       std::cout << "#############################################################" << std::endl;
@@ -38,7 +39,7 @@ int main(int argc, char const *argv[]) {
       spmatA.numNZ_ = 6;
       spmatA.columns_ = {0,2,1,1,3,3};
       spmatA.values_ = {1.0,2.0,3.0,4.0,5.0,6.0};
-      spmatA.row_ptr_ = {0,2,3,5,6}; ///!!!!
+      spmatA.rowPtr_ = {0,2,3,5,6}; ///!!!!
 
       std::cout << "#############################################################" << std::endl;
       std::cout << "Test sparse matrix to dense format" << std::endl;
@@ -157,7 +158,7 @@ int main(int argc, char const *argv[]) {
       spmatE.numNZ_ = 9;
       spmatE.columns_ = {0,2,1,1,3,0,1,2,3};
       spmatE.values_ = {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0};
-      spmatE.row_ptr_ = {0,2,3,5,9};
+      spmatE.rowPtr_ = {0,2,3,5,9};
 
       std::cout << "E " << spmatE << std::endl;
       spmatF = spmatE * 2;
@@ -168,16 +169,34 @@ int main(int argc, char const *argv[]) {
       
       std::cout << "G " << *spmatG << std::endl;
 
+      */
       std::cout << "#############################################################" << std::endl;
       std::cout << "JCastro tests" << std::endl;
       std::cout << "#############################################################" << std::endl << std::endl;
 
-      csrSpmat spmatAA(4,4,"AA csrmat");
+      csrSpmat spmatAB = csrSpmat(4,4,"AB csrmat");
 
-      spmatAA.numNZ_ = 6;
+      spmatAB.columns_ = {0,2,1,1,3,3};
+      spmatAB.values_ = {1.0,2.0,3.0,4.0,5.0,6.0};
+      spmatAB.rowPtr_ = {0,2,3,5,6};
+      
+      spmatAB.addValue(0,1,9);
+      spmatAB.addValue(1,3,9);
+      spmatAB.addValue(2,0,9);
+      spmatAB.addValue(3,3,9);
+      spmatAB.setValue(0,0,7);
+      spmatAB.setValue(0,3,8);
+
+      // why have addValue and subValue?
+
+      std::cout << spmatAB << std::endl;
+
+      csrSpmat spmatAA = csrSpmat(4,4,"AA csrmat");
+
+      spmatAA.numNZ_ = 6; // why is this needed?
       spmatAA.columns_ = {0,2,1,1,3,3};
       spmatAA.values_ = {1.0,2.0,3.0,4.0,5.0,6.0};
-      spmatAA.row_ptr_ = {0,2,3,5,6};
+      spmatAA.rowPtr_ = {0,2,3,5,6};
 
       std::cout << spmatAA << std::endl;
 

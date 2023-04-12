@@ -26,9 +26,9 @@ std::string spmat::getName() const
 }
 
 // Check if requested position exists
-void checkPos(const spmat* A, const unsigned int& i, const unsigned int& j)
+void checkPos(const spmat* A, const unsigned int& row, const unsigned int& col)
 {
-  if (A->numRows_-1 < i || A->numCols_-1 < j)
+  if (row < 0 || A->numRows_-1 < row || col < 0 || A->numCols_-1 < col)
   {
     throw std::runtime_error("ERROR: Cannot perform operation because the desired position does not exist.");
   }

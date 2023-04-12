@@ -75,7 +75,7 @@ public:
 };
 
 // Check if requested position exists
-void checkPos(const spmat* A, const unsigned int& i, const unsigned int& j);
+void checkPos(const spmat* A, const unsigned int& row, const unsigned int& pos);
 
 // Check if addition/subtraction operation is possible
 void checkAdd(const spmat& A, const spmat& B);

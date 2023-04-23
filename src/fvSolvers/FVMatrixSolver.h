@@ -3,17 +3,26 @@
 
 //#include "Mesh.h"
 #include "spmat.h"
+#include "FVSolverFactory.h"
 
 
 // An abstract class for the solver of the system of equations
-class FVMatrixSolver
+
+class FVMatrixSolver : public FVSolverFactory<FVMatrixSolver>
 {
+    private:
+
     public:
 
         /// Default constructor
         // FVMatrixSolver(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector,const int nCells);
 
-        FVMatrixSolver(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector);
+        FVMatrixSolver(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, Dictionary fvSolutionDict);
+
+        static std::shared_ptr<FVMatrixSolver> New(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, const std::string& systemSolver, Dictionary fvSolutionDict)
+        {
+            return FVSolverFactory::New(systemSolver, aMatrix, bVector, xVector, fvSolutionDict);
+        };
 
         /// Destructor
         virtual ~FVMatrixSolver();
@@ -33,8 +42,10 @@ class FVMatrixSolver
         /// \f$ X \f$ vector
         std::vector<double>* xVector_;
 
-    private:
-           
+        Dictionary fvSolutionDict_;
+
+
+
 };
 
 #endif

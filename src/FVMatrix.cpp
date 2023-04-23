@@ -56,24 +56,26 @@ void FVMatrix::solve()
     // Initialize solver performance Object
     solverPerf_ = SolverPerf(fvSolutionDict_.subDict("solvers").subDict(field_.name()), residualFirst);
   
-    FVMatrixSolver* Solver;
+    //FVMatrixSolver* Solver;
 
-     if(solverPerf_.solverModel() == "Jacobi")
-    {
-        //Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
-        Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef());
-    }
-    else if(solverPerf_.solverModel() == "GaussSiedel")
-    {
-        //Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
-        Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef());
-    }
-    else if(solverPerf_.solverModel() == "SOR")
-    {        
-        double wSOR (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("wSOR"));
-        //Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
-        Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
-    } 
+    std::shared_ptr<FVMatrixSolver> Solver = FVMatrixSolver::New(aMatrix_, bVector_, field_.internalFieldRef(),solverPerf_.solverModel(), fvSolutionDict_.subDict("solvers").subDict(field_.name()));
+
+    //  if(solverPerf_.solverModel() == "Jacobi")
+    // {
+    //     //Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
+    //     Solver = new SJacobi(aMatrix_, bVector_, field_.internalFieldRef());
+    // }
+    // else if(solverPerf_.solverModel() == "GaussSiedel")
+    // {
+    //     //Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells());
+    //     Solver = new SGaussSiedel(aMatrix_, bVector_, field_.internalFieldRef());
+    // }
+    // else if(solverPerf_.solverModel() == "SOR")
+    // {        
+    //     double wSOR (fvSolutionDict_.subDict("solvers").subDict(field_.name()).lookup<double> ("wSOR"));
+    //     //Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), field_.mesh().nCells(), wSOR);
+    //     Solver = new SSOR(aMatrix_, bVector_, field_.internalFieldRef(), wSOR);
+    // } 
 
     while (solverPerf_.proceed())
     {

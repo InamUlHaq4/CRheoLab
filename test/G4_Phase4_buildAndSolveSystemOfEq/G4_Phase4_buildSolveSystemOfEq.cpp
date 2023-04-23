@@ -87,15 +87,16 @@ int main()
     
     //FVMatrix TEqn1 (LapA + LapB);
     //FVMatrix TEqn1 (fvm::laplacian(23, T1) + fvm::laplacian(30, T1));
-    FVMatrix TEqn1 (fvm::laplacian(23, T1));
+    // FVMatrix TEqn1 (fvm::laplacian(23, T1));
 
-    //TEqn1.createRandomSparseaMatrixbVector();
-    //TEqn1.resetxVector();
+    FVMatrix TEqn1(T1);
+    TEqn1.createRandomSparseaMatrixbVector();
+    TEqn1.resetxVector();
     TEqn1.solve();
     TEqn1.solverPerf().perfShow();
     //TEqn1.resetxVector();
-    TEqn1.solve();
-    TEqn1.solverPerf().perfShow();
+    // TEqn1.solve();
+    // TEqn1.solverPerf().perfShow();
     
 
     // VolField<scalarField> T2

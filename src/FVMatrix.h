@@ -11,10 +11,10 @@
 #include "lilSpmat.h"
 #include "csrSpmat.h"
 
-#include "FVMatrixSolver.h"
-#include "SJacobi.h"
-#include "SGaussSiedel.h"
-#include "SSOR.h"
+#include "./fvSolvers/FVMatrixSolver.h"
+#include "./fvSolvers/SJacobi.h"
+#include "./fvSolvers/SGaussSiedel.h"
+#include "./fvSolvers/SSOR.h"
 #include "SolverPerf.h"
 
 

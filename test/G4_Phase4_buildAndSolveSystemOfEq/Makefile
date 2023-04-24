@@ -33,16 +33,16 @@ MD := mkdir -p
 
 # define the C source files
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/fvSolvers/*.cpp *.cpp)
-$(info $$SRC_FILES is [${SRC_FILES}]) # Printout Variable when running make 
-$(info $$###################################)
+#$(info $$SRC_FILES is [${SRC_FILES}]) # Printout Variable when running make 
+#$(info $$###################################)
 
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC_FILES))
 #$(info $$OBJ_FILES is [${OBJ_FILES}]) # Printout Variable when running make 
-$(info $$###################################)
+#$(info $$###################################)
 
 OBJ_FILES := $(patsubst $(OBJ_DIR)/fvSolvers/%.o, $(OBJ_DIR)/%.o, $(OBJ_FILES))
-$(info $$OBJ_FILES is [${OBJ_FILES}]) # Printout Variable when running make 
-$(info $$###################################)
+#$(info $$OBJ_FILES is [${OBJ_FILES}]) # Printout Variable when running make 
+#$(info $$###################################)
 
 # The following part of the makefile is generic; it can be used to
 # build any executable just by changing the definitions above and by

@@ -10,13 +10,13 @@ class SJacobi: public FVMatrixSolver
 
         /// Constructor
         // SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const int nCells);
-        SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict);
+        SJacobi( spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const Dictionary& fvSolutionDict);
         /// Destructor
         virtual ~SJacobi();
 
-        static std::string className();
+        static std::string solverMethod();
 
-        static std::shared_ptr<FVMatrixSolver> New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict);
+        static std::shared_ptr<FVMatrixSolver> New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const  Dictionary& fvSolutionDict);
 
         /// Solver for the system of equations using Jacobi procedure
         void doSolverStep() const override;

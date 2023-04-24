@@ -3,7 +3,7 @@
     std::string SGaussSiedel::solverMethod_("GaussSiedel");
 
     //Constructor
-    SGaussSiedel::SGaussSiedel(spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, Dictionary fvSolutionDict)
+    SGaussSiedel::SGaussSiedel(spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, const Dictionary& fvSolutionDict)
     :
     FVMatrixSolver(aMatrix,bVector,xVector, fvSolutionDict)
     {}
@@ -26,12 +26,12 @@
         }      
     }
 
-    std::string SGaussSiedel::className()
+    std::string SGaussSiedel::solverMethod()
     {
         return solverMethod_;
     }
 
-    std::shared_ptr<FVMatrixSolver> SGaussSiedel::New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict)
+    std::shared_ptr<FVMatrixSolver> SGaussSiedel::New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const Dictionary& fvSolutionDict)
     {
         return std::make_shared<SGaussSiedel>(aMatrix, bVector, xVector, fvSolutionDict);
     }

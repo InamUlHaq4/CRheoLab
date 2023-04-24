@@ -3,13 +3,13 @@
     std::string SSOR::solverMethod_("SOR");
 
     //Constructor
-    SSOR::SSOR(spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, Dictionary fvSolutionDict)
+    SSOR::SSOR(spmat* aMatrix, std::vector<double> &bVector,std::vector<double>& xVector, const Dictionary& fvSolutionDict)
     :
     FVMatrixSolver(aMatrix, bVector, xVector, fvSolutionDict)    
     {
         wSOR_ = fvSolutionDict_.lookup<double> ("wSOR");
 
-        std::cout << "wSOR=" << wSOR_ << std::endl ;
+        //std::cout << "wSOR=" << wSOR_ << std::endl ;
     }
 
     // Destructor
@@ -28,12 +28,12 @@
         }      
     }
 
-    std::string SSOR::className()
+    std::string SSOR::solverMethod()
     {
         return solverMethod_;
     }
 
-    std::shared_ptr<FVMatrixSolver> SSOR::New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict)
+    std::shared_ptr<FVMatrixSolver> SSOR::New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const Dictionary& fvSolutionDict)
     {
         return std::make_shared<SSOR>(aMatrix, bVector, xVector, fvSolutionDict);
     }

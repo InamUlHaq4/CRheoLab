@@ -3,7 +3,7 @@
     std::string SJacobi::solverMethod_("Jacobi");
 
     //Constructor
-    SJacobi::SJacobi(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict)
+    SJacobi::SJacobi(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const Dictionary& fvSolutionDict)
     :
     FVMatrixSolver(aMatrix,bVector,xVector, fvSolutionDict)
     {}
@@ -24,12 +24,12 @@
         (*xVector_)=result;
     }
 
-    std::string SJacobi::className()
+    std::string SJacobi::solverMethod()
     {
         return solverMethod_;
     }
 
-    std::shared_ptr<FVMatrixSolver> SJacobi::New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict)
+    std::shared_ptr<FVMatrixSolver> SJacobi::New(spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector,const  Dictionary& fvSolutionDict)
     {
         return std::make_shared<SJacobi>(aMatrix, bVector, xVector, fvSolutionDict);
     }

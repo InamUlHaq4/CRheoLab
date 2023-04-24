@@ -15,13 +15,11 @@ class FVMatrixSolver : public FVSolverFactory<FVMatrixSolver>
     public:
 
         /// Default constructor
-        // FVMatrixSolver(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector,const int nCells);
+        FVMatrixSolver(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, const Dictionary& fvSolutionDict);
 
-        FVMatrixSolver(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, Dictionary fvSolutionDict);
-
-        static std::shared_ptr<FVMatrixSolver> New(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, const std::string& systemSolver, Dictionary fvSolutionDict)
+        static std::shared_ptr<FVMatrixSolver> New(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, const std::string& solverMethod, const Dictionary& fvSolutionDict)
         {
-            return FVSolverFactory::New(systemSolver, aMatrix, bVector, xVector, fvSolutionDict);
+            return FVSolverFactory::New(solverMethod, aMatrix, bVector, xVector, fvSolutionDict);
         };
 
         /// Destructor

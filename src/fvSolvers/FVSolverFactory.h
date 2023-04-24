@@ -12,7 +12,7 @@ class FVSolverFactory
     public:
         // This is a function pointer to the constructor of the defined solver
         // which are going to be defined in the derived classes from the FVMatrixSolver
-        using createSolver = std::shared_ptr<solverType>(*)(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, Dictionary fvSolutionDict);
+        using createSolver = std::shared_ptr<solverType>(*)(spmat* aMatrix,  std::vector<double>& bVector, std::vector<double>& xVector, const Dictionary& fvSolutionDict);
 
         // The "registerScheme" function is a static member of the "Factory" class, it takes in a 
         // string "name" and a "createSolver" object called "scheme". The purpose of this function
@@ -41,7 +41,7 @@ class FVSolverFactory
 
         // This is a static std shared smart pointer of the derived schemes from the 
         // Laplacian Class
-        static std::shared_ptr<solverType> New(const std::string& name, spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, Dictionary fvSolutionDict)
+        static std::shared_ptr<solverType> New(const std::string& name, spmat* aMatrix, std::vector<double> &bVector,std::vector<double> &xVector, const Dictionary& fvSolutionDict)
         {
             std::map< std::string, FVSolverFactory::createSolver >& registry = getRegistry();
             auto it = registry.find(name);

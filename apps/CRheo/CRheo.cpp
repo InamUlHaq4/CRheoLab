@@ -1,9 +1,8 @@
-
 #include "printUtils.H"
 #include "Dictionary.h"
 #include "VolField.h"
 #include "Mesh.h"
-#include "fvSolution.h"
+#include "IOObject.h"
 
 int main()
 {
@@ -11,20 +10,42 @@ int main()
 
     Mesh mesh(time);
 
-    #include "createFields.H"
+    volScalarField p 
+    (
+        IOObject
+        (
+            "p",
+            time.timeName(),
+            mesh,
+            IOObject::MUST_READ,
+            IOObject::NO_WRITE
+        )
+    );
 
-    while(time.loop())
-    {
-        std::cout << "time [s]: " << time.time() << std::endl;
+    volScalarField banana 
+    (
+        IOObject
+        (
+            "banana",
+            time.timeName(),
+            mesh,
+            IOObject::MUST_READ,
+            IOObject::NO_WRITE
+        )
+    );
+    
+    volScalarField test1 = p + p;
+    volScalarField test2 = p * banana;
+    volScalarField test3 = p / banana;
+    test1.write();
+    test2.write();
+    test3.write();
 
-        p = p + p; 
+    volScalarField test4 = p + banana;
+    test4.write();
 
-        volScalarField p2 = p + p;
 
-        std::cout << U << std::endl;  
-
-        p2.write();
-    }
+    std::cout << "nsns" << std::endl;
 
     return 0;
 }

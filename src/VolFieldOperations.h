@@ -20,31 +20,235 @@ typedef VolField<symmTensorField> volSymmTensorField;
 
 //volField operations
 
-template <typename T1>
-inline void checkVolSize(const VolField<T1>& v1, const VolField<T1>& v2)
-{
-    if(v1.internalField().size() != v2.internalField().size() )
-    {
-        throw std::length_error("Volume fields do not have the same dimensions");
-    }
+//sum
+template <typename type>
+inline std::vector<type> operator+(const type& s, const vector<type>& v)
+{   
+   std::vector<type> result(v.size());
+   for (unsigned int j = 0; j < v.size(); j++)
+   {
+      result[j]= s + v[j];
+   }
+   return result;
 }
 
-inline volScalarField operator+(const volScalarField& v1, const volScalarField& v2)
+template <typename type>
+inline std::vector<type> operator+(const vector<type>& v, const type& s)
+{   
+   return s+v; 
+}
+
+
+template <typename vectorType>
+inline VolField<vectorType> operator+(const VolField<vectorType>& v1, const VolField<vectorType>& v2)
 {
-   volScalarField result (v1);
+   v1.dimensions().compareDimensions (v1.dimensions(), v2.dimensions());
 
-   result.rename(v1.name() + "+" + v2.name());
-   
-   result.initHeader();
+   VolField<vectorType> result 
+   (
+         IOObject
+        (
+            v1.name() + "+" + v2.name(),
+            v1.mesh().time().timeName(),
+            v1.mesh(),
+            IOObject::NO_READ,
+            IOObject::NO_WRITE,
+            false
+        ),
+        typename vectorType::value_type(0)
+   );
 
-   for(unsigned int i = 0 ; i < v1.internalField().size(); i++)
+   result.dimensionsRef() = v1.dimensions() + v2.dimensions();
+
+   const vectorType& v1_internal = v1.internalField();
+   const vectorType& v2_internal = v2.internalField();
+
+   if (v1_internal.size() == 1 && v2_internal.size() == 1) 
    {
-      result.internalFieldRef()[i] = v1.internalField()[i] + v2.internalField()[i];
+      result.internalFieldRef()[0] = v1.internalField()[0] + v2.internalField()[0];
    }
 
-   return result;
+   else
+   {
+      result.internalFieldRef()= v1.internalField() + v2.internalField();
+   }  
 
+   return result;
 }
 
+// subtraction
+
+template <typename type>
+inline std::vector<type> operator-(const type& s, const vector<type>& v)
+{   
+   std::vector<type> result(v.size());
+   for (unsigned int g = 0; g < v.size(); g++)
+   {
+      result[g]= s - v[g];
+   }
+   return result;
+}
+
+template <typename type>
+inline std::vector<type> operator-(const vector<type>& v, const type& s)
+{   
+   std::vector<type> result(v.size());
+   for (unsigned int g = 0; g < v.size(); g++)
+   {
+      result[g]= v[g]-s;
+   }
+   return result; 
+}
+
+
+template <typename vectorType>
+inline VolField<vectorType> operator-(const VolField<vectorType>& v1, const VolField<vectorType>& v2)
+{
+   v1.dimensions().compareDimensions (v1.dimensions(), v2.dimensions());
+
+   VolField<vectorType> result 
+   (
+         IOObject
+        (
+            v1.name() + "-" + v2.name(),
+            v1.mesh().time().timeName(),
+            v1.mesh(),
+            IOObject::NO_READ,
+            IOObject::NO_WRITE,
+            false
+        ),
+        typename vectorType::value_type(0)
+   );
+
+   result.dimensionsRef() = v1.dimensions() - v2.dimensions();
+
+   const vectorType& v1_internal = v1.internalField();
+   const vectorType& v2_internal = v2.internalField();
+
+   if (v1_internal.size() == 1 && v2_internal.size() == 1) 
+   {
+      result.internalFieldRef()[0] = v1.internalField()[0] - v2.internalField()[0];
+   }
+
+   else
+   {
+      result.internalFieldRef()= v1.internalField() - v2.internalField();
+   }  
+
+   return result;
+}
+
+// multiplication
+template <typename type>
+inline std::vector<type> operator*(const type& s, const vector<type>& v)
+{   
+   std::vector<type> result(v.size());
+   for (unsigned int j = 0; j < v.size(); j++)
+   {
+      result[j]= s * v[j];
+   }
+   return result;
+}
+
+template <typename type>
+inline std::vector<type> operator*(const vector<type>& v, const type& s)
+{   
+   return s*v; 
+}
+
+
+template <typename vectorType>
+inline VolField<vectorType> operator*(const VolField<vectorType>& v1, const VolField<vectorType>& v2)
+{
+   VolField<vectorType> result 
+   (
+         IOObject
+        (
+            v1.name() + "*" + v2.name(),
+            v1.mesh().time().timeName(),
+            v1.mesh(),
+            IOObject::NO_READ,
+            IOObject::NO_WRITE,
+            false
+        ),
+        typename vectorType::value_type(0)
+   );
+
+   result.dimensionsRef() = v1.dimensions() * v2.dimensions();
+
+   const vectorType& v1_internal = v1.internalField();
+   const vectorType& v2_internal = v2.internalField();
+
+   if (v1_internal.size() == 1 && v2_internal.size() == 1) 
+   {
+      result.internalFieldRef()[0] = v1.internalField()[0] * v2.internalField()[0];
+   }
+   
+   else
+   {
+      result.internalFieldRef()= v1.internalField() * v2.internalField();
+   }  
+
+   return result;
+}
+
+// division
+template <typename type>
+inline std::vector<type> operator/(const type& s, const vector<type>& v)
+{   
+   std::vector<type> result(v.size());
+   for (unsigned int j = 0; j < v.size(); j++)
+   {
+      result[j]= s / v[j];
+   }
+   return result;
+}
+
+template <typename type>
+inline std::vector<type> operator/(const vector<type>& v, const type& s)
+{   
+   std::vector<type> result(v.size());
+   for (unsigned int j = 0; j < v.size(); j++)
+   {
+      result[j]= v[j] / s;
+   }
+   return result;
+}
+
+
+template <typename vectorType>
+inline VolField<vectorType> operator/(const VolField<vectorType>& v1, const VolField<vectorType>& v2)
+{
+   VolField<vectorType> result 
+   (
+         IOObject
+        (
+            v1.name() + "/" + v2.name(),
+            v1.mesh().time().timeName(),
+            v1.mesh(),
+            IOObject::NO_READ,
+            IOObject::NO_WRITE,
+            false
+        ),
+        typename vectorType::value_type(0)
+   );
+
+   result.dimensionsRef() = v1.dimensions() / v2.dimensions();
+
+   const vectorType& v1_internal = v1.internalField();
+   const vectorType& v2_internal = v2.internalField();
+
+   if (v1_internal.size() == 1 && v2_internal.size() == 1) 
+   {
+      result.internalFieldRef()[0] = v1.internalField()[0] / v2.internalField()[0];
+   }
+    
+   else
+   {
+      result.internalFieldRef()= v1.internalField() / v2.internalField();
+   }  
+
+   return result;
+}
 
 #endif

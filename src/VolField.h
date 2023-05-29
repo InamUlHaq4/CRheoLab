@@ -5,6 +5,7 @@
 #include "BoundaryField.h"
 #include "DimensionedSet.h"
 #include "Dictionary.h"
+#include "DimensionedSet.h"
 
 typedef std::array<double, 3>   vector3;
 typedef std::array<double, 6>   symmTensor;
@@ -60,7 +61,9 @@ class VolField
         void initHeader() const;
         void updateHeader() const;
 
-        const DimensionedSet& dimensions() {return dimensions_;}
+        const DimensionedSet& dimensions() const {return dimensions_;}
+
+        DimensionedSet& dimensionsRef() {return dimensions_;}
 
         VolField& operator=(const VolField &vf); // provisional
 

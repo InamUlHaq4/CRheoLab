@@ -11,40 +11,28 @@ class DimensionedSet
     std::array<double, 7> dimensions_{0};
 
     public:
-    friend std::istream& operator>> (std::istream& is, DimensionedSet& ds)
-    {   
-        char braket1, braket2;
+    friend std::istream& operator>> (std::istream& is, DimensionedSet& ds);
 
-        is >> braket1;
-        
-        if(is.fail())
-            is.setstate(std::ios::failbit);
+    friend std::ostream& operator<< (std::ostream& os, const DimensionedSet& ds);
 
-        for (int i=0; i < 7; i++)
-        {
-            is >> ds.dimensions_[i];
-        }
+    bool compareDimensions (const DimensionedSet& ds1, const DimensionedSet& ds2) const;
 
-        is >> braket2;
+    //bool dimensionsRef (const DimensionedSet& ds1, const DimensionedSet& ds2);
 
-        if(is.fail())
-            is.setstate(std::ios::failbit);
+    ///@brief Returns the size of the  patch
+    int size() const {return dimensions_.size();}
 
-        return is;
-    }
+    // DimensionedSet[i]
+    const double& operator[](unsigned int index) const;
+    double operator[](unsigned int index);
 
-    friend std::ostream& operator<< (std::ostream& os, const DimensionedSet& ds)
-    {
-        os << '[' ;
-        os << ds.dimensions_[0];
-        for (int i=1; i<7; i++)
-        {
-            os << " " <<  ds.dimensions_[i];
-        }
-        os << ']';
+    DimensionedSet operator+( const DimensionedSet& ds2) const;
 
-        return os;
-    }
+    DimensionedSet operator-( const DimensionedSet& ds2) const;
+
+    DimensionedSet operator*( const DimensionedSet& ds2) const;
+
+    DimensionedSet operator/( const DimensionedSet& ds2) const;
 
 };
 
